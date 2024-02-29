@@ -1,4 +1,4 @@
-import SubmissionListAccess from "@/components/registrations/bayyan/SubmissionListAccess";
+import SubmissionListAccess from "@/components/registrations/bayan/SubmissionListAccess";
 import { prisma } from "@/prisma";
 import { useState } from "react";
 
