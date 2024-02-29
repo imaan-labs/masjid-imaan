@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Script from "next/script";
 import LocationImage from "@/public/images/location-bird-eye-view.jpeg";
-import Carousel from "./Carousel";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -93,14 +93,14 @@ export default function Hero() {
                   Join Whatsapp
                 </a>
               </div>
-              {/* <div data-aos="fade-up" data-aos-delay="600">
-                <a
+              <div data-aos="fade-up" data-aos-delay="600">
+                <Link
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                  href="#0"
+                  href="/registrations/khatira-03-24"
                 >
-                  Donate / Contribute
-                </a>
-              </div> */}
+                  RSVP To Next Event
+                </Link>
+              </div>
             </div>
           </div>
 
