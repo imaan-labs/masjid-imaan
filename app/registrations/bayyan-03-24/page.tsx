@@ -3,7 +3,7 @@ import Toggles from "@/components/registrations/bayyan/toggles";
 import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
 
-export default function BayyanForm() {
+export default async function BayyanForm() {
   async function onSubmit(form: FormData) {
     "use server";
     // const formData = new FormData(event.currentTarget);
@@ -36,6 +36,10 @@ export default function BayyanForm() {
     redirect("/");
   }
 
+  const registered = await prisma.khatiraEventRSVP
+    .findMany()
+    .then((all) => all.reduce((acc, event) => acc + event.headcount, 0));
+
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-16 md:py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
@@ -46,6 +50,9 @@ export default function BayyanForm() {
           Join us for a short lecture from Shaykh Moulana Raheel Syed and dinner
           provided for everyone! Meet and greet the community of muslims near
           you!
+        </p>
+        <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
+          {registered.toLocaleString()} people registered!
         </p>
         <form action={onSubmit} className="space-y-8">
           <div>
