@@ -1,5 +1,7 @@
+import { SubmitButton } from "@/components/registrations/Submit";
 import Toggles from "@/components/registrations/khatira/toggles";
 import { prisma } from "@/prisma";
+import { redirect } from "next/navigation";
 
 export default function KhatiraForm() {
   async function onSubmit(form: FormData) {
@@ -30,6 +32,8 @@ export default function KhatiraForm() {
         sisPhone,
       },
     });
+
+    redirect("/");
   }
 
   return (
@@ -95,12 +99,7 @@ export default function KhatiraForm() {
             />
           </div>
           <Toggles />
-          <button
-            type="submit"
-            className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          >
-            Submit
-          </button>
+          <SubmitButton className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" />
         </form>
       </div>
     </section>
