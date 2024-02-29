@@ -85,9 +85,10 @@ export default function KhatiraForm() {
               htmlFor="headcount"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
             >
-              How many family members will join you? Please provide accurate
-              estimate so we know how much food to order. A baby who does not
-              need their own plate of food should not be included in the count.
+              How many family members will join you? Please provide an accurate
+              estimate so that we can arrange the dinner accordingly. A baby who
+              does not need their own plate of food should not be included in
+              the count
             </label>
             <input
               type="number"
