@@ -3,7 +3,7 @@ import { prisma } from "@/prisma";
 import { useState } from "react";
 
 export default async function BayyanForm() {
-  const PASSWORD = "asdiuje129j12wjk";
+  const PASSWORD = process.env["BAYYAN_03_24_PASSWORD"]!;
   const data = await prisma.khatiraEventRSVP.findMany({
     orderBy: { name: "asc" },
   });
