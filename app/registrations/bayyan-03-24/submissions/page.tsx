@@ -8,6 +8,8 @@ export default async function BayyanForm() {
     orderBy: { name: "asc" },
   });
 
+  if (!PASSWORD) throw new Error("Invalid Password");
+
   return (
     <div>
       <SubmissionListAccess data={data} password={PASSWORD} />
