@@ -96,7 +96,7 @@ export default function Hero() {
               <div data-aos="fade-up" data-aos-delay="600">
                 <Link
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                  href="/registrations/khatira-03-24"
+                  href="/registrations/bayyan-03-24"
                 >
                   RSVP To Next Event
                 </Link>

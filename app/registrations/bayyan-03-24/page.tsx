@@ -1,9 +1,9 @@
 import { SubmitButton } from "@/components/registrations/Submit";
-import Toggles from "@/components/registrations/khatira/toggles";
+import Toggles from "@/components/registrations/bayyan/toggles";
 import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
 
-export default function KhatiraForm() {
+export default function BayyanForm() {
   async function onSubmit(form: FormData) {
     "use server";
     // const formData = new FormData(event.currentTarget);
@@ -38,13 +38,13 @@ export default function KhatiraForm() {
 
   return (
     <section className="bg-white dark:bg-gray-900">
-      <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+      <div className="py-16 md:py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
-          Khatira Registration March 9th 2024
+          Bayyan Registration March 9th 2024
         </h2>
         <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
-          Join us for a short lecture from Shaykh Moulana Raheel Syed and some
-          biryani for everyone! Meet and greet the community of muslims near
+          Join us for a short lecture from Shaykh Moulana Raheel Syed and dinner
+          provided for everyone! Meet and greet the community of muslims near
           you!
         </p>
         <form action={onSubmit} className="space-y-8">
@@ -85,9 +85,10 @@ export default function KhatiraForm() {
               htmlFor="headcount"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
             >
-              How many family members will join you? Please provide accurate
-              estimate so we know how much food to order. A baby who does not
-              need their own plate of food should not be included in the count.
+              How many family members will join you? Please provide an accurate
+              estimate so that we can arrange the dinner accordingly. A baby who
+              does not need their own plate of food should not be included in
+              the count
             </label>
             <input
               type="number"
