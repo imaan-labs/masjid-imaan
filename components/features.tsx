@@ -112,7 +112,7 @@ export default function Features() {
               </svg>
               <h4 className="h4 mb-2">Send Through Zelle</h4>
               <p className="text-lg text-gray-400 text-center">
-                Contribute through Zelle via imaan.labs@gmail.com
+                Contribute through Zelle via 929-301-6487
               </p>
             </div>
 
