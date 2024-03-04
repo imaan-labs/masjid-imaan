@@ -51,20 +51,7 @@ export default function Hero() {
             <h1 className="h1 mb-4" data-aos="fade-up">
               IMAAN: Your Place In Melissa For Muslims!
             </h1>
-            <div className="w-full flex flex-wrap items-center justify-center mb-8">
-              <Image
-                src="/images/masjid-front.jpeg"
-                width={500}
-                height={500}
-                alt="location"
-              />
-              <Image
-                src={LocationImage}
-                width={500}
-                height={500}
-                alt="location"
-              />
-            </div>
+
             {/* <Carousel /> */}
             <p
               className="text-xl text-gray-400 mb-8"
@@ -93,14 +80,29 @@ export default function Hero() {
                   Join Whatsapp
                 </a>
               </div>
-              <div data-aos="fade-up" data-aos-delay="600">
+              {/* <div data-aos="fade-up" data-aos-delay="600">
                 <Link
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
                   href="/registrations/bayan-03-24"
                 >
                   RSVP To Next Event
                 </Link>
-              </div>
+              </div> */}
+            </div>
+
+            <div className="pt-8 w-full flex flex-wrap items-center justify-center mb-8">
+              <Image
+                src="/images/masjid-front.jpeg"
+                width={500}
+                height={500}
+                alt="location"
+              />
+              <Image
+                src={LocationImage}
+                width={500}
+                height={500}
+                alt="location"
+              />
             </div>
           </div>
 
