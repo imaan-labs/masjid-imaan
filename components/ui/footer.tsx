@@ -188,7 +188,6 @@ export default function Footer() {
                   </svg>
                 </a>
               </li>
-            </ul>
               <li className="ml-4">
                 <a
                   href="https://www.facebook.com/imaanmasjidmelissa"
@@ -221,6 +220,7 @@ export default function Footer() {
                   </svg>
                 </a>
               </li>
+            </ul>
 
             {/* Copyrights note */}
             <div className="text-gray-400 text-sm mr-4">
