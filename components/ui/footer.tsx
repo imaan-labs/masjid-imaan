@@ -69,13 +69,7 @@ export default function Footer() {
                 <h6 className="text-gray-200 font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="relative inline-block">
-                        <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          Aqeedah Class
-                        </div>
-                      </div>
-                    </Tooltip>
+                    <Link href="/forms">Forms</Link>
                   </li>
                   <li className="mb-1">
                     <Tooltip content="Coming Soon">
@@ -90,20 +84,12 @@ export default function Footer() {
                     <Tooltip content="Coming Soon">
                       <div className="relative inline-block">
                         <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          Qur'an Classes
+                          Islamic Classes For Adults
                         </div>
                       </div>
                     </Tooltip>
                   </li>
-                  <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="relative inline-block">
-                        <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          Arabic Classes
-                        </div>
-                      </div>
-                    </Tooltip>
-                  </li>
+
                   <li className="mb-1">
                     <Tooltip content="Coming Soon">
                       <div className="relative inline-block">
