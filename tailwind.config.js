@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./node_modules/flowbite-react/lib/**/*.js",
+    "./node_modules/flowbite/**/*.js",
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -89,5 +90,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin")],
 };
