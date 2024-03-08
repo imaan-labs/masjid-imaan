@@ -6,7 +6,18 @@ import Link from "next/link";
 export default function Hero() {
   const GalleryImages = [
     "/images/masjid-front.jpeg",
+    "/images/jumah-1.jpeg",
     "/images/location-bird-eye-view.jpeg",
+    "/images/backyard-day-1.jpeg",
+    "/images/backyard-sunset-1.jpeg",
+    "/images/backyard-sunset-2.jpeg",
+    "/images/backyard-sunset-3.jpeg",
+    "/images/bayan-3-9-24.jpeg",
+    "/images/carpet-mens.jpeg",
+    "/images/center-1.jpeg",
+    "/images/center-2.jpeg",
+    "/images/entrance.jpeg",
+    "/images/janmaz.jpeg",
   ];
   return (
     <section>
