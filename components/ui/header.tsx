@@ -30,6 +30,16 @@ export default function Header() {
                   Join Whatsapp
                 </a>
               </li>
+              <li>
+                <Link
+                  className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3"
+                  href="/#donate"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                 Donate
+                </Link>
+              </li>
             </ul>
           </nav>
 
