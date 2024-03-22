@@ -25,7 +25,7 @@ export default function Header() {
                   id="dropdownHoverButton"
                   data-dropdown-toggle="dropdownHover"
                   data-dropdown-trigger="hover"
-                  className="text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-black hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="button"
                 >
                   Resources
@@ -67,7 +67,7 @@ export default function Header() {
               </li>
               <li>
                 <a
-                  className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                  className="font-medium text-gold-600 hover:text-gray-900 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                   href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
                   target="_blank"
                   rel="noreferrer"
@@ -77,7 +77,7 @@ export default function Header() {
               </li>
               <li>
                 <Link
-                  className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3"
+                  className="btn-sm text-white bg-gold-500 hover:bg-gold-600 ml-3"
                   href="/#donate"
                   target="_blank"
                   rel="noreferrer"
