@@ -4,15 +4,15 @@ import { useState } from "react";
 
 export default async function BayyanForm() {
   const PASSWORD = process.env["BAYYAN_03_24_PASSWORD"]!;
-  const data = await prisma.khatiraEventRSVP.findMany({
-    orderBy: { name: "asc" },
-  });
+  // const data = await prisma.khatiraEventRSVP.findMany({
+  //   orderBy: { name: "asc" },
+  // });
 
   if (!PASSWORD) throw new Error("Invalid Password");
 
   return (
     <div>
-      <SubmissionListAccess data={data} password={PASSWORD} />
+      <SubmissionListAccess data={[]} password={PASSWORD} />
     </div>
   );
 }
