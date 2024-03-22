@@ -69,7 +69,7 @@ export default function Footer() {
                 <h6 className="text-gray-200 font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <Link href="/forms">Forms</Link>
+                    <Link href="/letters">Letters</Link>
                   </li>
                   <li className="mb-1">
                     <Tooltip content="Coming Soon">
