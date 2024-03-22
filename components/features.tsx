@@ -69,7 +69,7 @@ export default function Features() {
                 <h4 className="h4 mb-2">Shop on Amazon</h4>
                 <div className="text-lg text-gray-400 text-center">
                   <p>
-                    If you use this link to buy anything on Amazon, a percentage
+                    Click this link to buy anything on Amazon, a percentage
                     will be sent to us. Encourage your family and friends to use
                     this link for anything they buy!
                   </p>

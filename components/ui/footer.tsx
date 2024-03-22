@@ -29,7 +29,7 @@ export default function Footer() {
             <div className="md:col-span-8 lg:col-span-7 grid sm:grid-cols-3 gap-8">
               {/* 2nd block */}
               <div className="text-sm">
-                <h6 className="text-gray-200 font-medium mb-1">Donate</h6>
+                <h6 className="text-black font-medium mb-1">Donate</h6>
                 <ul>
                   <li className="mb-1">
                     <p>Zelle: 929-301-6487</p>
@@ -37,7 +37,7 @@ export default function Footer() {
                   <li className="mb-1">
                     <a
                       href="https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08"
-                      className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
                       target="_blank"
                     >
                       Support with Zeffy
@@ -46,7 +46,7 @@ export default function Footer() {
                   <li className="mb-1">
                     <a
                       href="https://www.amazon.com/?&_encoding=UTF8&tag=imaan0bd-20&linkCode=ur2&linkId=c88e3ca8a369dd52a5e841cb314bc535&camp=1789&creative=9325"
-                      className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
                       target="_blank"
                     >
                       By Shopping on Amazon
@@ -55,7 +55,7 @@ export default function Footer() {
                   <li className="mb-1">
                     <a
                       href="https://donorbox.org/donate-to-imaan"
-                      className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
                       target="_blank"
                     >
                       Support with Donorbox
@@ -66,10 +66,10 @@ export default function Footer() {
 
               {/* 3rd block */}
               <div className="text-sm">
-                <h6 className="text-gray-200 font-medium mb-1">Resources</h6>
+                <h6 className="text-black font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <Link href="/forms">Forms</Link>
+                    <Link href="/letters">Letters</Link>
                   </li>
                   <li className="mb-1">
                     <Tooltip content="Coming Soon">
@@ -104,7 +104,7 @@ export default function Footer() {
 
               {/* 4th block */}
               <div className="text-sm">
-                <h6 className="text-gray-200 font-medium mb-1">Company</h6>
+                <h6 className="text-black font-medium mb-1">Company</h6>
                 <ul>
                   <li className="mb-1">
                     <Tooltip content="Coming Soon">
@@ -125,7 +125,7 @@ export default function Footer() {
                   <li className="mb-1">
                     <a
                       href="https://maps.app.goo.gl/8Jn9t21YQ51UicqH8"
-                      className="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
