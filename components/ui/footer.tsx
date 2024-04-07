@@ -16,12 +16,12 @@ export default function Footer() {
               <div className="mb-2">
                 {/* Logo */}
                 <Link href="/" className="inline-block" aria-label="Cruip">
-                  <Image src={Logo} height={32} width={32} alt="logo" />
+                  <Image src={Logo} height={64} width={64} alt="logo" />
                 </Link>
               </div>
               <div className="text-gray-400">
                 No matter who you are, you are a guest of Allah when you come to
-                Masjid IMAAN. Please don't hesitate to join us today!
+                Imaan Masjid in Melissa. Please don't hesitate to join us today!
               </div>
             </div>
 
@@ -32,16 +32,7 @@ export default function Footer() {
                 <h6 className="text-black font-medium mb-1">Donate</h6>
                 <ul>
                   <li className="mb-1">
-                    <p>Zelle: 929-301-6487</p>
-                  </li>
-                  <li className="mb-1">
-                    <a
-                      href="https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08"
-                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
-                      target="_blank"
-                    >
-                      Support with Zeffy
-                    </a>
+                    <p>Zelle: donate@imaanmasjid.org</p>
                   </li>
                   <li className="mb-1">
                     <a
@@ -50,6 +41,15 @@ export default function Footer() {
                       target="_blank"
                     >
                       By Shopping on Amazon
+                    </a>
+                  </li>
+                  <li className="mb-1">
+                    <a
+                      href="https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08"
+                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
+                      target="_blank"
+                    >
+                      Support with Zeffy
                     </a>
                   </li>
                   <li className="mb-1">
