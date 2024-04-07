@@ -79,7 +79,6 @@ export default function Header() {
                 <Link
                   className="btn-sm text-white bg-gold-500 hover:bg-gold-600 ml-3"
                   href="/#donate"
-                  target="_blank"
                   rel="noreferrer"
                 >
                   Donate
