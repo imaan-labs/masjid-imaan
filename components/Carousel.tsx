@@ -36,6 +36,24 @@ export default async function Carousel() {
             width={500}
           />
         </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
+            src="/images/masjid-mens2.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
+            src="/images/masjid-sisters.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
       </div>
       <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
         <button

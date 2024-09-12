@@ -26,7 +26,7 @@ export default function Features() {
 
           {/* Items */}
           <div
-            className="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-16 items-start md:max-w-2xl lg:max-w-none"
+            className="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-2 lg:gap-16 items-start md:max-w-2xl lg:max-w-none"
             data-aos-id-blocks
           >
             <a
@@ -110,12 +110,11 @@ export default function Features() {
                   strokeLinecap="square"
                 />
               </svg>
-              <h4 className="h4 mb-2">Send Through Zelle</h4>
+              <h4 className="h4 mb-2">Contribute Through Zelle</h4>
               <p className="text-lg text-gray-400 text-center">
-                Contribute through Zelle via 929-301-6487
+                Contribute through Zelle via donate@imaanmasjid.org
               </p>
             </div>
-
             {/* 3rd item */}
             <a
               href="https://donorbox.org/donate-to-imaan"
@@ -167,8 +166,62 @@ export default function Features() {
                 </svg>
                 <h4 className="h4 mb-2">Support Using Debit Cards</h4>
                 <p className="text-lg text-gray-400 text-center">
-                  Only have a Debit Card? No problem! Use this form to submit
-                  your donation!
+                  Only have a Debit Card? No problem! Make a quick contribution here!
+                </p>
+              </div>
+            </a>
+            {/* 4th item */}
+            <a
+              href="https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08"
+              className=""
+              target="_blank"
+            >
+              <div
+                className="relative flex flex-col items-center"
+                data-aos="fade-up"
+                data-aos-delay="200"
+                data-aos-anchor="[data-aos-id-blocks]"
+              >
+                <svg
+                  className="w-16 h-16 mb-4"
+                  viewBox="0 0 64 64"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    className="fill-current text-purple-600"
+                    width="64"
+                    height="64"
+                    rx="32"
+                  />
+                  <g
+                    transform="translate(21 21)"
+                    strokeLinecap="square"
+                    strokeWidth="2"
+                    fill="none"
+                    fillRule="evenodd"
+                  >
+                    <ellipse
+                      className="stroke-current text-purple-300"
+                      cx="11"
+                      cy="11"
+                      rx="5.5"
+                      ry="11"
+                    />
+                    <path
+                      className="stroke-current text-purple-100"
+                      d="M11 0v22M0 11h22"
+                    />
+                    <circle
+                      className="stroke-current text-purple-100"
+                      cx="11"
+                      cy="11"
+                      r="11"
+                    />
+                  </g>
+                </svg>
+                <h4 className="h4 mb-2">Setup Monthly with Card or ACH</h4>
+                <p className="text-lg text-gray-400 text-center">
+                  Setup a monthly recurring contribution via Zeffy that incurs no transaction fee to the Masjid! Make sure to set all other fields to zero before completing transaction.
                 </p>
               </div>
             </a>

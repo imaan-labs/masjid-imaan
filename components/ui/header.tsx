@@ -12,7 +12,7 @@ export default function Header() {
           <div className="shrink-0 mr-4">
             {/* Logo */}
             <Link href="/" className="block" aria-label="Cruip">
-              <Image src={Logo} height={32} width={32} alt="logo" />
+              <Image src={Logo} height={64} width={64} alt="logo" />
             </Link>
           </div>
 
@@ -56,18 +56,26 @@ export default function Header() {
                   >
                     <li>
                       <Link
-                        href="/gallery"
+                        href="/registrations/student-programs"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
-                        Gallery
+                        Student Programs
                       </Link>
                     </li>
                     <li>
                       <Link
-                        href="/forms"
+                        href="/letters"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Absent/Excuse Letters
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/gallery"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Gallery
                       </Link>
                     </li>
                   </ul>
@@ -87,7 +95,6 @@ export default function Header() {
                 <Link
                   className="btn-sm text-white bg-gold-500 hover:bg-gold-600 ml-3"
                   href="/#donate"
-                  target="_blank"
                   rel="noreferrer"
                 >
                   Donate

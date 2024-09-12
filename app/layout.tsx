@@ -19,7 +19,7 @@ const architects_daughter = Architects_Daughter({
 });
 
 export const metadata = {
-  title: "Masjid IMAAN",
+  title: "Imaan Masjid",
   description:
     "The place to practice your deen, to teach your kids and more. Certified scholars both males and females are present to learn from!",
 };
