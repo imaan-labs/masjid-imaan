@@ -65,7 +65,7 @@ export default function GalleryPage() {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="flex flex-wrap justify-evenly items-center gap-4">
         {gallery
           .filter(
             (picture) =>
@@ -78,8 +78,8 @@ export default function GalleryPage() {
                 className="max-w-full rounded-lg h-75"
                 src={gallery.name}
                 alt={gallery.name}
-                width={500}
-                height={300}
+                width={350}
+                height={350}
               />
             </div>
           ))}
