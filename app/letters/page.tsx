@@ -40,6 +40,12 @@ export default function FormsPage() {
         "A signed letter from Imaan for kids school to be excused from physical activities.",
       filename: "letters/Students Ramadan Fasting Excuse Letter.pdf",
     },
+    {
+      name: "Students Umrah Leaves Excuse Letter",
+      description:
+        "A signed letter from Imaan for kids school for leaves for Umrah.",
+      filename: "letters/Students Umrah Excuse Letter.pdf",
+    },
   ];
 
   return (
