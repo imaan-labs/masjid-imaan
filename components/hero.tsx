@@ -1,24 +1,8 @@
 import Image from "next/image";
 import Script from "next/script";
-import LocationImage from "@/public/images/location-bird-eye-view.jpeg";
 import Link from "next/link";
 
 export default function Hero() {
-  const GalleryImages = [
-    "/images/masjid-front.jpeg",
-    "/images/jumah-1.jpeg",
-    "/images/location-bird-eye-view.jpeg",
-    "/images/backyard-day-1.jpeg",
-    "/images/backyard-sunset-1.jpeg",
-    "/images/backyard-sunset-2.jpeg",
-    "/images/backyard-sunset-3.jpeg",
-    "/images/bayan-3-9-24.jpeg",
-    "/images/carpet-mens.jpeg",
-    "/images/center-1.jpeg",
-    "/images/center-2.jpeg",
-    "/images/entrance.jpeg",
-    "/images/janmaz.jpeg",
-  ];
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
@@ -114,7 +98,7 @@ export default function Hero() {
               </div> */}
             </div>
 
-            <div className="pt-8 w-full flex flex-wrap items-center justify-center mb-8">
+            {/* <div className="pt-8 w-full flex flex-wrap items-center justify-center mb-8">
               <div
                 id="gallery"
                 className="relative w-full"
@@ -187,7 +171,7 @@ export default function Hero() {
                   </span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="w-full">
