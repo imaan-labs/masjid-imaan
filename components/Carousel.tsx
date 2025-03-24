@@ -11,7 +11,7 @@ export default async function Carousel() {
       <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
           <img
-            src='/images/masjid-bird-eye-view.jpeg'
+            src='/images/location-bird-eye-view.jpeg'
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
             height={500}
@@ -38,6 +38,15 @@ export default async function Carousel() {
         </div>
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
           <Image
+            src="/images/men_full.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
             src="/images/masjid-mens2.jpeg"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
@@ -47,7 +56,43 @@ export default async function Carousel() {
         </div>
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
           <Image
+            src="/images/masjid-mens2.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
+            src="/images/men_full2.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
             src="/images/masjid-sisters.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
+            src="/images/new_sisters.jpeg"
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            alt="..."
+            height={500}
+            width={500}
+          />
+        </div>
+        <div className="hidden duration-700 ease-in-out" data-carousel-item>
+          <Image
+            src="/images/snowy_day.jpeg"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
             height={500}
