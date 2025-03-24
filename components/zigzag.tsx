@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import FeatImage01 from "@/public/images/firstkhutba.jpeg";
+import FeatImage01 from "@/public/images/jummah.jpg";
 import FeatImage02 from "@/public/images/firstsaturdaylecture.jpeg";
 import FeatImage03 from "@/public/images/features-03-image-03.png";
 
@@ -74,7 +74,7 @@ export default function Zigzag() {
                       >
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
-                      <span>First Adhan: 12:45 PM</span>
+                      <span>First Adhan</span>
                     </li>
                     <li className="flex items-center mb-2">
                       <svg
@@ -85,8 +85,7 @@ export default function Zigzag() {
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
                       <span>
-                        Lecture Starts: 1:00 PM (Mostly done in English, on
-                        occassion done in Urdu)
+                        English Lecture
                       </span>
                     </li>
                     <li className="flex items-center">
@@ -98,8 +97,7 @@ export default function Zigzag() {
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
                       <span>
-                        After the lecture: Short 3-5 minute Arabic Khutbah as
-                        per the Sunnah
+                        Arabic Khutbah
                       </span>
                     </li>
                     <li className="flex items-center">
