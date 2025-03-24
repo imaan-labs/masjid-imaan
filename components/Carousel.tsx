@@ -136,6 +136,20 @@ export default async function Carousel() {
           aria-label="Slide 5"
           data-carousel-slide-to="4"
         ></button>
+        <button
+          type="button"
+          className="w-3 h-3 rounded-full"
+          aria-current="false"
+          aria-label="Slide 6"
+          data-carousel-slide-to="5"
+        ></button>
+        <button
+          type="button"
+          className="w-3 h-3 rounded-full"
+          aria-current="false"
+          aria-label="Slide 7"
+          data-carousel-slide-to="6"
+        ></button>
       </div>
       <button
         type="button"
