@@ -4,30 +4,29 @@ import Link from "next/link";
 export default function FormsPage() {
   const forms = [
     {
-      name: "Eid Al Adha 2024 Student Excusal Letter",
-      description:
-        "A signed excusal letter from Imaan for kids to attend Eid Al Adha.",
-      filename: "letters/Students Eid-ul-Adha Excuse Letter.pdf",
-    },
-    {
-      name: "Eid Al Fitr 2024 Student Excusal Letter",
+      name: "Eid Al Fitr Student Excusal Letter",
       description:
         "A signed excusal letter from Imaan for kids to attend Eid Al Fitr.",
       filename: "letters/Students Eid-ul-Fitr Excuse Letter.pdf",
     },
     {
-      name: "Eid Al Adha 2024 Employee Excusal Letter",
+      name: "Eid Al Adha Student Excusal Letter",
       description:
-        "A signed excusal letter from Imaan for work to attend Eid Al Adha.",
-      filename: "letters/Employee Eid-ul-Adha Excuse Letter.pdf",
+        "A signed excusal letter from Imaan for kids to attend Eid Al Adha.",
+      filename: "letters/Students Eid-ul-Adha Excuse Letter.pdf",
     },
     {
-      name: "Eid Al Fitr 2024 Employee Excusal Letter",
+      name: "Eid Al Fitr Employee Excusal Letter",
       description:
         "A signed excusal letter from Imaan for adults to be excused from work to attend Eid Al Fitr.",
       filename: "letters/Employee Eid-ul-Fitr Excuse Letter.pdf",
     },
-
+    {
+      name: "Eid Al Adha Employee Excusal Letter",
+      description:
+        "A signed excusal letter from Imaan for work to attend Eid Al Adha.",
+      filename: "letters/Employee Eid-ul-Adha Excuse Letter.pdf",
+    },
     {
       name: "Students Jummah Excusal Letter",
       description:
