@@ -5,19 +5,19 @@ import Link from "next/link";
 
 export default function Hero() {
   const GalleryImages = [
-    "/images/masjid-front.jpeg",
-    "/images/jumah-1.jpeg",
     "/images/location-bird-eye-view.jpeg",
-    "/images/backyard-day-1.jpeg",
-    "/images/backyard-sunset-1.jpeg",
-    "/images/backyard-sunset-2.jpeg",
-    "/images/backyard-sunset-3.jpeg",
-    "/images/bayan-3-9-24.jpeg",
-    "/images/carpet-mens.jpeg",
-    "/images/center-1.jpeg",
-    "/images/center-2.jpeg",
+    "/images/masjid-front.jpeg",
+    "/images/men_full.jpeg",
+    "/images/men_full2.jpeg",
+    "/images/masjid-sisters.jpeg",
+    "/images/sisters_new.jpeg",
+    "/images/iftar.jpeg",
+    "/images/backyard-sunset.jpeg",
+    "/images/bonfire.jpeg",
     "/images/entrance.jpeg",
-    "/images/janmaz.jpeg",
+    "/images/snowy_day.jpeg",
+    "/images/masjid-mens-old.jpeg",
+    "/images/center-1.jpeg",
   ];
   return (
     <section>
