@@ -33,7 +33,7 @@ export default function GalleryPage() {
     { name: "/images/snowy_day.jpg", categories: ["Location"] },
     { name: "/images/masjid-mens-old.jpg", categories: ["Location"] },
     { name: "/images/center-1.jpeg", categories: ["Center"] },
-    {/*{ name: "/images/masjid-clock.jpeg", categories: ["Location"] },
+    /*{ name: "/images/masjid-clock.jpeg", categories: ["Location"] },
     { name: "/images/masjid-parking-1.jpeg", categories: ["Location"] },
     { name: "/images/masjid-sisters-1.jpeg", categories: ["Location"] },
     { name: "/images/center-3.jpeg", categories: ["Center"] },
@@ -49,7 +49,7 @@ export default function GalleryPage() {
     { name: "/images/firstsaturdaylecture.jpeg", categories: ["Events"] },
     { name: "/images/janmaz.jpeg", categories: ["Location"] },
     { name: "/images/jumah-1.jpeg", categories: ["Community"] },
-    { name: "/images/masjid-mens.jpeg", categories: ["Location"] },*/}
+    { name: "/images/masjid-mens.jpeg", categories: ["Location"] },*/
   ];
 
   function categoryClass(category: GalleryCategories) {
