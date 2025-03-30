@@ -4,30 +4,29 @@ import Link from "next/link";
 export default function FormsPage() {
   const forms = [
     {
-      name: "Eid Al Adha 2024 Student Excusal Letter",
-      description:
-        "A signed excusal letter from Imaan for kids to attend Eid Al Adha.",
-      filename: "letters/Students Eid-ul-Adha Excuse Letter.pdf",
-    },
-    {
-      name: "Eid Al Fitr 2024 Student Excusal Letter",
+      name: "Eid Al Fitr Student Excusal Letter",
       description:
         "A signed excusal letter from Imaan for kids to attend Eid Al Fitr.",
       filename: "letters/Students Eid-ul-Fitr Excuse Letter.pdf",
     },
     {
-      name: "Eid Al Adha 2024 Employee Excusal Letter",
+      name: "Eid Al Adha Student Excusal Letter",
       description:
-        "A signed excusal letter from Imaan for work to attend Eid Al Adha.",
-      filename: "letters/Employee Eid-ul-Adha Excuse Letter.pdf",
+        "A signed excusal letter from Imaan for kids to attend Eid Al Adha.",
+      filename: "letters/Students Eid-ul-Adha Excuse Letter.pdf",
     },
     {
-      name: "Eid Al Fitr 2024 Employee Excusal Letter",
+      name: "Eid Al Fitr Employee Excusal Letter",
       description:
         "A signed excusal letter from Imaan for adults to be excused from work to attend Eid Al Fitr.",
       filename: "letters/Employee Eid-ul-Fitr Excuse Letter.pdf",
     },
-
+    {
+      name: "Eid Al Adha Employee Excusal Letter",
+      description:
+        "A signed excusal letter from Imaan for adults to be excused from work to attend Eid Al Adha.",
+      filename: "letters/Employee Eid-ul-Adha Excuse Letter.pdf",
+    },
     {
       name: "Students Jummah Excusal Letter",
       description:
@@ -39,6 +38,24 @@ export default function FormsPage() {
       description:
         "A signed letter from Imaan for kids school to be excused from physical activities.",
       filename: "letters/Students Ramadan Fasting Excuse Letter.pdf",
+    },
+    {
+      name: "Students Ramadan Last Ashra Excusal Letter",
+      description:
+        "A signed excusal letter from Imaan for kids to be excused from school for praying all night in the odd nights of last Ashra of Ramadan.",
+      filename: "letters/Students Ramadan Last Ashra Excuse Letter.pdf",
+    },
+    {
+      name: "Employee Ramadan Last Ashra Excuse Letter",
+      description:
+        "A signed letter from Imaan for for adults to be excused from work for praying all night in the odd nights of last Ashra of Ramadan.",
+      filename: "letters/Employee Ramadan Last Ashra Excuse Letter.pdf",
+    },
+    {
+      name: "Students Umrah Leaves Excuse Letter",
+      description:
+        "A signed letter from Imaan for kids school for leaves for Umrah.",
+      filename: "letters/Students Umrah Excuse Letter.pdf",
     },
   ];
 

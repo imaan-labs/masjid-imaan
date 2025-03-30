@@ -210,7 +210,7 @@ export default function Footer() {
 
             {/* Copyrights note */}
             <div className="text-gray-400 text-sm mr-4">
-              &copy; IMAAN™ - All rights reserved.
+              &copy; IMAAN™ - All rights reserved. IMAAN is a tax-exempt non-profit organization registered in the State of Texas, that has been formed exclusively for community building, educational, and religious purposes. It is registered with the Internal Revenue Service under revenue code 501(c)(3).
             </div>
           </div>
         </div>
