@@ -113,7 +113,6 @@ export default function WishlistPage() {
           </div>
         </div>
       </section>
-      </div>
       <div className="mx-auto max-w-screen-sm text-center">
         <Link
           href="/"
