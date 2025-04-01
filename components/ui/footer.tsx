@@ -143,7 +143,7 @@ export default function Footer() {
             <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
               <li>
                 <a
-                  href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
+                  href="https://chat.whatsapp.com/FcehoEQjFcsE89qLVrfMQV"
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
                   aria-label="Whatsapp"
                 >
