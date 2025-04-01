@@ -3,6 +3,9 @@ import Image from "next/image";
 import FeatImage01 from "@/public/images/jummah.jpg";
 import FeatImage02 from "@/public/images/firstsaturdaylecture.jpeg";
 import FeatImage03 from "@/public/images/taraweeh.jpg";
+import FeatImage04 from "@/public/images/ramadan1446calendar.png";
+import FeatImage05 from "@/public/images/eidalfitr2025salah.png";
+import FeatImage06 from "@/public/images/eidaladha2024salah.png";
 
 export default function Zigzag() {
   return (
@@ -242,6 +245,153 @@ export default function Zigzag() {
                 </div>
               </div>
             </div>
+
+            {/* 4th item */}
+            <div className="md:grid md:grid-cols-12 md:gap-6 items-center">
+              {/* Image */}
+              <div
+                className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0"
+                data-aos="fade-up"
+              >
+                <Image
+                  className="max-w-full mx-auto md:max-w-none h-auto"
+                  src={FeatImage04}
+                  width={540}
+                  height={405}
+                  alt="Features 04"
+                />
+              </div>
+              {/* Content */}
+              <div
+                className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                data-aos="fade-left"
+              >
+                <div className="md:pl-4 lg:pl-12 xl:pl-16">
+                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">
+                    Ramadan 1446 Calendar
+                  </div>
+                  <h3 className="h3 mb-3">
+                    Stay up to date with each Suhoor and Iftar time!
+                  </h3>
+                  <p className="text-xl text-gray-400 mb-4">
+                    Adhan times for All Salah.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 5th item */}
+            <div className="md:grid md:grid-cols-12 md:gap-6 items-center">
+              {/* Image */}
+              <div
+                className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1"
+                data-aos="fade-up"
+              >
+                <Image
+                  className="max-w-full mx-auto md:max-w-none h-auto"
+                  src={FeatImage05}
+                  width={540}
+                  height={405}
+                  alt="Features 05"
+                />
+              </div>
+              {/* Content */}
+              <div
+                className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                data-aos="fade-right"
+              >
+                <div className="md:pl-4 lg:pl-12 xl:pl-16">
+                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">
+                    Pray Eid Salah locally
+                  </div>
+                  <h3 className="h3 mb-3">
+                    Eid Salah right here in Melissa
+                  </h3>
+                  <p className="text-xl text-gray-400 mb-4">
+                    With multiple Eid Salah times for flexibility
+                  </p>
+                  <ul className="text-lg text-gray-400 -mb-2">
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>Lectures and Dua</span>
+                    </li>
+                    <li className="flex items-center">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>Walkthrough for additional Takbeer</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* 6th item */}
+            <div className="md:grid md:grid-cols-12 md:gap-6 items-center">
+              {/* Image */}
+              <div
+                className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0"
+                data-aos="fade-up"
+              >
+                <Image
+                  className="max-w-full mx-auto md:max-w-none h-auto"
+                  src={FeatImage06}
+                  width={540}
+                  height={405}
+                  alt="Features 06"
+                />
+              </div>
+              {/* Content */}
+              <div
+                className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                data-aos="fade-left"
+              >
+                <div className="md:pl-4 lg:pl-12 xl:pl-16">
+                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">
+                    Pray Eid Al Adha close by
+                  </div>
+                  <h3 className="h3 mb-3">
+                    In time to perform sacrifice at a place of choice
+                  </h3>
+                  <p className="text-xl text-gray-400 mb-4">
+                    Salah time chosen with care for all.
+                  </p>
+                  <ul className="text-lg text-gray-400 -mb-2">
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>Lectures and Dua</span>
+                    </li>
+                    <li className="flex items-center">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>Walkthrough for additional Takbeer</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
