@@ -69,7 +69,7 @@ export default function Hero() {
               Sahih al-Bukhari 615
             </p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-              <div data-aos="fade-up" data-aos-delay="400">
+              {*/<div data-aos="fade-up" data-aos-delay="400">
                 <a
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
                   href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
@@ -78,7 +78,7 @@ export default function Hero() {
                 >
                   Join Whatsapp
                 </a>
-              </div>
+              </div>*/}
               <div data-aos="fade-up" data-aos-delay="600">
                 <Link
                   className="btn text-white bg-gold-500 hover:bg-gold-600 w-full mb-4 sm:w-auto sm:mb-0 ml-4"
@@ -86,6 +86,36 @@ export default function Hero() {
                 >
                   Donate
                 </Link>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="400">
+                <a
+                  className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
+                  href="/gallery"
+                  //target="_blank"
+                  rel="noreferrer"
+                >
+                  Gallery
+                </a>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="400">
+                <a
+                  className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
+                  href="/letters"
+                  //target="_blank"
+                  rel="noreferrer"
+                >
+                  Letters
+                </a>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="400">
+                <a
+                  className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
+                  href="/wishlist"
+                  //target="_blank"
+                  rel="noreferrer"
+                >
+                  Wishlist
+                </a>
               </div>
 
               {/* <div data-aos="fade-up" data-aos-delay="600">
