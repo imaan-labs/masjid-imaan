@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-type GalleryCategories = "Location" | "Events" | "Center" | "Community" | "All";
+type GalleryCategories = "Location" | "Events" | "Recreation Center" | "Community" | "All";
 
 interface GalleryData {
   name: string;
@@ -17,7 +17,7 @@ export default function GalleryPage() {
     "All",
     "Location",
     "Events",
-    "Center",
+    "Recreation Center",
   ];
   const gallery: GalleryData[] = [
     { name: "/images/location-bird-eye-view.jpeg", categories: ["Location"] },
@@ -32,19 +32,21 @@ export default function GalleryPage() {
     { name: "/images/entrance.jpeg", categories: ["Location"] },
     { name: "/images/snowy_day.jpg", categories: ["Location"] },
     { name: "/images/masjid-mens-old.jpg", categories: ["Location"] },
-    { name: "/images/center-1.jpeg", categories: ["Center"] },
-    /*{ name: "/images/masjid-clock.jpeg", categories: ["Location"] },
+    { name: "/images/pooltable.jpeg", categories: ["Recreation Center"] },
+    { name: "/images/eliptical.jpeg", categories: ["Recreation Center"] },
+    { name: "/images/toyroom.jpeg", categories: ["Recreation Center"] },
     { name: "/images/masjid-parking-1.jpeg", categories: ["Location"] },
+    /*{ name: "/images/masjid-clock.jpeg", categories: ["Location"] },
     { name: "/images/masjid-sisters-1.jpeg", categories: ["Location"] },
-    { name: "/images/center-3.jpeg", categories: ["Center"] },
-    { name: "/images/center-4.jpeg", categories: ["Center"] },
+    { name: "/images/center-3.jpeg", categories: ["Recreation Center"] },
+    { name: "/images/center-4.jpeg", categories: ["Recreation Center"] },
     { name: "/images/backyard-day-1.jpeg", categories: ["Location"] },
     { name: "/images/backyard-sunset-1.jpeg", categories: ["Location"] },
     { name: "/images/backyard-sunset-2.jpeg", categories: ["Location"] },
     { name: "/images/backyard-sunset-3.jpeg", categories: ["Location"] },
     { name: "/images/bayan-3-9-24.jpeg", categories: ["Events"] },
     { name: "/images/carpet-mens.jpeg", categories: ["Location"] },
-    { name: "/images/center-2.jpeg", categories: ["Center"] },
+    { name: "/images/center-2.jpeg", categories: ["Recreation Center"] },
     { name: "/images/firstkhutba.jpeg", categories: ["Events"] },
     { name: "/images/firstsaturdaylecture.jpeg", categories: ["Events"] },
     { name: "/images/janmaz.jpeg", categories: ["Location"] },
