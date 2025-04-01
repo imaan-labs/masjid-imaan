@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-type GalleryCategories = "Location" | "Events" | "Recreation Center" | "Community" | "All";
+type GalleryCategories = "Masjid" | "Location" | "Events" | "Recreation Center" | "Community" | "Flyers" | "All";
 
 interface GalleryData {
   name: string;
@@ -15,43 +15,57 @@ export default function GalleryPage() {
     useState<GalleryCategories>("All");
   const categories: GalleryCategories[] = [
     "All",
+    "Masjid",
     "Location",
     "Events",
     "Recreation Center",
+    "Community",
+    "Flyers"
   ];
   const gallery: GalleryData[] = [
-    { name: "/images/location-bird-eye-view.jpeg", categories: ["Location"] },
-    { name: "/images/masjid-front.jpeg", categories: ["Location"] },
-    { name: "/images/men_full.jpg", categories: ["Location"] },
-    { name: "/images/men_full2.jpg", categories: ["Location"] },
-    { name: "/images/masjid-sisters.jpg", categories: ["Location"] },
-    { name: "/images/new_sisters.jpg", categories: ["Location"] },
-    { name: "/images/iftar.jpg", categories: ["Location"] },
-    { name: "/images/backyard-sunset.jpeg", categories: ["Location"] },
-    { name: "/images/bonfire.jpg", categories: ["Location"] },
+    { name: "/images/birdeyeview.jpeg", categories: ["Location"] },
+    { name: "/images/meneidsalah.jpg", categories: ["Masjid"] },
+    { name: "/images/front.jpeg", categories: ["Location"] },
+    { name: "/images/menoccupied.jpg", categories: ["Masjid"] },
+    { name: "/images/menpraying.jpg", categories: ["Masjid"] },
+    { name: "/images/earlydaysjummah.jpg", categories: ["Masjid"] },
+    { name: "/images/menold.jpg", categories: ["Masjid"] },
+    { name: "/images/menraw.jpg", categories: ["Masjid"] },
+    { name: "/images/sistersentrance.jpg", categories: ["Masjid"] },
+    { name: "/images/sistersnewcarpet.jpg", categories: ["Masjid"] },
+    { name: "/images/sistersoldcarpet.jpg", categories: ["Masjid"] },
+    { name: "/images/iftar20252.jpg", categories: ["Events"] },
+    { name: "/images/iftar20251.jpg", categories: ["Events"] },
+    { name: "/images/iftar2024.jpg", categories: ["Events"] },
+    { name: "/images/playingpool.jpg", categories: ["Community"] },
+    { name: "/images/kidsplayingfront.jpg", categories: ["Community"] },
+    { name: "/images/kidswritingboard.jpg", categories: ["Community"] },
+    { name: "/images/parkinggathering.jpg", categories: ["Community"] },
+    { name: "/images/sunset.jpeg", categories: ["Location"] },
+    { name: "/images/bonfire.jpg", categories: ["Recreation Center"] },
     { name: "/images/entrance.jpeg", categories: ["Location"] },
-    { name: "/images/snowy_day.jpg", categories: ["Location"] },
-    { name: "/images/masjid-mens-old.jpg", categories: ["Location"] },
+    { name: "/images/snowyday.jpg", categories: ["Location"] },
+    { name: "/images/centergym1.jpg", categories: ["Recreation Center"] },
+    { name: "/images/centergym2.jpg", categories: ["Recreation Center"] },
     { name: "/images/pooltable.jpeg", categories: ["Recreation Center"] },
     { name: "/images/eliptical.jpeg", categories: ["Recreation Center"] },
     { name: "/images/toyroom.jpeg", categories: ["Recreation Center"] },
-    { name: "/images/masjid-parking-1.jpeg", categories: ["Location"] },
-    /*{ name: "/images/masjid-clock.jpeg", categories: ["Location"] },
-    { name: "/images/masjid-sisters-1.jpeg", categories: ["Location"] },
-    { name: "/images/center-3.jpeg", categories: ["Recreation Center"] },
-    { name: "/images/center-4.jpeg", categories: ["Recreation Center"] },
-    { name: "/images/backyard-day-1.jpeg", categories: ["Location"] },
-    { name: "/images/backyard-sunset-1.jpeg", categories: ["Location"] },
-    { name: "/images/backyard-sunset-2.jpeg", categories: ["Location"] },
-    { name: "/images/backyard-sunset-3.jpeg", categories: ["Location"] },
-    { name: "/images/bayan-3-9-24.jpeg", categories: ["Events"] },
-    { name: "/images/carpet-mens.jpeg", categories: ["Location"] },
-    { name: "/images/center-2.jpeg", categories: ["Recreation Center"] },
-    { name: "/images/firstkhutba.jpeg", categories: ["Events"] },
-    { name: "/images/firstsaturdaylecture.jpeg", categories: ["Events"] },
-    { name: "/images/janmaz.jpeg", categories: ["Location"] },
-    { name: "/images/jumah-1.jpeg", categories: ["Community"] },
-    { name: "/images/masjid-mens.jpeg", categories: ["Location"] },*/
+    { name: "/images/fooseball.jpeg", categories: ["Recreation Center"] },
+    { name: "/images/grills.jpeg", categories: ["Recreation Center"] },
+    { name: "/images/basketball.jpeg", categories: ["Recreation Center"] },
+    { name: "/images/parking1.jpeg", categories: ["Location"] },
+    { name: "/images/parking2.jpeg", categories: ["Location"] },
+    { name: "/images/eidgoodies.jpg", categories: ["Community"] },
+    { name: "/images/bbq.jpg", categories: ["Community"] },
+    { name: "/images/inflatable.jpg", categories: ["Masjid"] },
+    { name: "/images/gravelvolunteer.jpg", categories: ["Community"] },
+    { name: "/images/sisterscarpervolunteer.jpg", categories: ["Community"] },
+    { name: "/images/centergymvolunteer.jpg", categories: ["Community"] },
+    { name: "/images/centeroutsidevolunteer.jpg", categories: ["Community"] },
+    { name: "/images/centerraw.jpg", categories: ["Recreation Center"] },
+    { name: "/images/clock.jpeg", categories: ["Masjid"] },
+    { name: "/images/perimeterinstructions.png", categories: ["Flyers"] },
+    { name: "/images/recreationcenter.png", categories: ["Flyers"] }
   ];
 
   function categoryClass(category: GalleryCategories) {
