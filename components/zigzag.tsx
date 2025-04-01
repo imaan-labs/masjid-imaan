@@ -219,9 +219,19 @@ export default function Zigzag() {
                     A health center with indoor games on property!
                   </h3>
                   <p className="text-xl text-gray-400 mb-4">
-                    Not to mention a few outdoor activities on the side.
+                    Not to mention a few outdoor activities on the side with special hours for Sisters only..
                   </p>
                   <ul className="text-lg text-gray-400 -mb-2">
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>Open 24/7</span>
+                    </li>
                     <li className="flex items-center mb-2">
                       <svg
                         className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
@@ -290,6 +300,16 @@ export default function Zigzag() {
                       >
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
+                      <span>Cornhole</span>
+                    </li>
+                    <li className="flex items-center">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
                       <span>Firepit</span>
                     </li>
                     <li className="flex items-center">
@@ -332,7 +352,7 @@ export default function Zigzag() {
                     Join Taraweeh every Ramadan!
                   </div>
                   <h3 className="h3 mb-3">
-                    Complete the Qur'an behind a Hafidh!
+                    Complete the Qur'an behind a Hafidh in Ramadan!
                   </h3>
                   <p className="text-xl text-gray-400 mb-4">
                     And learn about what each Juz in the Qur'an talks about with an English lecture supplimenting the Taraweeh by an Aa'lim.
@@ -478,7 +498,7 @@ export default function Zigzag() {
                     Pray Eid Al Adha close by
                   </div>
                   <h3 className="h3 mb-3">
-                    In time to perform sacrifice at a place of choice
+                    Pray Eid Salah in time to perform sacrifice at a place of choice
                   </h3>
                   <p className="text-xl text-gray-400 mb-4">
                     Salah time chosen with care for all.
