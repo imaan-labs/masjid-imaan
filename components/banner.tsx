@@ -17,7 +17,7 @@ export default function Banner() {
               <span className="italic px-1.5">or</span>{" "}
               <a
                 className="font-medium hover:underline text-emerald-400"
-                href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
+                href="https://chat.whatsapp.com/FcehoEQjFcsE89qLVrfMQV"
                 target="_blank"
                 rel="noreferrer"
               >

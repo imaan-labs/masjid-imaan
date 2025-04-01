@@ -1,8 +1,8 @@
 import Footer from "@/components/ui/footer";
 import Link from "next/link";
 
-export default function FormsPage() {
-  const forms = [
+export default function lettersPage() {
+  const letters = [
     {
       name: "Eid Al Fitr Student Excusal Letter",
       description:
@@ -62,7 +62,7 @@ export default function FormsPage() {
   return (
     <div>
       <div className="pt-32 flex flex-wrap items-center justify-center">
-        {forms.map((form, index) => (
+        {letters.map((form, index) => (
           <div
             key={index}
             className="m-2 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
