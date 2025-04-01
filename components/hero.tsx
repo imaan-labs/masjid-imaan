@@ -102,7 +102,7 @@ export default function Hero() {
                   href="/letters"
                   rel="noreferrer"
                 >
-                  Absent/Excuse Letters
+                  Excuse Letters
                 </a>
               </div>
               <div data-aos="fade-up" data-aos-delay="400">
@@ -112,15 +112,6 @@ export default function Hero() {
                   rel="noreferrer"
                 >
                   Wishlist
-                </a>
-              </div>
-              <div data-aos="fade-up" data-aos-delay="400">
-                <a
-                  className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                  href="/registrations/student-programs"
-                  rel="noreferrer"
-                >
-                  Student Programs
                 </a>
               </div>
 
