@@ -45,7 +45,7 @@ export default function GalleryPage() {
     { name: "/images/parkinggathering.jpg", categories: ["Community"] },
     { name: "/images/sunset.jpeg", categories: ["Location"] },
     { name: "/images/bonfire.jpg", categories: ["Recreation Center"] },
-    { name: "/images/zplextrip.jpg", categories: ["Event","Community"] },
+    { name: "/images/zplextrip.jpg", categories: ["Events","Community"] },
     { name: "/images/entrance.jpeg", categories: ["Location"] },
     { name: "/images/snowyday.jpg", categories: ["Masjid","Location"] },
     { name: "/images/centergym1.jpg", categories: ["Recreation Center"] },
