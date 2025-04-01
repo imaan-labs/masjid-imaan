@@ -91,8 +91,6 @@ export default function Hero() {
                 <a
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
                   href="/gallery"
-                  //target="_blank"
-                  rel="noreferrer"
                 >
                   Gallery
                 </a>
@@ -101,8 +99,6 @@ export default function Hero() {
                 <a
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
                   href="/letters"
-                  //target="_blank"
-                  rel="noreferrer"
                 >
                   Letters
                 </a>
@@ -111,8 +107,6 @@ export default function Hero() {
                 <a
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
                   href="/wishlist"
-                  //target="_blank"
-                  rel="noreferrer"
                 >
                   Wishlist
                 </a>

@@ -56,10 +56,10 @@ export default function Header() {
                   >
                     <li>
                       <Link
-                        href="/registrations/student-programs"
+                        href="/gallery"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
-                        Student Programs
+                        Gallery
                       </Link>
                     </li>
                     <li>
@@ -72,18 +72,18 @@ export default function Header() {
                     </li>
                     <li>
                       <Link
-                        href="/gallery"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        Gallery
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
                         href="/wishlist"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Wishlist
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/registrations/student-programs"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Student Programs
                       </Link>
                     </li>
                   </ul>

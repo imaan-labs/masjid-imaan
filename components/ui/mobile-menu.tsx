@@ -68,7 +68,39 @@ export default function MobileMenu() {
             : { maxHeight: 0, opacity: 0.8 }
         }
       >
-        <ul className="bg-gray-800 px-4 py-2">
+        <ul className="bg-gold-600 px-4 py-2">
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/#donate"
+            >
+              Donate
+            </a>
+          </li>
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/gallery"
+            >
+              Gallery
+            </a>
+          </li>
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/letters"
+            >
+              Letters
+            </a>
+          </li>
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/wishlist"
+            >
+              Wishlist
+            </a>
+          </li>
           <li>
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
