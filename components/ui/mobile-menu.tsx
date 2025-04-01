@@ -73,6 +73,7 @@ export default function MobileMenu() {
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href="/#donate"
+              rel="noreferrer"
             >
               Donate
             </a>
@@ -81,6 +82,7 @@ export default function MobileMenu() {
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href="/gallery"
+              rel="noreferrer"
             >
               Gallery
             </a>
@@ -89,16 +91,27 @@ export default function MobileMenu() {
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href="/letters"
+              rel="noreferrer"
             >
-              Letters
+              Absent/Excuse Letters
             </a>
           </li>
           <li>
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href="/wishlist"
+              rel="noreferrer"
             >
               Wishlist
+            </a>
+          </li>
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/registrations/student-programs"
+              rel="noreferrer"
+            >
+              Student Programs
             </a>
           </li>
           <li>

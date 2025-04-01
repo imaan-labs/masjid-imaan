@@ -21,6 +21,30 @@ export default function Header() {
             {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
+                <Link
+                  className="btn-sm text-white bg-gold-600 hover:bg-gold-700 ml-3"
+                  href="/#donate"
+                >
+                  Donate
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/gallery"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/letters"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Absent/Excuse Letters
+                </Link>
+              </li>
+              <li>
                 <button
                   id="dropdownHoverButton"
                   data-dropdown-toggle="dropdownHover"
@@ -56,22 +80,6 @@ export default function Header() {
                   >
                     <li>
                       <Link
-                        href="/gallery"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        Gallery
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/letters"
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        Absent/Excuse Letters
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
                         href="/wishlist"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
@@ -86,26 +94,18 @@ export default function Header() {
                         Student Programs
                       </Link>
                     </li>
+                    <li>
+                      <a
+                        className="font-medium text-gold-600 hover:text-gray-900 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                        href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Join Whatsapp
+                      </a>
+                    </li>
                   </ul>
                 </div>
-              </li>
-              <li>
-                <a
-                  className="font-medium text-gold-600 hover:text-gray-900 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-                  href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Join Whatsapp
-                </a>
-              </li>
-              <li>
-                <Link
-                  className="btn-sm text-white bg-gold-600 hover:bg-gold-700 ml-3"
-                  href="/#donate"
-                >
-                  Donate
-                </Link>
               </li>
             </ul>
           </nav>
