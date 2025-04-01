@@ -53,7 +53,7 @@ export default function GalleryPage() {
     { name: "/images/foosball.jpg", categories: ["Recreation Center"] },
     { name: "/images/grills.jpg", categories: ["Recreation Center"] },
     { name: "/images/basketball.jpg", categories: ["Recreation Center"] },
-    { name: "/images/parking1.jpg", categories: ["Location"] },
+    { name: "/images/parking1.jpeg", categories: ["Location"] },
     { name: "/images/parking2.jpg", categories: ["Location"] },
     { name: "/images/eidgoodies.jpg", categories: ["Community"] },
     { name: "/images/bbq.jpg", categories: ["Community"] },
