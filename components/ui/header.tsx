@@ -96,7 +96,7 @@ export default function Header() {
                     </li>
                     <li>
                       <a
-                        className="font-medium text-gold-600 hover:text-gray-900 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                        className="font-medium text-gray-800 hover:text-gray-900 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                         href="https://chat.whatsapp.com/KiUPGNefJ9AGngLgO69cGr"
                         target="_blank"
                         rel="noreferrer"
