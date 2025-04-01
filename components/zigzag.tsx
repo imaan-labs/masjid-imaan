@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import FeatImage01 from "@/public/images/jummah.jpg";
-import FeatImage02 from "@/public/images/firstsaturdaylecture.jpeg";
+import FeatImage02 from "@/public/images/firstsaturdaylecture.jpg";
 import FeatImage03 from "@/public/images/recreationcenter.png";
 import FeatImage04 from "@/public/images/taraweeh.jpg";
 import FeatImage05 from "@/public/images/ramadan1446calendar.png";
