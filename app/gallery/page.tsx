@@ -29,6 +29,7 @@ export default function GalleryPage() {
     { name: "/images/iftar20252.jpg", categories: ["Events","Community","Recreation Center"] },
     { name: "/images/grills.jpg", categories: ["Events","Recreation Center"] },
     { name: "/images/iftar20251.jpg", categories: ["Events","Community","Recreation Center"] },
+    { name: "/images/marker.jpg", categories: ["Masjid","Location"] },
     { name: "/images/bonfire.jpg", categories: ["Recreation Center"] },
     { name: "/images/parkinggathering.jpg", categories: ["Community"] },
     { name: "/images/entrancenight.jpg", categories: ["Masjid","Location"] },
