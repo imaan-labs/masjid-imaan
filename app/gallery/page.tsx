@@ -84,7 +84,7 @@ export default function GalleryPage() {
     { name: "/images/firstsaturdaylecture.jpg", categories: ["Events","Flyers"] },
     { name: "/images/perimeterinstructions.png", categories: ["Flyers"] },
     { name: "/images/recreationcenter.png", categories: ["Recreation Center","Flyers"] },
-    { name: "/images/jointeid2024.png", categories: ["Flyers"] }
+    { name: "/images/jointeid2024.jpg", categories: ["Flyers"] }
   ];
 
   function categoryClass(category: GalleryCategories) {
