@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import FeatImage01 from "@/public/images/jummah.jpg";
+import FeatImage01 from "@/public/images/jumuah.png";
 import FeatImage02 from "@/public/images/firstsaturdaylecture.jpg";
 import FeatImage03 from "@/public/images/recreationcenter.png";
 import FeatImage04 from "@/public/images/taraweeh.jpg";

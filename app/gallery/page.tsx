@@ -87,7 +87,7 @@ export default function GalleryPage() {
     { name: "/images/sunset.jpeg", categories: ["Location"] },
     { name: "/images/entrance.jpeg", categories: ["Location"] },
     { name: "/images/centerraw.jpeg", categories: ["Recreation Center"] },
-    { name: "/images/jummah.jpg", categories: ["Events","Flyers"] },
+    { name: "/images/jumuah.png", categories: ["Events","Flyers"] },
     { name: "/images/firstsaturdaylecture.jpg", categories: ["Events","Flyers"] },
     { name: "/images/perimeterinstructions.png", categories: ["Flyers"] },
     { name: "/images/recreationcenter.png", categories: ["Recreation Center","Flyers"] },
