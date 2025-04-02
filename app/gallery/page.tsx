@@ -24,6 +24,7 @@ export default function GalleryPage() {
   ];
   const gallery: GalleryData[] = [
     { name: "/images/birdeyeview.jpeg", categories: ["Masjid","Location"] },
+    { name: "/images/frontducks.jpg", categories: ["Masjid","Location"] },
     { name: "/images/meneidsalah.jpg", categories: ["Masjid"] },
     { name: "/images/front.jpeg", categories: ["Masjid","Location"] },
     { name: "/images/menoccupied.jpg", categories: ["Masjid"] },
@@ -45,6 +46,8 @@ export default function GalleryPage() {
     { name: "/images/kidsplayingfront.jpg", categories: ["Community"] },
     { name: "/images/kidsplayingpatio1.jpg", categories: ["Community","Recreation Center"] },
     { name: "/images/kidsplayingpatio2.jpg", categories: ["Community","Recreation Center"] },
+    { name: "/images/kidsplayingbasketball1.jpg", categories: ["Community","Recreation Center"] },
+    { name: "/images/kidsplayingbasketball2.jpg", categories: ["Community","Recreation Center"] },
     { name: "/images/parkinggathering.jpg", categories: ["Community"] },
     { name: "/images/sunset.jpeg", categories: ["Location"] },
     { name: "/images/bonfire.jpg", categories: ["Recreation Center"] },
@@ -70,7 +73,8 @@ export default function GalleryPage() {
     { name: "/images/inflatable.jpg", categories: ["Masjid"] },
     { name: "/images/gravelvolunteer.jpg", categories: ["Community"] },
     { name: "/images/frontdoorwashvolunteer.jpg", categories: ["Masjid","Community"] },
-    { name: "/images/sisterscarpetvolunteer.jpg", categories: ["Masjid","Community"] },
+    { name: "/images/sisterscarpetvolunteer1.jpg", categories: ["Masjid","Community"] },
+    { name: "/images/sisterscarpetvolunteer2.jpg", categories: ["Masjid","Community"] },
     { name: "/images/centergymvolunteer.jpg", categories: ["Community","Recreation Center"] },
     { name: "/images/centeroutsidevolunteer.jpg", categories: ["Community","Recreation Center"] },
     { name: "/images/fencevolunteer.jpg", categories: ["Community"] },
@@ -80,6 +84,7 @@ export default function GalleryPage() {
     { name: "/images/firstsaturdaylecture.jpg", categories: ["Events","Flyers"] },
     { name: "/images/perimeterinstructions.png", categories: ["Flyers"] },
     { name: "/images/recreationcenter.png", categories: ["Recreation Center","Flyers"] }
+    { name: "/images/jointeid2024.png", categories: ["Flyers"] }
   ];
 
   function categoryClass(category: GalleryCategories) {
