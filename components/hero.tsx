@@ -81,7 +81,7 @@ export default function Hero() {
               </div>*/}
               <div data-aos="fade-up" data-aos-delay="600">
                 <Link
-                  className="btn text-white bg-teal-600 hover:bg-gold-700 w-full sm:w-auto sm:ml-4"
+                  className="btn text-white bg-teal-600 hover:bg-teal-700 w-full sm:w-auto sm:ml-4"
                   href="/#donate"
                 >
                   Donate

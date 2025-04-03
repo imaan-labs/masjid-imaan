@@ -22,7 +22,7 @@ export default function Header() {
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
                 <Link
-                  className="btn-sm text-white bg-gold-600 hover:bg-gold-700 ml-3"
+                  className="btn-sm text-white bg-teal-600 hover:bg-teal-700 ml-3"
                   href="/#donate"
                 >
                   Donate
