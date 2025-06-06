@@ -6,7 +6,7 @@ import FeatImage03 from "@/public/images/recreationcenter.png";
 import FeatImage04 from "@/public/images/taraweeh.jpg";
 import FeatImage05 from "@/public/images/ramadan1446calendar.png";
 import FeatImage06 from "@/public/images/eidalfitr2025salah.png";
-import FeatImage07 from "@/public/images/eidaladha2024salah.png";
+import FeatImage07 from "@/public/images/eidaladha2025salah.png";
 
 export default function Zigzag() {
   return (
