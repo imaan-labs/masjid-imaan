@@ -112,7 +112,7 @@ export default function Features() {
               </svg>
               <h4 className="h4 mb-2">Contribute Through Zelle</h4>
               <p className="text-lg text-gray-400 text-center">
-                Contribute through Zelle via donate@imaanmasjid.org
+                Use your bank app to Zelle via donate@imaanmasjid.org.
               </p>
             </div>
             {/* 3rd item */}
@@ -164,9 +164,9 @@ export default function Features() {
                     />
                   </g>
                 </svg>
-                <h4 className="h4 mb-2">Support Using Debit Cards</h4>
+                <h4 className="h4 mb-2">Support Using Debit Cards via Donorbox</h4>
                 <p className="text-lg text-gray-400 text-center">
-                  Only have a Debit Card? No problem! Make a quick contribution here!
+                  Only have a Debit Card? No problem! Make a quick contribution here and get a tax exempt receipt in email.
                 </p>
               </div>
             </a>
@@ -219,9 +219,9 @@ export default function Features() {
                     />
                   </g>
                 </svg>
-                <h4 className="h4 mb-2">Setup Monthly with Card or ACH</h4>
+                <h4 className="h4 mb-2">Setup Monthly on Zeffy with Card or ACH</h4>
                 <p className="text-lg text-gray-400 text-center">
-                  Setup a monthly recurring contribution via Zeffy that incurs no transaction fee to the Masjid! Make sure to set all other fields to zero before completing transaction.
+                  Setup a monthly recurring contribution via Zeffy, it incurs no transaction fee to the Masjid! Make sure to set all other fields to zero before completing transaction. You get a tax exempt receipt via email.
                 </p>
               </div>
             </a>
