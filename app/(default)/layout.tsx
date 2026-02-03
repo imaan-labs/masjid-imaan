@@ -7,7 +7,6 @@ import 'aos/dist/aos.css'
 
 import PageIllustration from '@/components/page-illustration'
 import Footer from '@/components/ui/footer'
-import { initFlowbite } from 'flowbite'
 
 export default function DefaultLayout({
   children,
@@ -16,7 +15,6 @@ export default function DefaultLayout({
 }) {  
 
   useEffect(() => {
-    initFlowbite();
     AOS.init({
       once: true,
       disable: 'phone',
