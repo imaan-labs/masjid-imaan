@@ -172,7 +172,7 @@ export default function Features() {
             </a>
             {/* 4th item */}
             <a
-              href="https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08"
+              href="https://www.zeffy.com/en-US/organizations/imaan-masjid"
               className=""
               target="_blank"
             >
