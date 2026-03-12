@@ -32,7 +32,9 @@ export default function Footer() {
                 <h6 className="text-black font-medium mb-1">Donate</h6>
                 <ul>
                   <li className="mb-1">
-                    <p>Zelle: donate@imaanmasjid.org</p>
+                    <p>Zelle:</p>
+                    <p>Operations: donate@imaanmasjid.org</p>
+                    <p>Property: helpbuild@imaanmasjid.org</p>
                   </li>
                   <li className="mb-1">
                     <a
