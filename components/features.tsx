@@ -112,7 +112,7 @@ export default function Features() {
               </svg>
               <h4 className="h4 mb-2">Contribute Through Zelle</h4>
               <p className="text-lg text-gray-400 text-center">
-                Use your bank app to Zelle via donate@imaanmasjid.org.
+                Use your bank app to Zelle via donate@imaanmasjid.org for operations or sadaqa <br />or helpbuild@imaanmasjid.org to help us build a permanent masjid.
               </p>
             </div>
             {/* 3rd item */}
