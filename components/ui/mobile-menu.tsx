@@ -81,6 +81,24 @@ export default function MobileMenu() {
           <li>
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/prayer-times"
+              rel="noreferrer"
+            >
+              Prayer Times
+            </a>
+          </li>
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href="/flyers"
+              rel="noreferrer"
+            >
+              Flyers
+            </a>
+          </li>
+          <li>
+            <a
+              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href="/gallery"
               rel="noreferrer"
             >
@@ -90,7 +108,7 @@ export default function MobileMenu() {
           <li>
             <a
               className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="/letters"
+              href="/excuse-letters"
               rel="noreferrer"
             >
               Absent/Excuse Letters

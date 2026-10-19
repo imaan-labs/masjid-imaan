@@ -99,7 +99,7 @@ export default function Hero() {
               <div data-aos="fade-up" data-aos-delay="400">
                 <a
                   className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
-                  href="/letters"
+                  href="/excuse-letters"
                   rel="noreferrer"
                 >
                   Excuse Letters

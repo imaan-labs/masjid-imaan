@@ -8,7 +8,7 @@ import Logo from "@/public/images/logo.png";
 
 export default function Header() {
   return (
-    <header className="absolute w-full z-30">
+    <header className="absolute w-full z-30 print:hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
@@ -33,6 +33,22 @@ export default function Header() {
               </li>
               <li>
                 <Link
+                  href="/prayer-times"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Prayer Times
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/flyers"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Flyers
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/gallery"
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
@@ -41,7 +57,7 @@ export default function Header() {
               </li>
               <li>
                 <Link
-                  href="/letters"
+                  href="/excuse-letters"
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   Absent/Excuse Letters

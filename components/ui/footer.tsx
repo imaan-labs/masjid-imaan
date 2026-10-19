@@ -6,7 +6,7 @@ import Tooltip from "../Tooltip";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="print:hidden">
       <div className="py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Top area: Blocks */}
@@ -71,7 +71,7 @@ export default function Footer() {
                 <h6 className="text-black font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <Link href="/letters">Letters</Link>
+                    <Link href="/excuse-letters">Letters</Link>
                   </li>
                   <li className="mb-1">
                     <Tooltip content="Coming Soon">
