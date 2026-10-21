@@ -1,131 +1,131 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useId, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useDonation } from "@/src/components/DonationModal";
+
+const links = [
+  { href: "/prayer-times", label: "Prayer" },
+  { href: "/prayer-times#jumuah", label: "Jumu'ah" },
+  { href: "/#aalim-sessions", label: "Classes" },
+  { href: "/excuse-letters", label: "Excuse Letters" },
+  { href: "/bulletin", label: "Bulletin" },
+  { href: "/gallery", label: "Photo Gallery" },
+  { href: "/calendar", label: "Hilāl Calendar" },
+];
 
 export default function MobileMenu() {
-  const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const titleId = useId();
+  const { openGive } = useDonation();
 
-  const trigger = useRef<HTMLButtonElement>(null);
-  const mobileNav = useRef<HTMLDivElement>(null);
-
-  // close the mobile menu on click outside
   useEffect(() => {
-    const clickHandler = ({ target }: { target: EventTarget | null }): void => {
-      if (!mobileNav.current || !trigger.current) return;
-      if (
-        !mobileNavOpen ||
-        mobileNav.current.contains(target as Node) ||
-        trigger.current.contains(target as Node)
-      )
-        return;
-      setMobileNavOpen(false);
-    };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
+    setOpen(false);
+  }, [pathname]);
 
-  // close the mobile menu if the esc key is pressed
   useEffect(() => {
-    const keyHandler = ({ keyCode }: { keyCode: number }): void => {
-      if (!mobileNavOpen || keyCode !== 27) return;
-      setMobileNavOpen(false);
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
     };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   return (
     <div className="md:hidden">
-      {/* Hamburger button */}
       <button
-        ref={trigger}
-        className={`hamburger ${mobileNavOpen && "active"}`}
-        aria-controls="mobile-nav"
-        aria-expanded={mobileNavOpen}
-        onClick={() => setMobileNavOpen(!mobileNavOpen)}
+        type="button"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-900 transition-all duration-200 hover:bg-[#F3EAD7]"
+        aria-expanded={open}
+        aria-controls="mobile-drawer"
+        onClick={() => setOpen((current) => !current)}
       >
-        <span className="sr-only">Menu</span>
-        <svg
-          className="w-6 h-6 fill-current text-gray-300 hover:text-gray-200 transition duration-150 ease-in-out"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect y="4" width="24" height="2" rx="1" />
-          <rect y="11" width="24" height="2" rx="1" />
-          <rect y="18" width="24" height="2" rx="1" />
+        <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+        <svg className="h-6 w-6" viewBox="0 0 24 24" aria-hidden="true">
+          {open ? (
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          ) : (
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          )}
         </svg>
       </button>
 
-      {/*Mobile navigation */}
-      <nav
-        id="mobile-nav"
-        ref={mobileNav}
-        className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out"
-        style={
-          mobileNavOpen
-            ? { maxHeight: mobileNav.current?.scrollHeight, opacity: 1 }
-            : { maxHeight: 0, opacity: 0.8 }
-        }
+      <div
+        className={`fixed inset-0 z-50 ${open ? "pointer-events-auto" : "pointer-events-none"}`}
       >
-        <ul className="bg-gold-600 px-4 py-2">
-          <li>
-            <a
-              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="/#donate"
-              rel="noreferrer"
+        <button
+          type="button"
+          aria-label="Close menu"
+          className={`absolute inset-0 bg-slate-900/40 transition-all duration-200 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setOpen(false)}
+        />
+        <nav
+          id="mobile-drawer"
+          aria-labelledby={titleId}
+          aria-hidden={!open}
+          className={`absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col bg-white px-5 py-6 text-slate-900 shadow-xl transition-all duration-200 ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <p id={titleId} className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800">
+              Imaan Masjid
+            </p>
+            <button
+              type="button"
+              className="rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200 hover:bg-white"
+              onClick={() => setOpen(false)}
             >
-              Donate
-            </a>
-          </li>
-          <li>
-            <a
-              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="/gallery"
-              rel="noreferrer"
-            >
-              Gallery
-            </a>
-          </li>
-          <li>
-            <a
-              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="/letters"
-              rel="noreferrer"
-            >
-              Absent/Excuse Letters
-            </a>
-          </li>
-          <li>
-            <a
-              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="/wishlist"
-              rel="noreferrer"
-            >
-              Wishlist
-            </a>
-          </li>
-          <li>
-            <a
-              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="/registrations/student-programs"
-              rel="noreferrer"
-            >
-              Student Programs
-            </a>
-          </li>
-          <li>
-            <a
-              className="font-medium text-white-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href="https://chat.whatsapp.com/FcehoEQjFcsE89qLVrfMQV"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Join Whatsapp
-            </a>
-          </li>
-        </ul>
-      </nav>
+              Close
+            </button>
+          </div>
+          <ul className="mt-6 space-y-1">
+            {links.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="block rounded-xl px-3 py-3 text-base font-semibold transition-all duration-200 hover:bg-slate-50"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            className="mt-6 rounded-xl bg-brand-teal px-4 py-3 text-center text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand-dark"
+            onClick={() => {
+              setOpen(false);
+              openGive();
+            }}
+          >
+            Ways to Give
+          </button>
+        </nav>
+      </div>
     </div>
   );
 }

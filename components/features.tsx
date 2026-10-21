@@ -1,232 +1,146 @@
+"use client";
+
+import { useState } from "react";
+import { useDonation } from "@/src/components/DonationModal";
+
+const zelleAccounts = [
+  { label: "Operations", email: "donate@imaanmasjid.org" },
+  { label: "Building Fund", email: "helpbuild@imaanmasjid.org" },
+];
+
+const cardClass =
+  "flex flex-col rounded-3xl border border-slate-200/80 bg-white p-8 text-slate-900 shadow-sm transition-all duration-300 hover:border-slate-300 hover:shadow-xl";
+const buttonClass =
+  "mt-6 inline-flex w-fit rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800";
+const badgeClass =
+  "w-fit rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-800";
+
 export default function Features() {
+  const [copied, setCopied] = useState<string | null>(null);
+  const { openGive } = useDonation();
+
+  async function copyEmail(email: string) {
+    let copiedOk = false;
+    try {
+      await navigator.clipboard.writeText(email);
+      copiedOk = true;
+    } catch {
+      const field = document.createElement("textarea");
+      field.value = email;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.left = "-9999px";
+      document.body.appendChild(field);
+      field.select();
+      copiedOk = document.execCommand("copy");
+      field.remove();
+    }
+    if (!copiedOk) return;
+    setCopied(email);
+    window.setTimeout(() => {
+      setCopied((current) => (current === email ? null : current));
+    }, 2000);
+  }
+
   return (
-    <section id="donate">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="py-12 md:py-20">
-          {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 mb-4">
-              Make A Difference At IMAAN But Most Importantly For Your Scales!
-            </h2>
-            <p className="text-xl text-gray-400">
-              IMAAN focuses on giving you the option to spend on yourself & your
-              children first & foremost!
-            </p>
-            <p className="text-xl text-gray-400">
-              For those that can not, we provide the option to sponsor other
-              people and their children so that we may spread the deen of Islam.
-              Imagine when you stand in front of Allah subhana wa ta'ala on the
-              day of judgement, and Allah reveals a mountain of good deeds that
-              you had no idea you had earned. Your Lord will explain to you that
-              the amount of money you sponsored provided 2 kids to become Hafiz
-              of Qur'an and all of that lead to you earning good deeds you never
-              knew about!
-            </p>
-          </div>
-
-          {/* Items */}
-          <div
-            className="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-2 lg:gap-16 items-start md:max-w-2xl lg:max-w-none"
-            data-aos-id-blocks
-          >
-            <a
-              href="https://www.amazon.com/?&_encoding=UTF8&tag=imaan0bd-20&linkCode=ur2&linkId=c88e3ca8a369dd52a5e841cb314bc535&camp=1789&creative=9325"
-              className=""
-              target="_blank"
-            >
-              {/* 1st item */}
-              <div
-                className="relative flex flex-col items-center"
-                data-aos="fade-up"
-                data-aos-anchor="[data-aos-id-blocks]"
-              >
-                <svg
-                  className="w-16 h-16 mb-4"
-                  viewBox="0 0 64 64"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    className="fill-current text-purple-600"
-                    width="64"
-                    height="64"
-                    rx="32"
-                  />
-                  <path
-                    className="stroke-current text-purple-100"
-                    d="M30 39.313l-4.18 2.197L27 34.628l-5-4.874 6.91-1.004L32 22.49l3.09 6.26L42 29.754l-3 2.924"
-                    strokeLinecap="square"
-                    strokeWidth="2"
-                    fill="none"
-                    fillRule="evenodd"
-                  />
-                  <path
-                    className="stroke-current text-purple-300"
-                    d="M43 42h-9M43 37h-9"
-                    strokeLinecap="square"
-                    strokeWidth="2"
-                  />
-                </svg>
-                <h4 className="h4 mb-2">Shop on Amazon</h4>
-                <div className="text-lg text-gray-400 text-center">
-                  <p>
-                    Click this link to buy anything on Amazon, a percentage
-                    will be sent to us. Encourage your family and friends to use
-                    this link for anything they buy!
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            {/* 2nd item */}
-            <div
-              className="relative flex flex-col items-center"
-              data-aos="fade-up"
-              data-aos-delay="100"
-              data-aos-anchor="[data-aos-id-blocks]"
-            >
-              <svg
-                className="w-16 h-16 mb-4"
-                viewBox="0 0 64 64"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  className="fill-current text-purple-600"
-                  cx="32"
-                  cy="32"
-                  r="32"
-                />
-                <path
-                  className="stroke-current text-purple-100"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                  d="M21 23h22v18H21z"
-                  fill="none"
-                  fillRule="evenodd"
-                />
-                <path
-                  className="stroke-current text-purple-300"
-                  d="M26 28h12M26 32h12M26 36h5"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                />
-              </svg>
-              <h4 className="h4 mb-2">Contribute Through Zelle</h4>
-              <p className="text-lg text-gray-400 text-center">
-                Use your bank app to Zelle via <b>donate@imaanmasjid.org</b> to contribute in operations or give sadaqa <br />or <b>helpbuild@imaanmasjid.org</b> to help us build a permanent masjid.
-              </p>
-            </div>
-            {/* 3rd item */}
-            <a
-              href="https://donorbox.org/donate-to-imaan"
-              className=""
-              target="_blank"
-            >
-              <div
-                className="relative flex flex-col items-center"
-                data-aos="fade-up"
-                data-aos-delay="200"
-                data-aos-anchor="[data-aos-id-blocks]"
-              >
-                <svg
-                  className="w-16 h-16 mb-4"
-                  viewBox="0 0 64 64"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    className="fill-current text-purple-600"
-                    width="64"
-                    height="64"
-                    rx="32"
-                  />
-                  <g
-                    transform="translate(21 21)"
-                    strokeLinecap="square"
-                    strokeWidth="2"
-                    fill="none"
-                    fillRule="evenodd"
-                  >
-                    <ellipse
-                      className="stroke-current text-purple-300"
-                      cx="11"
-                      cy="11"
-                      rx="5.5"
-                      ry="11"
-                    />
-                    <path
-                      className="stroke-current text-purple-100"
-                      d="M11 0v22M0 11h22"
-                    />
-                    <circle
-                      className="stroke-current text-purple-100"
-                      cx="11"
-                      cy="11"
-                      r="11"
-                    />
-                  </g>
-                </svg>
-                <h4 className="h4 mb-2">Support Using Debit Cards via Donorbox</h4>
-                <p className="text-lg text-gray-400 text-center">
-                  Only have a Debit Card? No problem! Make a quick contribution here and get a tax exempt receipt in email.
-                </p>
-              </div>
-            </a>
-            {/* 4th item */}
-            <a
-              href="https://www.zeffy.com/en-US/organizations/imaan-masjid"
-              className=""
-              target="_blank"
-            >
-              <div
-                className="relative flex flex-col items-center"
-                data-aos="fade-up"
-                data-aos-delay="200"
-                data-aos-anchor="[data-aos-id-blocks]"
-              >
-                <svg
-                  className="w-16 h-16 mb-4"
-                  viewBox="0 0 64 64"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    className="fill-current text-purple-600"
-                    width="64"
-                    height="64"
-                    rx="32"
-                  />
-                  <g
-                    transform="translate(21 21)"
-                    strokeLinecap="square"
-                    strokeWidth="2"
-                    fill="none"
-                    fillRule="evenodd"
-                  >
-                    <ellipse
-                      className="stroke-current text-purple-300"
-                      cx="11"
-                      cy="11"
-                      rx="5.5"
-                      ry="11"
-                    />
-                    <path
-                      className="stroke-current text-purple-100"
-                      d="M11 0v22M0 11h22"
-                    />
-                    <circle
-                      className="stroke-current text-purple-100"
-                      cx="11"
-                      cy="11"
-                      r="11"
-                    />
-                  </g>
-                </svg>
-                <h4 className="h4 mb-2">Setup Monthly on Zeffy with Card or ACH</h4>
-                <p className="text-lg text-gray-400 text-center">
-                  Setup a monthly recurring contribution via Zeffy, it incurs no transaction fee to the Masjid! Make sure to set all other fields to zero before completing transaction. You get a tax exempt receipt via email.
-                </p>
-              </div>
-            </a>
-          </div>
+    <section id="donate" className="scroll-mt-24">
+      <div className="mx-auto w-full max-w-7xl px-4 pb-2 pt-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            For Your Scales
+          </h2>
+          <p className="mt-3 text-base leading-7 text-slate-600">
+            Your contributions directly support daily prayers, educational
+            programs, and the permanent masjid facility.
+          </p>
         </div>
+
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          <article className={cardClass}>
+            <p className={badgeClass}>
+              Fast & Recurring
+            </p>
+            <h3 className="mt-4 text-xl font-bold tracking-tight">Quick Donate</h3>
+            <p className="mt-1 text-sm font-medium text-slate-500">Donorbox</p>
+            <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+              Give immediately via debit/credit card or set up monthly support.
+            </p>
+            <button type="button" onClick={() => openGive("card")} className={buttonClass}>
+              Quick Donate (Card/ACH) ⚡
+            </button>
+          </article>
+
+          <article className={cardClass}>
+            <p className={badgeClass}>
+              Recommended • 100% to Masjid
+            </p>
+            <h3 className="mt-4 text-xl font-bold tracking-tight">Zeffy</h3>
+            <p className="mt-1 text-sm font-medium text-slate-500">0% platform fee</p>
+            <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+              Covers transaction fees so every cent supports operations.
+            </p>
+            <button type="button" onClick={() => openGive("zeffy")} className={buttonClass}>
+              Open Zeffy Portal →
+            </button>
+          </article>
+
+          <article className={cardClass}>
+            <p className={badgeClass}>
+              Direct & Fee-Free
+            </p>
+            <h3 className="mt-4 text-xl font-bold tracking-tight">Bank Transfer</h3>
+            <p className="mt-1 text-sm font-medium text-slate-500">Zelle</p>
+            <ul className="mt-4 flex-1 space-y-4">
+              {zelleAccounts.map((account) => {
+                const isCopied = copied === account.email;
+                return (
+                  <li key={account.email}>
+                    <p className="text-sm font-semibold text-slate-900">{account.label}</p>
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <span className="text-sm text-slate-600">{account.email}</span>
+                      <button
+                        type="button"
+                        onClick={() => copyEmail(account.email)}
+                        className="rounded-xl border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-800 transition-all hover:bg-slate-900 hover:text-white"
+                        aria-label={`Copy ${account.email}`}
+                      >
+                        {isCopied ? "Copied!" : "Copy"}
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="sr-only" aria-live="polite">
+              {copied ? `Copied ${copied}` : ""}
+            </p>
+            <p className="mt-4 text-sm leading-6 text-slate-600">
+              Mail a check or confirm a pledge at{" "}
+              <a href="mailto:shura@imaanmasjid.org" className="font-semibold text-slate-900">
+                shura@imaanmasjid.org
+              </a>
+              .
+            </p>
+          </article>
+        </div>
+
+        <article className="mt-4 flex flex-col gap-4 rounded-3xl border border-slate-200/80 bg-white p-8 text-slate-900 shadow-sm transition-all duration-300 hover:border-slate-300 hover:shadow-xl sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-base font-bold tracking-tight text-slate-900">
+              🛒 Support via Amazon Purchases
+            </h3>
+            <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-600">
+              Shop through our official affiliate link at no additional cost to you, and Amazon will contribute a percentage of eligible purchases to IMAAN.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => openGive("amazon")}
+            className="inline-flex shrink-0 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800"
+          >
+            Shop on Amazon →
+          </button>
+        </article>
       </div>
     </section>
   );
