@@ -6,6 +6,7 @@
     "dev": "next dev",
     "studio": "sanity dev --port 3333",
     "seed": "node scripts/seed-sanity.mjs",
+    "upload:gallery": "node scripts/upload-gallery.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,23 +15,20 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
     "@sanity/client": "^8.9.0",
     "@sanity/image-url": "^2.1.1",
     "@tailwindcss/postcss": "^4.1.18",
     "adhan": "^4.4.6",
-    "aos": "^2.3.4",
+    "astronomy-engine": "^2.1.19",
     "autoprefixer": "^10.4.24",
     "next": "^16.1.6",
     "postcss": "^8.5.6",
     "react": "^19.2.4",
     "react-dom": "^19.3.1",
-    "react-iframe": "^1.8.5",
     "sanity": "^6.20.0",
     "styled-components": "^6.6.0"
   },
   "devDependencies": {
-    "@types/aos": "^3.0.7",
     "@types/node": "^25.2.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",

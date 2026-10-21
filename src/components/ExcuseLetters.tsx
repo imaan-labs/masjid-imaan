@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import {
   buildExcuseLetter,
-  excuseLetterOptions,
   imaanSignature,
+  lettersFor,
+  type Audience,
   type LetterId,
 } from "@/src/lib/excuseLetters";
 
@@ -13,7 +13,8 @@ const inputClass =
   "mt-1 w-full rounded-xl border border-[#E6D3B0] bg-white px-3 py-2 text-[#3F3428] outline-none focus:border-[#047857] focus:ring-2 focus:ring-[#047857]/30";
 
 export default function ExcuseLetters() {
-  const [letterId, setLetterId] = useState<LetterId>("eid-fitr");
+  const [audience, setAudience] = useState<Audience>("student");
+  const [letterId, setLetterId] = useState<LetterId>("eid-fitr-student");
   const [name, setName] = useState("");
   const [institution, setInstitution] = useState("");
   const [dates, setDates] = useState("");
@@ -30,27 +31,34 @@ export default function ExcuseLetters() {
     );
   }, []);
 
-  const selected = excuseLetterOptions.find((option) => option.id === letterId)!;
-  const letter = buildExcuseLetter(letterId, { name, institution, dates });
+  const options = lettersFor(audience);
+  const selected = options.find((option) => option.id === letterId) ?? options[0];
+  const letter = buildExcuseLetter(selected.id, { name, institution, dates });
+  const institutionLabel = audience === "student" ? "School" : "Employer";
 
   return (
-    <div className="excuse-page min-h-screen bg-[#F3EAD7] px-4 pb-16 pt-28 text-[#3F3428] sm:px-6">
+    <div className="excuse-page bg-[#F3EAD7] px-4 py-12 text-slate-900 sm:px-6 lg:px-8">
       <style>{`
         @media print {
           @page { margin: 0.7in; }
-          .excuse-page { padding: 0 !important; background: white !important; }
-          .no-print { display: none !important; }
+          body * { visibility: hidden; }
+          .letter-sheet, .letter-sheet * { visibility: visible; }
           .letter-sheet {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
             border: 0 !important;
             box-shadow: none !important;
             margin: 0 !important;
             max-width: none !important;
             padding: 0 !important;
+            background: white !important;
           }
         }
       `}</style>
 
-      <div className="mx-auto grid max-w-6xl items-start gap-8 lg:grid-cols-[22rem_minmax(0,1fr)]">
+      <div className="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-[22rem_minmax(0,1fr)]">
         <form
           className="no-print rounded-2xl border border-[#E6D3B0] bg-[#FFF8EC] p-5 shadow-sm"
           onSubmit={(event) => {
@@ -65,52 +73,59 @@ export default function ExcuseLetters() {
             Excuse Letters
           </h1>
           <p className="mt-2 text-sm leading-6 text-[#5C5146]">
-            Choose a letter, then enter the name, institution, and date(s).
+            Choose a school or workplace letter, then enter the name, institution, and date(s).
             The letter updates as you type.
           </p>
 
-          <fieldset className="mt-5">
-            <legend className="text-sm font-semibold text-[#047857]">
-              Letter
-            </legend>
-            <div className="mt-2 space-y-2">
-              {excuseLetterOptions.map((option) => {
-                const active = option.id === letterId;
-                return (
-                  <label
-                    key={option.id}
-                    className={`block cursor-pointer rounded-xl border px-3 py-2 ${
-                      active
-                        ? "border-[#047857] bg-[#047857] text-[#F6F0E6]"
-                        : "border-[#E6D3B0] bg-white text-[#3F3428]"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="letter"
-                      value={option.id}
-                      checked={active}
-                      onChange={() => setLetterId(option.id)}
-                      className="sr-only"
-                    />
-                    <span className="block text-sm font-semibold">
-                      {option.title}
-                    </span>
-                    <span
-                      className={`mt-0.5 block text-xs leading-5 ${
-                        active ? "text-[#E7D7B8]" : "text-[#5C5146]"
-                      }`}
-                    >
-                      {option.summary}
-                    </span>
-                  </label>
-                );
-              })}
-            </div>
-          </fieldset>
+          <div className="mt-5 grid grid-cols-2 gap-2" role="group" aria-label="Letter audience">
+            {(
+              [
+                ["student", "School / Students"],
+                ["employee", "Workplace / Adults"],
+              ] as const
+            ).map(([value, label]) => {
+              const selectedAudience = audience === value;
+              return (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={selectedAudience}
+                  onClick={() => {
+                    const next = lettersFor(value);
+                    setAudience(value);
+                    setLetterId(next[0].id);
+                  }}
+                  className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
+                    selectedAudience
+                      ? "bg-emerald-800 text-white"
+                      : "border border-[#E6D3B0] bg-white text-[#3F3428] hover:border-emerald-800"
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          <label className="mt-5 block text-sm font-semibold" htmlFor="letter-type">
+            Letter
+            <select
+              id="letter-type"
+              value={selected.id}
+              onChange={(event) => setLetterId(event.target.value as LetterId)}
+              className={inputClass}
+            >
+              {options.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <p className="mt-2 text-xs leading-5 text-[#5C5146]">{selected.summary}</p>
 
           <label className="mt-4 block text-sm font-semibold" htmlFor="person-name">
-            Student/Employee Name
+            Full Name
             <input
               id="person-name"
               value={name}
@@ -122,13 +137,13 @@ export default function ExcuseLetters() {
           </label>
 
           <label className="mt-4 block text-sm font-semibold" htmlFor="institution">
-            School/Institution Name
+            {institutionLabel}
             <input
               id="institution"
               value={institution}
               onChange={(event) => setInstitution(event.target.value)}
               className={inputClass}
-              placeholder="Melissa High School"
+              placeholder={audience === "student" ? "Melissa High School" : "Employer name"}
             />
           </label>
 
@@ -145,26 +160,19 @@ export default function ExcuseLetters() {
 
           <button
             type="submit"
-            className="mt-5 w-full rounded-full bg-[#047857] px-4 py-3 text-sm font-semibold text-[#F6F0E6] hover:bg-[#065F46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A15B]"
+            className="mt-5 w-full rounded-full bg-emerald-800 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A15B]"
           >
             Print / Save as PDF
           </button>
           <p className="mt-2 text-xs leading-5 text-[#5C5146]">
             In the print dialog, choose Save as PDF to download the letter.
           </p>
-          <p className="mt-4 text-xs leading-5 text-[#5C5146]">
-            Pre-signed blank copies are still available on the{" "}
-            <Link href="/letters" className="font-semibold text-[#047857] underline">
-              original letters page
-            </Link>
-            .
-          </p>
         </form>
 
         <article className="letter-sheet rounded-sm border border-[#E6D3B0] bg-white px-6 py-8 text-[#1C1917] shadow-md sm:px-10 sm:py-10">
           <header className="flex items-center gap-4 border-b-2 border-[#047857] pb-4">
             <img
-              src="/images/logo.jpeg"
+              src="/images/logo.png"
               alt="Imaan Masjid"
               className="h-20 w-20 object-contain"
             />
@@ -177,7 +185,7 @@ export default function ExcuseLetters() {
                 1010 Milrany Ln, Melissa, TX 75454
               </p>
               <p className="text-sm text-[#5C5146]">
-                shura@imaanmasjid.org · imaanmasjid.org
+                shura@imaanmasjid.org
               </p>
             </div>
           </header>

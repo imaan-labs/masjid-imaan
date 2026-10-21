@@ -1,22 +1,64 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import FlyerBoardIsland from "@/src/components/FlyerBoardIsland";
 import {
-  getFlyers,
-  MissingSanityConfigError,
+  flyersFromDocuments,
+  flyersQuery,
+  getSanityClient,
   type Flyer,
+  type FlyerDocument,
 } from "@/src/lib/sanity";
 
-export default async function FlyerBoard() {
-  let flyers: Flyer[] = [];
-  let status: "ready" | "unavailable" = "ready";
+export default function FlyerBoard({
+  limit,
+  previewOnly = false,
+}: {
+  limit?: number;
+  previewOnly?: boolean;
+}) {
+  const [flyers, setFlyers] = useState<Flyer[]>([]);
+  const [status, setStatus] = useState<"loading" | "ready">("loading");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  try {
-    flyers = await getFlyers();
-  } catch (error) {
-    if (!(error instanceof MissingSanityConfigError)) {
-      console.error("Failed to load flyers from Sanity", error);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get("category");
+    if (categoryParam) {
+      setSelectedCategory(categoryParam.toLowerCase());
     }
-    status = "unavailable";
-  }
+  }, []);
 
-  return <FlyerBoardIsland flyers={flyers} status={status} />;
+  useEffect(() => {
+    let cancelled = false;
+
+    getSanityClient()
+      .fetch<FlyerDocument[]>(flyersQuery)
+      .then((data) => {
+        console.log("Sanity flyers:", data);
+        if (cancelled) return;
+        setFlyers(flyersFromDocuments(data));
+        setStatus("ready");
+      })
+      .catch((error) => {
+        console.log("Sanity flyers:", error);
+        if (cancelled) return;
+        setFlyers([]);
+        setStatus("ready");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <FlyerBoardIsland
+      flyers={flyers}
+      status={status}
+      limit={limit}
+      previewOnly={previewOnly}
+      initialCategory={selectedCategory}
+    />
+  );
 }

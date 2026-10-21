@@ -2,132 +2,113 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/images/logo.png";
-import Tooltip from "../Tooltip";
+const WHATSAPP_FORM =
+  "https://docs.google.com/forms/d/1aQT8UFFkeKrnGlhWZCJ5KrTdQM1OcqaGD5ijvXumkz8";
 
 export default function Footer() {
   return (
-    <footer className="print:hidden">
+    <footer className="bg-brand-dark text-slate-100 print:hidden [&_a]:transition-all [&_a]:duration-200 [&_button]:transition-all [&_button]:duration-200">
       <div className="py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Top area: Blocks */}
           <div className="grid md:grid-cols-12 gap-8 lg:gap-20 mb-8 md:mb-12">
             {/* 1st block */}
             <div className="md:col-span-4 lg:col-span-5">
               <div className="mb-2">
                 {/* Logo */}
-                <Link href="/" className="inline-block" aria-label="Cruip">
-                  <Image src={Logo} height={64} width={64} alt="logo" />
+                <Link href="/" className="inline-flex items-center gap-3">
+                  <Image
+                    src={Logo}
+                    alt=""
+                    className="h-14 w-auto"
+                    style={{ width: "auto", height: "3.5rem" }}
+                  />
+                  <span>
+                    <span className="block text-lg font-semibold text-white">
+                      Imaan Masjid
+                    </span>
+                    <span className="block text-xs text-emerald-200">Melissa, TX</span>
+                  </span>
                 </Link>
               </div>
-              <div className="text-gray-400">
+              <div className="text-emerald-100/80">
                 No matter who you are, you are a guest of Allah when you come to
                 Imaan Masjid in Melissa. Please don't hesitate to join us today!
               </div>
+              <a
+                href="mailto:shura@imaanmasjid.org"
+                className="mt-3 inline-block text-sm font-semibold text-emerald-50 hover:text-white"
+              >
+                shura@imaanmasjid.org
+              </a>
             </div>
 
             {/* 2nd, 3rd and 4th blocks */}
-            <div className="md:col-span-8 lg:col-span-7 grid sm:grid-cols-3 gap-8">
-              {/* 2nd block */}
+            <div className="md:col-span-8 lg:col-span-7 grid sm:grid-cols-2 gap-8">
               <div className="text-sm">
-                <h6 className="text-black font-medium mb-1">Donate</h6>
+                <h6 className="text-emerald-200 font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <p>Zelle:</p>
-                    <p>Operations: donate@imaanmasjid.org</p>
-                    <p>Property: helpbuild@imaanmasjid.org</p>
+                    <Link href="/#donate" className="text-emerald-50 hover:text-white">
+                      Donate
+                    </Link>
                   </li>
                   <li className="mb-1">
-                    <a
-                      href="https://www.amazon.com/?&_encoding=UTF8&tag=imaan0bd-20&linkCode=ur2&linkId=c88e3ca8a369dd52a5e841cb314bc535&camp=1789&creative=9325"
-                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
-                      target="_blank"
-                    >
-                      By Shopping on Amazon
-                    </a>
+                    <Link href="/prayer-times" className="text-emerald-50 hover:text-white">
+                      Daily Prayer & Jumu&apos;ah
+                    </Link>
                   </li>
                   <li className="mb-1">
-                    <a
-                      href="https://www.zeffy.com/en-US/organizations/imaan-masjid"
-                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
-                      target="_blank"
-                    >
-                      Support with Zeffy
-                    </a>
+                    <Link href="/bulletin" className="text-emerald-50 hover:text-white">
+                      Community Bulletin
+                    </Link>
                   </li>
                   <li className="mb-1">
-                    <a
-                      href="https://donorbox.org/donate-to-imaan"
-                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
-                      target="_blank"
-                    >
-                      Support with Donorbox
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              {/* 3rd block */}
-              <div className="text-sm">
-                <h6 className="text-black font-medium mb-1">Resources</h6>
-                <ul>
-                  <li className="mb-1">
-                    <Link href="/excuse-letters">Letters</Link>
+                    <Link href="/calendar" className="text-emerald-50 hover:text-white">
+                      Hilāl Calendar
+                    </Link>
                   </li>
                   <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="relative inline-block">
-                        <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          Islamic Classes For Kids
-                        </div>
-                      </div>
-                    </Tooltip>
+                    <Link href="/excuse-letters" className="text-emerald-50 hover:text-white">
+                      Excuse Letters
+                    </Link>
                   </li>
                   <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="relative inline-block">
-                        <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          Islamic Classes For Adults
-                        </div>
-                      </div>
-                    </Tooltip>
-                  </li>
-
-                  <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="relative inline-block">
-                        <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          Books
-                        </div>
-                      </div>
-                    </Tooltip>
+                    <Link href="/gallery" className="text-emerald-50 hover:text-white">
+                      Photo Gallery
+                    </Link>
                   </li>
                 </ul>
               </div>
 
               {/* 4th block */}
               <div className="text-sm">
-                <h6 className="text-black font-medium mb-1">Company</h6>
+                <h6 className="text-emerald-200 font-medium mb-1">Company</h6>
                 <ul>
                   <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="relative inline-block">
-                        <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                          The Origin Story
-                        </div>
-                      </div>
-                    </Tooltip>
+                    <a
+                      href="https://www.al-imaan.org"
+                      className="text-emerald-50 hover:text-white"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Parent Entity
+                    </a>
                   </li>
                   <li className="mb-1">
-                    <Tooltip content="Coming Soon">
-                      <div className="text-gray-800 hover:text-gray-100 transition duration-150 ease-in-out cursor-not-allowed">
-                        Meet The Shura
-                      </div>
-                    </Tooltip>
+                    <Link href="/privacy" className="text-emerald-50 hover:text-white">
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link href="/terms" className="text-emerald-50 hover:text-white">
+                      Terms
+                    </Link>
                   </li>
                   <li className="mb-1">
                     <a
                       href="https://maps.app.goo.gl/8Jn9t21YQ51UicqH8"
-                      className="text-black hover:text-gray-500 transition duration-150 ease-in-out"
+                      className="text-emerald-50 hover:text-white"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -145,9 +126,11 @@ export default function Footer() {
             <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
               <li>
                 <a
-                  href="https://chat.whatsapp.com/FcehoEQjFcsE89qLVrfMQV"
+                  href={WHATSAPP_FORM}
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
-                  aria-label="Whatsapp"
+                  aria-label="Request WhatsApp invite"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <svg viewBox="0 0 32 32" className="w-8 h-8 fill-current">
                     <path
@@ -211,7 +194,7 @@ export default function Footer() {
             </ul>
 
             {/* Copyrights note */}
-            <div className="text-gray-400 text-sm mr-4">
+            <div className="text-emerald-100/70 text-sm mr-4">
               &copy; IMAAN™ - All rights reserved. IMAAN is a tax-exempt non-profit organization registered in the State of Texas, that has been formed exclusively for community building, educational, and religious purposes. It is registered with the Internal Revenue Service under revenue code 501(c)(3).
             </div>
           </div>

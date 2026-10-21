@@ -28,7 +28,7 @@ const client = createClient({
   dataset: "production",
   apiVersion: "2024-01-01",
   token,
-  useCdn: false,
+  useCdn: true,
 });
 
 const boardMembers = [
@@ -64,6 +64,22 @@ const documents = [
     raisedAmount: 25000,
     showProgressBar: true,
     donationUrl: "https://www.zeffy.com/",
+  },
+  {
+    _id: "prayer-settings",
+    _type: "prayerSettings",
+    title: "Current Daily Schedule",
+    fajr: "6:15 AM",
+    dhuhr: "1:30 PM",
+    asr: "5:00 PM",
+    maghrib: "Sunset + 5 min",
+    isha: "8:30 PM",
+    jumuahFirstLecture: "1:15 PM",
+    jumuahFirstKhutbah: "1:30 PM",
+    jumuahFirstSalah: "1:50 PM",
+    jumuahSecondLecture: "2:15 PM",
+    jumuahSecondKhutbah: "2:30 PM",
+    jumuahSecondSalah: "2:50 PM",
   },
 ];
 

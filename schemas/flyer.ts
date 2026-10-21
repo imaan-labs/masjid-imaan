@@ -26,10 +26,12 @@ export default defineType({
       type: "string",
       options: {
         list: [
-          { title: "General", value: "general" },
-          { title: "Youth", value: "youth" },
-          { title: "Sisters", value: "sisters" },
-          { title: "Lectures", value: "lectures" },
+          { title: "General Announcement", value: "general" },
+          { title: "Interactive Sessions / Lectures", value: "sessions" },
+          { title: "Ramadan Services & Taraweeh", value: "ramadan" },
+          { title: "Eid Celebrations & Prayers", value: "eid" },
+          { title: "Youth & Kids", value: "youth" },
+          { title: "Sisters Program", value: "sisters" },
           { title: "Fundraiser", value: "fundraiser" },
         ],
         layout: "radio",

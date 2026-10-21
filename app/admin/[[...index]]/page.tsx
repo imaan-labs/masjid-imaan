@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 
-const SanityStudio = dynamic(() => import("@/src/components/SanityStudio"), {
+const StudioPage = dynamic(() => import("@/src/components/Studio"), {
   ssr: false,
 });
 
 export default function AdminPage() {
-  return <SanityStudio />;
+  return <StudioPage />;
 }

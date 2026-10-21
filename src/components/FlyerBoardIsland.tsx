@@ -1,24 +1,37 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import Link from "next/link";
 import type { Flyer } from "@/src/lib/sanity";
 
 const FILTERS = [
   { id: "all", label: "All" },
+  { id: "sessions", label: "Sessions" },
+  { id: "ramadan", label: "Ramadan" },
+  { id: "eid", label: "Eid" },
   { id: "youth", label: "Youth" },
   { id: "sisters", label: "Sisters" },
-  { id: "lectures", label: "Lectures" },
-  { id: "fundraiser", label: "Fundraisers" },
+  { id: "fundraiser", label: "Fundraiser" },
+  { id: "general", label: "General" },
 ] as const;
 
 type FilterId = (typeof FILTERS)[number]["id"];
 
+function isFilterId(value: string): value is FilterId {
+  return FILTERS.some((item) => item.id === value);
+}
+
 const CATEGORY_LABELS: Record<string, string> = {
-  general: "General",
-  youth: "Youth",
-  sisters: "Sisters",
-  lectures: "Lectures",
+  general: "General Announcement",
+  sessions: "Interactive Sessions / Lectures",
+  ramadan: "Ramadan Services & Taraweeh",
+  eid: "Eid Celebrations & Prayers",
+  youth: "Youth & Kids",
+  sisters: "Sisters Program",
   fundraiser: "Fundraiser",
+  classes: "Classes",
+  schedule: "Schedule",
+  lectures: "Lectures",
 };
 
 type View = {
@@ -42,18 +55,34 @@ function categoryLabel(category: string | null) {
 export default function FlyerBoardIsland({
   flyers,
   status,
+  limit,
+  previewOnly = false,
+  initialCategory = null,
 }: {
   flyers: Flyer[];
-  status: "ready" | "unavailable";
+  status: "loading" | "ready";
+  limit?: number;
+  previewOnly?: boolean;
+  initialCategory?: string | null;
 }) {
   const [filter, setFilter] = useState<FilterId>("all");
+
+  useEffect(() => {
+    if (initialCategory && isFilterId(initialCategory)) {
+      setFilter(initialCategory);
+    }
+  }, [initialCategory]);
+  const [query, setQuery] = useState("");
   const [activeId, setActiveId] = useState<string | null>(null);
   const headingId = useId();
 
-  const visible =
-    filter === "all"
-      ? flyers
-      : flyers.filter((flyer) => flyer.category === filter);
+  const searched = flyers.filter((flyer) => {
+    const categoryOk = previewOnly || filter === "all" || flyer.category === filter;
+    const needle = query.trim().toLowerCase();
+    const textOk = previewOnly || needle.length === 0 || flyer.title.toLowerCase().includes(needle);
+    return categoryOk && textOk;
+  });
+  const visible = typeof limit === "number" ? searched.slice(0, limit) : searched;
 
   const active = flyers.find((flyer) => flyer._id === activeId) ?? null;
   const closeLightbox = useCallback(() => setActiveId(null), []);
@@ -71,27 +100,56 @@ export default function FlyerBoardIsland({
   return (
     <section
       aria-labelledby={headingId}
-      className="min-h-screen bg-[#F6F0E6] px-4 pb-20 pt-28 text-[#3F3428] sm:px-6"
+      id={previewOnly ? "flyer-preview" : "flyer-board"}
+      className={
+        previewOnly
+          ? "flex w-full flex-col rounded-3xl border border-slate-200/80 bg-white p-6 text-slate-900 shadow-xl"
+          : "scroll-mt-24 py-16 text-slate-900"
+      }
     >
-      <div className="mx-auto max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#C6A15B]">
-            Community bulletin
-          </p>
-          <h1
-            id={headingId}
-            className="mt-2 text-4xl font-semibold tracking-tight text-[#047857] sm:text-5xl"
-          >
-            Flyer Bulletin
-          </h1>
-          <p className="mt-3 text-base text-[#5C5146] sm:text-lg">
-            Current announcements for the masjid. Tap a flyer to open it, then
-            pinch or scroll to zoom.
+      <div className={previewOnly ? "flex w-full flex-col" : "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"}>
+        <div className={previewOnly ? "" : "mx-auto max-w-2xl text-center"}>
+          {previewOnly ? (
+            <h2
+              id={headingId}
+              className="font-heading text-2xl font-extrabold tracking-tight text-slate-900"
+            >
+              Bulletin Board
+            </h2>
+          ) : (
+            <h1
+              id={headingId}
+              className="text-4xl font-semibold tracking-tight text-brand-dark sm:text-5xl"
+            >
+              Bulletin Board
+            </h1>
+          )}
+          <p className={previewOnly ? "mt-1 text-sm text-slate-600" : "mt-3 text-base text-slate-600 sm:text-lg"}>
+            {previewOnly
+              ? "The latest announcements from the masjid."
+              : "Current announcements for the masjid. Tap a flyer to open it, then pinch or scroll to zoom."}
           </p>
         </div>
 
+        {previewOnly ? null : (
+        <div className="mx-auto mt-8 max-w-xl">
+          <label className="block text-sm font-semibold text-brand-teal" htmlFor="flyer-search">
+            Search flyers
+          </label>
+          <input
+            id="flyer-search"
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search by title"
+            className="mt-2 w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-900 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+          />
+        </div>
+        )}
+
+        {previewOnly ? null : (
         <div
-          className="mt-8 flex flex-wrap items-center justify-center gap-2"
+          className="mt-6 flex flex-wrap items-center justify-center gap-2"
           role="toolbar"
           aria-label="Filter flyers by category"
         >
@@ -103,10 +161,10 @@ export default function FlyerBoardIsland({
                 type="button"
                 aria-pressed={selected}
                 onClick={() => setFilter(item.id)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A15B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F0E6] ${
+                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg ${
                   selected
-                    ? "border-[#047857] bg-[#047857] text-[#F6F0E6]"
-                    : "border-[#C6A15B] bg-[#FFF9F0] text-[#047857] hover:bg-[#F3E2C4]"
+                    ? "border-brand-teal bg-brand-teal text-white"
+                    : "border-slate-200 bg-white text-brand-teal hover:border-brand-teal"
                 }`}
               >
                 {item.label}
@@ -114,36 +172,37 @@ export default function FlyerBoardIsland({
             );
           })}
         </div>
+        )}
 
-        {status === "unavailable" ? (
-          <p className="mx-auto mt-10 max-w-xl rounded-2xl border border-[#C6A15B] bg-[#FFF9F0] px-5 py-8 text-center text-[#5C5146]">
-            The bulletin could not be loaded. Check the Sanity project
-            settings and try again.
+        {status === "loading" ? (
+          <p className={`mx-auto max-w-xl rounded-2xl border px-5 py-6 text-center ${previewOnly ? "mt-4 border-slate-200 bg-slate-50 text-slate-600" : "mt-10 border-slate-200 bg-white text-slate-600"}`}>
+            Loading current flyers…
           </p>
         ) : visible.length === 0 ? (
-          <p className="mx-auto mt-10 max-w-xl rounded-2xl border border-dashed border-[#C6A15B] bg-[#FFF9F0] px-5 py-8 text-center text-[#5C5146]">
-            No current flyers in this category.
+          <p className={`rounded-2xl border px-5 py-6 text-center ${previewOnly ? "mt-4 border-dashed border-slate-300 bg-slate-50 text-slate-600" : "mx-auto mt-10 max-w-xl border-dashed border-slate-300 bg-white text-slate-600"}`}>
+            No announcements posted right now.
           </p>
         ) : (
-          <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className={previewOnly ? "mt-4 grid grid-cols-1 gap-3" : "mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"}>
             {visible.map((flyer) => (
               <li key={flyer._id}>
                 <button
                   type="button"
                   onClick={() => setActiveId(flyer._id)}
-                  className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E4D3B4] bg-[#FFF9F0] text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#C6A15B] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#047857] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F0E6]"
+                  className={`flex h-full w-full flex-col text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 ${previewOnly ? "rounded-2xl" : "rounded-3xl border border-slate-200/80 bg-white shadow-sm hover:border-slate-300 hover:shadow-xl"}`}
                 >
-                  <span className="relative block aspect-[3/4] overflow-hidden bg-[#EFE4D2]">
+                  <span className="relative flex w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-900/5 p-2">
                     <img
                       src={flyer.imageUrl}
-                      alt=""
-                      className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                      alt={flyer.title}
+                      className={`block h-auto w-full rounded-xl object-contain ${previewOnly ? "" : "max-h-[580px]"}`}
+                      loading="lazy"
                     />
-                    <span className="absolute left-3 top-3 rounded-full bg-[#047857] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#F6E7C3]">
+                    <span className="absolute left-3 top-3 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-800">
                       {categoryLabel(flyer.category)}
                     </span>
                   </span>
-                  <span className="px-4 py-4 text-lg font-semibold leading-snug text-[#047857]">
+                  <span className={`font-semibold leading-snug ${previewOnly ? "px-1 py-3 text-sm text-slate-900" : "px-4 py-4 text-lg text-slate-900"}`}>
                     {flyer.title}
                   </span>
                 </button>
@@ -151,6 +210,17 @@ export default function FlyerBoardIsland({
             ))}
           </ul>
         )}
+
+        {previewOnly ? (
+          <div className="pt-6">
+            <Link
+              href="/bulletin"
+              className="inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800"
+            >
+              Browse Full Bulletin Board →
+            </Link>
+          </div>
+        ) : null}
       </div>
 
       {active ? (
@@ -326,22 +396,22 @@ function FlyerLightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-[#1C1917]/88 p-3 sm:p-6"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-dark/80 p-3 transition-all duration-200 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
       onClick={onClose}
     >
       <div
-        className="flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[#C6A15B] bg-[#1C1917] shadow-2xl"
+        className="flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-brand-dark shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-3 border-b border-[#C6A15B]/40 px-4 py-3 text-[#F6F0E6]">
+        <div className="flex items-start justify-between gap-3 border-b border-white/10 px-4 py-3 text-white">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#C6A15B]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-gold">
               {categoryLabel(flyer.category)}
             </p>
-            <h2 id={titleId} className="text-lg font-semibold text-[#F6F0E6]">
+            <h2 id={titleId} className="text-lg font-semibold text-white">
               {flyer.title}
             </h2>
           </div>
@@ -349,7 +419,7 @@ function FlyerLightbox({
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="rounded-full bg-[#047857] px-3 py-1.5 text-sm font-semibold text-[#F6F0E6] hover:bg-[#065F46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A15B]"
+            className="rounded-full bg-brand-teal px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-gold hover:text-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
           >
             Close
           </button>
@@ -377,7 +447,7 @@ function FlyerLightbox({
           />
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#C6A15B]/40 px-4 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3">
           <p className="text-sm text-[#E7D7B8]">
             Pinch, scroll, or use the buttons to zoom. {Math.round(view.scale * 100)}%
           </p>
@@ -387,7 +457,7 @@ function FlyerLightbox({
                 href={flyer.actionLink}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[#C6A15B] px-3 py-1.5 text-sm font-semibold text-[#F6E7C3] hover:bg-[#C6A15B] hover:text-[#1C1917]"
+                className="rounded-full border border-white/20 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-brand-gold hover:text-brand-dark"
               >
                 Open link
               </a>
@@ -395,7 +465,7 @@ function FlyerLightbox({
             <button
               type="button"
               onClick={() => updateScale(view.scale / 1.25)}
-              className="rounded-full border border-[#C6A15B] px-3 py-1.5 text-sm font-semibold text-[#F6E7C3]"
+              className="rounded-full border border-white/20 px-3 py-1.5 text-sm font-semibold text-slate-200"
               aria-label="Zoom out"
             >
               −
@@ -403,14 +473,14 @@ function FlyerLightbox({
             <button
               type="button"
               onClick={() => setView({ scale: 1, x: 0, y: 0 })}
-              className="rounded-full border border-[#C6A15B] px-3 py-1.5 text-sm font-semibold text-[#F6E7C3]"
+              className="rounded-full border border-white/20 px-3 py-1.5 text-sm font-semibold text-slate-200"
             >
               Reset
             </button>
             <button
               type="button"
               onClick={() => updateScale(view.scale * 1.25)}
-              className="rounded-full bg-[#047857] px-3 py-1.5 text-sm font-semibold text-[#F6F0E6]"
+              className="rounded-full bg-brand-teal px-3 py-1.5 text-sm font-semibold text-white"
               aria-label="Zoom in"
             >
               +

@@ -1,20 +1,24 @@
 /* Tailwind CSS Directives */
 @import "tailwindcss";
 
-/* Additional styles */
-@import './additional-styles/utility-patterns.css';
-@import './additional-styles/range-slider.css';
-@import './additional-styles/toggle-switch.css';
-@import './additional-styles/theme.css';
-
-/* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
-@layer utilities {
-    .rtl {
-        direction: rtl;
-    }
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --color-brand-dark: #0f2432;
+  --color-brand-teal: #2e6575;
+  --color-brand-gold: #d4a373;
+  --color-brand-bg: #f7f9fb;
 }
 
-/* See Alpine.js: https://github.com/alpinejs/alpine#x-cloak */
-[x-cloak=""] {
-    display: none;
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
 }
+

@@ -1,4 +1,3 @@
-import Footer from "@/components/ui/footer";
 import ExcuseLetters from "@/src/components/ExcuseLetters";
 
 export const metadata = {
@@ -11,9 +10,6 @@ export default function ExcuseLettersPage() {
   return (
     <>
       <ExcuseLetters />
-      <div className="no-print">
-        <Footer />
-      </div>
     </>
   );
 }
