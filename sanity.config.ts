@@ -8,7 +8,7 @@ import prayerSettings from "./schemas/prayerSettings";
 
 export default defineConfig({
   name: "default",
-  title: "Imaan",
+  title: "IMAAN CMS",
   basePath: "/admin",
   projectId: "zy8zabah",
   dataset: "production",
