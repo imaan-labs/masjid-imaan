@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDonation, type GiveTab } from "@/src/components/DonationModal";
 import {
+  CAMPAIGN_ZEFFY_URL,
   FALLBACK_CAMPAIGN,
   FEATURED_CAMPAIGN_QUERY,
   getSanityClient,
@@ -22,30 +23,34 @@ function money(amount: number) {
 export default function CampaignProgressCard({
   compact = false,
   onGive,
+  campaign: campaignProp,
 }: {
   compact?: boolean;
   onGive?: (tab: Extract<GiveTab, "zeffy" | "card">) => void;
+  campaign?: CampaignProgress | null;
 }) {
   const { openGive } = useDonation();
-  const [campaign, setCampaign] = useState<CampaignProgress>(FALLBACK_CAMPAIGN);
+  const [fetchedCampaign, setFetchedCampaign] = useState<CampaignProgress>(FALLBACK_CAMPAIGN);
+  const campaign = campaignProp ?? fetchedCampaign;
 
   useEffect(() => {
+    if (campaignProp) return;
     let cancelled = false;
     getSanityClient()
       .fetch<CampaignDocument | null>(FEATURED_CAMPAIGN_QUERY)
       .then((document) => {
         const resolved = resolveCampaign(document);
         console.log("Sanity campaign:", resolved);
-        if (!cancelled) setCampaign(resolved);
+        if (!cancelled) setFetchedCampaign(resolved);
       })
       .catch((error) => {
         console.log("Sanity campaign:", error);
-        if (!cancelled) setCampaign(FALLBACK_CAMPAIGN);
+        if (!cancelled) setFetchedCampaign(FALLBACK_CAMPAIGN);
       });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [campaignProp]);
 
   const funded =
     campaign.goalAmount > 0
@@ -113,17 +118,18 @@ export default function CampaignProgressCard({
         </div>
 
         <div className="flex shrink-0 flex-col items-stretch gap-2.5 sm:flex-row sm:items-center">
-          <button
-            type="button"
-            onClick={() => give("zeffy")}
-            className="inline-flex rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-slate-800"
+          <a
+            href={campaign?.donationUrl || CAMPAIGN_ZEFFY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-slate-800"
           >
             Donate via Zeffy (0% Fee) →
-          </button>
+          </a>
           <button
             type="button"
             onClick={() => give("card")}
-            className="inline-flex rounded-xl border border-amber-300 bg-white px-4 py-2 text-xs font-bold text-slate-900 transition hover:bg-amber-50"
+            className="inline-flex items-center justify-center rounded-xl border border-amber-300 bg-white px-4 py-2 text-xs font-bold text-slate-900 transition hover:bg-amber-50"
           >
             Quick Donate ⚡
           </button>
