@@ -224,7 +224,7 @@ export function galleryCategoryLabel(category: string | null | undefined) {
   return GALLERY_CATEGORIES.find((item) => item.id === category)?.label ?? "Community & Gatherings";
 }
 
-export const FEATURED_CAMPAIGN_QUERY = `*[_type == "campaign" && !(_id in path("drafts.**")) && scope in ["masjid", "both"]] | order(isFeatured desc, _createdAt desc)[0]{
+export const FEATURED_CAMPAIGN_QUERY = `*[_type == "campaign" && !(_id in path("drafts.**")) && scope in ["masjid", "both"] && isFeatured == true] | order(_createdAt desc)[0]{
   _id,
   title,
   description,
@@ -260,6 +260,12 @@ export type CampaignProgress = {
   donationUrl: string | null;
 };
 
+export const CAMPAIGN_ZEFFY_URL =
+  "https://www.zeffy.com/en-US/donation-form/contribute-to-imaan-masjid-property-purchase";
+
+export const GENERAL_ZEFFY_URL =
+  "https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08";
+
 export const FALLBACK_CAMPAIGN: CampaignProgress = {
   title: "Phase 2 Building & Property Expansion Fund",
   description: "",
@@ -267,7 +273,7 @@ export const FALLBACK_CAMPAIGN: CampaignProgress = {
   goalAmount: 400000,
   raisedAmount: 150000,
   showProgressBar: true,
-  donationUrl: null,
+  donationUrl: CAMPAIGN_ZEFFY_URL,
 };
 
 export function resolveCampaign(
@@ -290,7 +296,10 @@ export function resolveCampaign(
     goalAmount,
     raisedAmount,
     showProgressBar: document?.showProgressBar !== false && goalAmount > 0,
-    donationUrl: typeof document?.donationUrl === "string" ? document.donationUrl : null,
+    donationUrl:
+      typeof document?.donationUrl === "string" && document.donationUrl.trim()
+        ? document.donationUrl.trim()
+        : null,
   };
 }
 

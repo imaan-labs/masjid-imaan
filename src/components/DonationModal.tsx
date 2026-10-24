@@ -2,10 +2,18 @@
 
 import { createContext, useContext, useEffect, useId, useRef, useState } from "react";
 import CampaignProgressCard from "@/src/components/CampaignProgressCard";
+import {
+  CAMPAIGN_ZEFFY_URL as CAMPAIGN_ZEFFY_FALLBACK,
+  FALLBACK_CAMPAIGN,
+  FEATURED_CAMPAIGN_QUERY,
+  GENERAL_ZEFFY_URL,
+  getSanityClient,
+  resolveCampaign,
+  type CampaignDocument,
+  type CampaignProgress,
+} from "@/src/lib/sanity";
 
 const DONORBOX_EMBED = "https://donorbox.org/embed/donate-to-imaan";
-const ZEFFY_URL =
-  "https://www.zeffy.com/en-US/donation-form/7ee3d4a2-6e81-471d-8255-06f0d1f9be08";
 const AMAZON_URL =
   "https://www.amazon.com/?&_encoding=UTF8&tag=imaan0bd-20&linkCode=ur2&linkId=c88e3ca8a369dd52a5e841cb314bc535&camp=1789&creative=9325";
 
@@ -78,15 +86,37 @@ export default function DonationModal({
   tab,
   onTab,
   onClose,
+  campaign: campaignProp,
 }: {
   open: boolean;
   tab: GiveTab;
   onTab: (tab: GiveTab) => void;
   onClose: () => void;
+  campaign?: CampaignProgress | null;
 }) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [fetchedCampaign, setFetchedCampaign] = useState<CampaignProgress | null>(null);
+
+  useEffect(() => {
+    if (campaignProp || !open) return;
+    let cancelled = false;
+    getSanityClient()
+      .fetch<CampaignDocument | null>(FEATURED_CAMPAIGN_QUERY)
+      .then((document) => {
+        if (!cancelled) setFetchedCampaign(resolveCampaign(document));
+      })
+      .catch(() => {
+        if (!cancelled) setFetchedCampaign(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [campaignProp, open]);
+
+  const campaign = campaignProp ?? fetchedCampaign;
+  const CAMPAIGN_ZEFFY_URL = campaign?.donationUrl || CAMPAIGN_ZEFFY_FALLBACK;
 
   useEffect(() => {
     if (!open) return;
@@ -180,7 +210,14 @@ export default function DonationModal({
           })}
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto bg-brand-bg p-4">
-          <CampaignProgressCard compact onGive={onTab} />
+          <CampaignProgressCard
+            compact
+            campaign={{
+              ...(campaign ?? FALLBACK_CAMPAIGN),
+              donationUrl: CAMPAIGN_ZEFFY_URL,
+            }}
+            onGive={onTab}
+          />
           <div className="mt-4">
           {tab === "card" ? (
             <div role="tabpanel" id="give-panel-card" aria-labelledby="give-tab-card">
@@ -207,12 +244,12 @@ export default function DonationModal({
                 Zeffy covers the transaction fee, so every cent of your gift supports masjid operations, programs, and the building fund.
               </p>
               <a
-                href={ZEFFY_URL}
+                href={GENERAL_ZEFFY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex rounded-xl bg-brand-teal px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand-dark"
+                className="mt-6 inline-flex items-center justify-center rounded-xl bg-[#2B5865] px-5 py-2.5 text-xs font-semibold text-white transition hover:bg-[#234752]"
               >
-                Open Zeffy Portal
+                Open Zeffy Portal ↗
               </a>
             </div>
           ) : null}
