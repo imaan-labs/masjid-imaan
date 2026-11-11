@@ -116,7 +116,8 @@ const TITLE_WORDS = [
   "on",
 ];
 
-const token = process.env.SANITY_WRITE_TOKEN || process.env.SANITY_API_WRITE_TOKEN;
+const token =
+  process.env.SANITY_WRITE_TOKEN || process.env.SANITY_API_WRITE_TOKEN;
 
 if (!token) {
   console.error(
@@ -180,14 +181,19 @@ function readableTitle(filename) {
   const words = splitFilename(filename);
   if (words.length === 0) return filename;
   return words
-    .map((word) => (/^\d+$/.test(word) ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+    .map((word) =>
+      /^\d+$/.test(word) ? word : word.charAt(0).toUpperCase() + word.slice(1),
+    )
     .join(" ");
 }
 
 function inferCategory(filename) {
   const name = filename.toLowerCase();
   if (/eid|fitr|adha/.test(name)) return "eid";
-  if (/pray|taraweeh|salah|jumuah|jummah|khutba|quran|hadith|lecture/.test(name)) return "prayers";
+  if (
+    /pray|taraweeh|salah|jumuah|jummah|khutba|quran|hadith|lecture/.test(name)
+  )
+    return "prayers";
   if (
     /gym|center|entrance|parking|carpet|fence|gravel|volunteer|facility|door|recreation|pool|foosball|toy|clock|bird|raw|occupied|perimeter/.test(
       name,
@@ -215,7 +221,8 @@ async function walk(directory, files) {
     }
     if (!entry.isFile()) continue;
     const extension = path.extname(entry.name).toLowerCase();
-    if (!IMAGE_EXT.has(extension) || SKIP_NAMES.has(entry.name.toLowerCase())) continue;
+    if (!IMAGE_EXT.has(extension) || SKIP_NAMES.has(entry.name.toLowerCase()))
+      continue;
     files.push(fullPath);
   }
 }
@@ -229,7 +236,12 @@ async function collectLocalImages() {
   for (const filePath of files.sort()) {
     const slug = cleanSlug(path.basename(filePath));
     if (!slug || bySlug.has(slug)) continue;
-    bySlug.set(slug, { kind: "file", filePath, filename: path.basename(filePath), slug });
+    bySlug.set(slug, {
+      kind: "file",
+      filePath,
+      filename: path.basename(filePath),
+      slug,
+    });
   }
   return [...bySlug.values()];
 }
@@ -246,7 +258,8 @@ async function collectRemoteImages(localSlugs) {
   for (const directory of SOURCE_DIRS) {
     await walkSources(path.join(ROOT, directory), sourceFiles);
   }
-  const pattern = /https?:\/\/(?:www\.)?imaanmasjid\.org\/[^"'()\s]+\.(?:jpg|jpeg|png|webp)/gi;
+  const pattern =
+    /https?:\/\/(?:www\.)?imaanmasjid\.org\/[^"'()\s]+\.(?:jpg|jpeg|png|webp)/gi;
   for (const filePath of sourceFiles) {
     const text = await readFile(filePath, "utf8");
     for (const match of text.matchAll(pattern)) urls.add(match[0]);
@@ -255,7 +268,8 @@ async function collectRemoteImages(localSlugs) {
   for (const url of urls) {
     const filename = remoteFilename(url);
     const slug = cleanSlug(filename);
-    if (!slug || localSlugs.has(slug) || SKIP_NAMES.has(filename.toLowerCase())) continue;
+    if (!slug || localSlugs.has(slug) || SKIP_NAMES.has(filename.toLowerCase()))
+      continue;
     images.push({ kind: "url", url, filename, slug });
   }
   return images;
@@ -277,24 +291,29 @@ async function walkSources(directory, files) {
       continue;
     }
     if (!entry.isFile()) continue;
-    if (/\.(tsx|ts|jsx|js|mjs|astro|html|md|json)$/i.test(entry.name)) files.push(fullPath);
+    if (/\.(tsx|ts|jsx|js|mjs|astro|html|md|json)$/i.test(entry.name))
+      files.push(fullPath);
   }
 }
 
 async function uploadBody(image) {
   if (image.kind === "file") {
     const info = await stat(image.filePath);
-    if (!info.isFile() || info.size === 0) throw new Error(`Empty file: ${image.filePath}`);
+    if (!info.isFile() || info.size === 0)
+      throw new Error(`Empty file: ${image.filePath}`);
     return createReadStream(image.filePath);
   }
   const response = await fetch(image.url);
-  if (!response.ok) throw new Error(`Failed to fetch ${image.url} (${response.status})`);
+  if (!response.ok)
+    throw new Error(`Failed to fetch ${image.url} (${response.status})`);
   return Buffer.from(await response.arrayBuffer());
 }
 
 async function main() {
   const local = await collectLocalImages();
-  const remote = await collectRemoteImages(new Set(local.map((image) => image.slug)));
+  const remote = await collectRemoteImages(
+    new Set(local.map((image) => image.slug)),
+  );
   const images = [...local, ...remote];
   if (images.length === 0) {
     console.log("No gallery photos found.");
@@ -318,9 +337,13 @@ async function main() {
         console.log(`${label} Already published: ${title}`);
         continue;
       }
-      const uploadedAsset = await client.assets.upload("image", await uploadBody(image), {
-        filename: image.filename,
-      });
+      const uploadedAsset = await client.assets.upload(
+        "image",
+        await uploadBody(image),
+        {
+          filename: image.filename,
+        },
+      );
       await client.createOrReplace({
         _id: documentId,
         _type: "galleryImage",
@@ -343,7 +366,9 @@ async function main() {
     }
   }
 
-  console.log(`Done. Published ${published}, already present ${skipped}, total ${images.length}.`);
+  console.log(
+    `Done. Published ${published}, already present ${skipped}, total ${images.length}.`,
+  );
 }
 
 main().catch((error) => {

@@ -91,6 +91,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Sanity Studio CMS
 
 The studio can be accessed inside the running Next.js app at:
+
 - [http://localhost:3000/admin](http://localhost:3000/admin)
 
 Or launched standalone via:
@@ -101,15 +102,15 @@ npm run studio
 
 ### Available Scripts
 
-| Script | Command | Purpose |
-| --- | --- | --- |
-| `npm run dev` | `next dev` | Start Next.js development server |
-| `npm run build` | `next build` | Build the Next.js production bundle |
-| `npm run start` | `next start` | Run production Next.js server |
-| `npm run studio` | `sanity dev --port 3333` | Run standalone Sanity Studio on port 3333 |
-| `npm run seed` | `node scripts/seed-sanity.mjs` | Seed Sanity dataset with default data |
-| `npm run upload:gallery` | `node scripts/upload-gallery.mjs` | Upload local gallery images to Sanity |
-| `npm run lint` | `next lint` | Run ESLint checks |
+| Script                   | Command                           | Purpose                                   |
+| ------------------------ | --------------------------------- | ----------------------------------------- |
+| `npm run dev`            | `next dev`                        | Start Next.js development server          |
+| `npm run build`          | `next build`                      | Build the Next.js production bundle       |
+| `npm run start`          | `next start`                      | Run production Next.js server             |
+| `npm run studio`         | `sanity dev --port 3333`          | Run standalone Sanity Studio on port 3333 |
+| `npm run seed`           | `node scripts/seed-sanity.mjs`    | Seed Sanity dataset with default data     |
+| `npm run upload:gallery` | `node scripts/upload-gallery.mjs` | Upload local gallery images to Sanity     |
+| `npm run lint`           | `next lint`                       | Run ESLint checks                         |
 
 ---
 

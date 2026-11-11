@@ -15,7 +15,15 @@ export const HIJRI_MONTHS = [
   "Dhul-Hijjah",
 ] as const;
 
-export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+export const WEEKDAYS = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+] as const;
 
 export type HijriDate = {
   year: number;
@@ -71,11 +79,20 @@ const gregorianFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
-function partValue(parts: Intl.DateTimeFormatPart[], type: Intl.DateTimeFormatPartTypes) {
+function partValue(
+  parts: Intl.DateTimeFormatPart[],
+  type: Intl.DateTimeFormatPartTypes,
+) {
   return Number(parts.find((part) => part.type === type)?.value);
 }
 
-export function chicagoDate(year: number, month: number, day: number, hour = 12, minute = 0) {
+export function chicagoDate(
+  year: number,
+  month: number,
+  day: number,
+  hour = 12,
+  minute = 0,
+) {
   const guess = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: TIME_ZONE,
@@ -148,7 +165,8 @@ export function gregorianForHijri(year: number, month: number, day: number) {
       const civil = gregorianParts(candidate);
       const noon = chicagoDate(civil.year, civil.month, civil.day);
       const hijri = hijriFromDate(noon);
-      if (hijri.year === year && hijri.month === month && hijri.day === day) return noon;
+      if (hijri.year === year && hijri.month === month && hijri.day === day)
+        return noon;
     }
   }
   return null;
@@ -158,14 +176,21 @@ export function daysInHijriMonth(year: number, month: number) {
   const thirtieth = gregorianForHijri(year, month, 30);
   if (!thirtieth) return 29;
   const hijri = hijriFromDate(thirtieth);
-  return hijri.year === year && hijri.month === month && hijri.day === 30 ? 30 : 29;
+  return hijri.year === year && hijri.month === month && hijri.day === 30
+    ? 30
+    : 29;
 }
 
 export function marksForDay(month: number, day: number): DayMark[] {
   const marks: DayMark[] = [];
 
   if (month === 1 && day === 10) {
-    marks.push({ kind: "sacred", label: "Day of Ashura", short: "Ashura", detail: "Sunnah fast" });
+    marks.push({
+      kind: "sacred",
+      label: "Day of Ashura",
+      short: "Ashura",
+      detail: "Sunnah fast",
+    });
   }
   if (month === 9 && day >= 21) {
     marks.push({
@@ -176,13 +201,28 @@ export function marksForDay(month: number, day: number): DayMark[] {
     });
   }
   if (month === 10 && day === 1) {
-    marks.push({ kind: "sacred", label: "Eid al-Fitr", short: "Eid", detail: "Sacred date" });
+    marks.push({
+      kind: "sacred",
+      label: "Eid al-Fitr",
+      short: "Eid",
+      detail: "Sacred date",
+    });
   }
   if (month === 12 && day === 9) {
-    marks.push({ kind: "sacred", label: "Day of Arafah", short: "Arafah", detail: "Sunnah fast" });
+    marks.push({
+      kind: "sacred",
+      label: "Day of Arafah",
+      short: "Arafah",
+      detail: "Sunnah fast",
+    });
   }
   if (month === 12 && day === 10) {
-    marks.push({ kind: "sacred", label: "Eid al-Adha", short: "Eid", detail: "Sacred date" });
+    marks.push({
+      kind: "sacred",
+      label: "Eid al-Adha",
+      short: "Eid",
+      detail: "Sacred date",
+    });
   }
   if (month === 12 && day === 13) {
     marks.push({
@@ -194,13 +234,22 @@ export function marksForDay(month: number, day: number): DayMark[] {
     return marks;
   }
   if (month !== 9 && (day === 13 || day === 14 || day === 15)) {
-    marks.push({ kind: "white-day", label: "White Day", short: "White", detail: "Sunnah fast" });
+    marks.push({
+      kind: "white-day",
+      label: "White Day",
+      short: "White",
+      detail: "Sunnah fast",
+    });
   }
 
   return marks;
 }
 
-function cellFor(year: number, month: number, day: number): CalendarCell | null {
+function cellFor(
+  year: number,
+  month: number,
+  day: number,
+): CalendarCell | null {
   const gregorian = gregorianForHijri(year, month, day);
   if (!gregorian) return null;
   return {
@@ -229,7 +278,11 @@ export function buildMonth(year: number, month: number): MonthGrid {
   };
 }
 
-export function shiftMonth(year: number, month: number, delta: number): HijriDate {
+export function shiftMonth(
+  year: number,
+  month: number,
+  delta: number,
+): HijriDate {
   const index = year * 12 + (month - 1) + delta;
   const monthIndex = ((index % 12) + 12) % 12;
   return {
@@ -243,11 +296,20 @@ export function hijriLabel(date: HijriDate) {
   return `${date.day} ${HIJRI_MONTHS[date.month - 1]} ${date.year}`;
 }
 
-function nextMarked(from: Date, match: (mark: DayMark) => boolean): UpcomingDate | null {
+function nextMarked(
+  from: Date,
+  match: (mark: DayMark) => boolean,
+): UpcomingDate | null {
   const start = gregorianParts(from);
   for (let offset = 0; offset < 370; offset += 1) {
-    const civil = new Date(Date.UTC(start.year, start.month - 1, start.day + offset));
-    const noon = chicagoDate(civil.getUTCFullYear(), civil.getUTCMonth() + 1, civil.getUTCDate());
+    const civil = new Date(
+      Date.UTC(start.year, start.month - 1, start.day + offset),
+    );
+    const noon = chicagoDate(
+      civil.getUTCFullYear(),
+      civil.getUTCMonth() + 1,
+      civil.getUTCDate(),
+    );
     const hijri = hijriFromDate(noon);
     const mark = marksForDay(hijri.month, hijri.day).find(match);
     if (!mark) continue;

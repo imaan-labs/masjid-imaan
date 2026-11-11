@@ -7,7 +7,11 @@ export function formatGalleryDate(value: string | null) {
   if (!value) return null;
   const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (!match) return value;
-  const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  const date = new Date(
+    Number(match[1]),
+    Number(match[2]) - 1,
+    Number(match[3]),
+  );
   return date.toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -35,7 +39,8 @@ export default function GalleryLightbox({
     document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
-      if (event.key === "ArrowRight") onIndex(Math.min(images.length - 1, index + 1));
+      if (event.key === "ArrowRight")
+        onIndex(Math.min(images.length - 1, index + 1));
       if (event.key === "ArrowLeft") onIndex(Math.max(0, index - 1));
     };
     document.addEventListener("keydown", onKeyDown);
@@ -49,8 +54,16 @@ export default function GalleryLightbox({
   const dateLabel = formatGalleryDate(image.date);
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/80 p-4" role="presentation">
-      <button type="button" className="absolute inset-0 cursor-default" aria-label="Close photo" onClick={onClose} />
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/80 p-4"
+      role="presentation"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default"
+        aria-label="Close photo"
+        onClick={onClose}
+      />
       <div
         role="dialog"
         aria-modal="true"
@@ -62,8 +75,12 @@ export default function GalleryLightbox({
             <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
               {galleryCategoryLabel(image.category)}
             </p>
-            <h2 className="mt-1 text-lg font-bold tracking-tight">{image.title}</h2>
-            {dateLabel ? <p className="mt-1 text-sm text-slate-600">{dateLabel}</p> : null}
+            <h2 className="mt-1 text-lg font-bold tracking-tight">
+              {image.title}
+            </h2>
+            {dateLabel ? (
+              <p className="mt-1 text-sm text-slate-600">{dateLabel}</p>
+            ) : null}
           </div>
           <button
             ref={closeRef}

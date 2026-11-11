@@ -30,7 +30,8 @@ export default function CampaignProgressCard({
   campaign?: CampaignProgress | null;
 }) {
   const { openGive } = useDonation();
-  const [fetchedCampaign, setFetchedCampaign] = useState<CampaignProgress>(FALLBACK_CAMPAIGN);
+  const [fetchedCampaign, setFetchedCampaign] =
+    useState<CampaignProgress>(FALLBACK_CAMPAIGN);
   const campaign = campaignProp ?? fetchedCampaign;
 
   useEffect(() => {
@@ -54,7 +55,10 @@ export default function CampaignProgressCard({
 
   const funded =
     campaign.goalAmount > 0
-      ? Math.max(0, Math.round((campaign.raisedAmount / campaign.goalAmount) * 1000) / 10)
+      ? Math.max(
+          0,
+          Math.round((campaign.raisedAmount / campaign.goalAmount) * 1000) / 10,
+        )
       : 0;
   const barWidth = Math.min(100, funded);
   const remaining = Math.max(0, campaign.goalAmount - campaign.raisedAmount);
@@ -68,7 +72,9 @@ export default function CampaignProgressCard({
     >
       <div
         className={`flex gap-4 ${
-          compact ? "flex-col" : "flex-col lg:flex-row lg:items-center lg:justify-between"
+          compact
+            ? "flex-col"
+            : "flex-col lg:flex-row lg:items-center lg:justify-between"
         }`}
       >
         <div className="min-w-0 flex-1">
@@ -96,9 +102,12 @@ export default function CampaignProgressCard({
             <div className="mt-2.5">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 text-xs font-semibold text-slate-900">
                 <p>
-                  {money(campaign.raisedAmount)} Raised of {money(campaign.goalAmount)} ({funded}% Funded)
+                  {money(campaign.raisedAmount)} Raised of{" "}
+                  {money(campaign.goalAmount)} ({funded}% Funded)
                 </p>
-                <p className="text-red-700">{money(remaining)} Remaining Needed</p>
+                <p className="text-red-700">
+                  {money(remaining)} Remaining Needed
+                </p>
               </div>
               <div
                 className="mt-2.5 h-2.5 overflow-hidden rounded-full bg-slate-200"

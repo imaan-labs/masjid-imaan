@@ -57,47 +57,59 @@ export default function Features() {
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           <article className={cardClass}>
-            <p className={badgeClass}>
-              Fast & Recurring
-            </p>
-            <h3 className="mt-4 text-xl font-bold tracking-tight">Quick Donate</h3>
+            <p className={badgeClass}>Fast & Recurring</p>
+            <h3 className="mt-4 text-xl font-bold tracking-tight">
+              Quick Donate
+            </h3>
             <p className="mt-1 text-sm font-medium text-slate-500">Donorbox</p>
             <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
               Give immediately via debit/credit card or set up monthly support.
             </p>
-            <button type="button" onClick={() => openGive("card")} className={buttonClass}>
+            <button
+              type="button"
+              onClick={() => openGive("card")}
+              className={buttonClass}
+            >
               Quick Donate (Card/ACH) ⚡
             </button>
           </article>
 
           <article className={cardClass}>
-            <p className={badgeClass}>
-              Recommended • 100% to Masjid
-            </p>
+            <p className={badgeClass}>Recommended • 100% to Masjid</p>
             <h3 className="mt-4 text-xl font-bold tracking-tight">Zeffy</h3>
-            <p className="mt-1 text-sm font-medium text-slate-500">0% platform fee</p>
+            <p className="mt-1 text-sm font-medium text-slate-500">
+              0% platform fee
+            </p>
             <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
               Covers transaction fees so every cent supports operations.
             </p>
-            <button type="button" onClick={() => openGive("zeffy")} className={buttonClass}>
+            <button
+              type="button"
+              onClick={() => openGive("zeffy")}
+              className={buttonClass}
+            >
               Open Zeffy Portal →
             </button>
           </article>
 
           <article className={cardClass}>
-            <p className={badgeClass}>
-              Direct & Fee-Free
-            </p>
-            <h3 className="mt-4 text-xl font-bold tracking-tight">Bank Transfer</h3>
+            <p className={badgeClass}>Direct & Fee-Free</p>
+            <h3 className="mt-4 text-xl font-bold tracking-tight">
+              Bank Transfer
+            </h3>
             <p className="mt-1 text-sm font-medium text-slate-500">Zelle</p>
             <ul className="mt-4 flex-1 space-y-4">
               {zelleAccounts.map((account) => {
                 const isCopied = copied === account.email;
                 return (
                   <li key={account.email}>
-                    <p className="text-sm font-semibold text-slate-900">{account.label}</p>
+                    <p className="text-sm font-semibold text-slate-900">
+                      {account.label}
+                    </p>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
-                      <span className="text-sm text-slate-600">{account.email}</span>
+                      <span className="text-sm text-slate-600">
+                        {account.email}
+                      </span>
                       <button
                         type="button"
                         onClick={() => copyEmail(account.email)}
@@ -116,7 +128,10 @@ export default function Features() {
             </p>
             <p className="mt-4 text-sm leading-6 text-slate-600">
               Mail a check or confirm a pledge at{" "}
-              <a href="mailto:shura@imaanmasjid.org" className="font-semibold text-slate-900">
+              <a
+                href="mailto:shura@imaanmasjid.org"
+                className="font-semibold text-slate-900"
+              >
                 shura@imaanmasjid.org
               </a>
               .
@@ -130,7 +145,9 @@ export default function Features() {
               🛒 Support via Amazon Purchases
             </h3>
             <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-600">
-              Shop through our official affiliate link at no additional cost to you, and Amazon will contribute a percentage of eligible purchases to IMAAN.
+              Shop through our official affiliate link at no additional cost to
+              you, and Amazon will contribute a percentage of eligible purchases
+              to IMAAN.
             </p>
           </div>
           <button

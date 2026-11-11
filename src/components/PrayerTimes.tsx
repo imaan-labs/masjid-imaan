@@ -57,7 +57,9 @@ function clockInstant(label: string, sameDay: Date) {
   if (meridiem === "PM" && hour !== 12) hour += 12;
   if (meridiem === "AM" && hour === 12) hour = 0;
   const targetMinutes = hour * 60 + minute;
-  return new Date(sameDay.getTime() + (targetMinutes - chicagoMinutes(sameDay)) * 60 * 1000);
+  return new Date(
+    sameDay.getTime() + (targetMinutes - chicagoMinutes(sameDay)) * 60 * 1000,
+  );
 }
 
 function offsetBase(label: string, sunset: Date, maghrib: Date, isha: Date) {
@@ -176,9 +178,15 @@ function jumuahShifts(settings: PrayerSettings) {
   ];
 }
 
-export default function PrayerTimes({ compact = false }: { compact?: boolean }) {
+export default function PrayerTimes({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
   const [now, setNow] = useState<Date | null>(null);
-  const [settings, setSettings] = useState<PrayerSettings>(DEFAULT_PRAYER_SETTINGS);
+  const [settings, setSettings] = useState<PrayerSettings>(
+    DEFAULT_PRAYER_SETTINGS,
+  );
 
   useEffect(() => {
     const update = () => setNow(new Date());
@@ -211,7 +219,9 @@ export default function PrayerTimes({ compact = false }: { compact?: boolean }) 
         id="prayer-times"
         className="mx-4 my-4 max-w-5xl rounded-3xl bg-brand-dark px-4 py-6 text-white shadow-xl sm:mx-auto sm:p-10"
       >
-        <p className="text-sm text-slate-300">Loading today&apos;s prayer times…</p>
+        <p className="text-sm text-slate-300">
+          Loading today&apos;s prayer times…
+        </p>
       </section>
     );
   }
@@ -226,12 +236,18 @@ export default function PrayerTimes({ compact = false }: { compact?: boolean }) 
   );
   const ishaAt = clockInstant(ishaDisplay.time, sunset) ?? times15.isha;
   const taraweehDisplay = settings.taraweeh.trim()
-    ? resolvePrayerOffset(settings.taraweeh, offsetBase(settings.taraweeh, sunset, maghribAt, ishaAt))
+    ? resolvePrayerOffset(
+        settings.taraweeh,
+        offsetBase(settings.taraweeh, sunset, maghribAt, ishaAt),
+      )
     : { time: "" };
   const rows = iqamahRows(sunset, times15.isha, settings).map((row) => {
-    if (row.name === "Maghrib" && maghribDisplay.time) return { ...row, iqamah: maghribDisplay.time };
-    if (row.name === "Isha" && ishaDisplay.time) return { ...row, iqamah: ishaDisplay.time };
-    if (row.name === "Taraweeh" && taraweehDisplay.time) return { ...row, iqamah: taraweehDisplay.time };
+    if (row.name === "Maghrib" && maghribDisplay.time)
+      return { ...row, iqamah: maghribDisplay.time };
+    if (row.name === "Isha" && ishaDisplay.time)
+      return { ...row, iqamah: ishaDisplay.time };
+    if (row.name === "Taraweeh" && taraweehDisplay.time)
+      return { ...row, iqamah: taraweehDisplay.time };
     return row;
   });
   const shifts = jumuahShifts(settings);
@@ -299,19 +315,25 @@ export default function PrayerTimes({ compact = false }: { compact?: boolean }) 
                 className={`grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] items-center border-b border-slate-800 py-1.5 ${current ? "rounded-lg bg-white/10" : ""}`}
                 role="row"
               >
-                <span className={`text-sm font-bold ${current ? "text-brand-gold" : "text-white"}`}>
+                <span
+                  className={`text-sm font-bold ${current ? "text-brand-gold" : "text-white"}`}
+                >
                   {row.name}
                 </span>
                 <span className="text-xs font-medium leading-4 text-slate-300">
                   {adhanNote(row.name, times15, times18, timesHanafi)}
                 </span>
-                <span className="text-right text-base font-bold text-white">{row.iqamah}</span>
+                <span className="text-right text-base font-bold text-white">
+                  {row.iqamah}
+                </span>
               </div>
             );
           })}
         </div>
 
-        <div className={`mb-8 mt-8 flex-col justify-between border-b border-white/15 pb-4 md:flex-row md:items-end ${compact ? "hidden" : "hidden md:flex"}`}>
+        <div
+          className={`mb-8 mt-8 flex-col justify-between border-b border-white/15 pb-4 md:flex-row md:items-end ${compact ? "hidden" : "hidden md:flex"}`}
+        >
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-brand-gold">
               Daily & Congregational
@@ -328,51 +350,80 @@ export default function PrayerTimes({ compact = false }: { compact?: boolean }) 
           </div>
         </div>
 
-        <div className={`gap-4 md:grid-cols-2 ${taraweehDisplay.time ? "lg:grid-cols-6" : "lg:grid-cols-5"} ${compact ? "hidden" : "hidden md:grid"}`}>
+        <div
+          className={`gap-4 md:grid-cols-2 ${taraweehDisplay.time ? "lg:grid-cols-6" : "lg:grid-cols-5"} ${compact ? "hidden" : "hidden md:grid"}`}
+        >
           <PrayerCard name="Fajr" iqamah={settings.fajr}>
             <div>
-              <span className="text-slate-300">15°:</span> {formatTime(times15.fajr)}
+              <span className="text-slate-300">15°:</span>{" "}
+              {formatTime(times15.fajr)}
             </div>
             <div>
-              <span className="text-slate-300">18°:</span> {formatTime(times18.fajr)}
+              <span className="text-slate-300">18°:</span>{" "}
+              {formatTime(times18.fajr)}
             </div>
           </PrayerCard>
 
           <PrayerCard name="Dhuhr" iqamah={settings.dhuhr}>
-            <span className="text-slate-300">Adhan:</span> {formatTime(times15.dhuhr)}
+            <span className="text-slate-300">Adhan:</span>{" "}
+            {formatTime(times15.dhuhr)}
           </PrayerCard>
 
           <PrayerCard name="Asr" iqamah={settings.asr}>
             <div>
-              <span className="text-slate-300">Standard:</span> {formatTime(times15.asr)}
+              <span className="text-slate-300">Standard:</span>{" "}
+              {formatTime(times15.asr)}
             </div>
             <div>
-              <span className="text-slate-300">Hanafi:</span> {formatTime(timesHanafi.asr)}
+              <span className="text-slate-300">Hanafi:</span>{" "}
+              {formatTime(timesHanafi.asr)}
             </div>
           </PrayerCard>
 
-          <PrayerCard name="Maghrib" iqamah={maghribDisplay.time} note={maghribDisplay.note} iqamahClassName="text-xl">
-            <span className="text-slate-300">Adhan:</span> {formatTime(times15.maghrib)}
+          <PrayerCard
+            name="Maghrib"
+            iqamah={maghribDisplay.time}
+            note={maghribDisplay.note}
+            iqamahClassName="text-xl"
+          >
+            <span className="text-slate-300">Adhan:</span>{" "}
+            {formatTime(times15.maghrib)}
           </PrayerCard>
 
-          <PrayerCard name="Isha" iqamah={ishaDisplay.time} note={ishaDisplay.note}>
+          <PrayerCard
+            name="Isha"
+            iqamah={ishaDisplay.time}
+            note={ishaDisplay.note}
+          >
             <div>
-              <span className="text-slate-300">15°:</span> {formatTime(times15.isha)}
+              <span className="text-slate-300">15°:</span>{" "}
+              {formatTime(times15.isha)}
             </div>
             <div>
-              <span className="text-slate-300">18°:</span> {formatTime(times18.isha)}
+              <span className="text-slate-300">18°:</span>{" "}
+              {formatTime(times18.isha)}
             </div>
           </PrayerCard>
 
           {taraweehDisplay.time ? (
-            <PrayerCard name="Taraweeh" iqamah={taraweehDisplay.time} note={taraweehDisplay.note} iqamahClassName="text-xl">
+            <PrayerCard
+              name="Taraweeh"
+              iqamah={taraweehDisplay.time}
+              note={taraweehDisplay.note}
+              iqamahClassName="text-xl"
+            >
               <span className="text-slate-300">After Isha</span>
             </PrayerCard>
           ) : null}
         </div>
 
-        <div id="jumuah" className={`scroll-mt-28 ${compact ? "mt-3" : "mt-4 md:mt-8"}`}>
-          <div className={`grid ${compact ? "grid-cols-2 gap-2" : "grid-cols-1 gap-4 md:grid-cols-2"}`}>
+        <div
+          id="jumuah"
+          className={`scroll-mt-28 ${compact ? "mt-3" : "mt-4 md:mt-8"}`}
+        >
+          <div
+            className={`grid ${compact ? "grid-cols-2 gap-2" : "grid-cols-1 gap-4 md:grid-cols-2"}`}
+          >
             {shifts.map((shift) => (
               <div
                 key={shift.shift}
@@ -418,8 +469,14 @@ function PrayerCard({
         <span className="block text-xs font-medium uppercase text-slate-300">
           Iqamah
         </span>
-        <span className={`${iqamahClassName} font-extrabold text-white`}>{iqamah}</span>
-        {note ? <span className="mt-1 block px-2 text-[10px] font-medium text-slate-400">{note}</span> : null}
+        <span className={`${iqamahClassName} font-extrabold text-white`}>
+          {iqamah}
+        </span>
+        {note ? (
+          <span className="mt-1 block px-2 text-[10px] font-medium text-slate-400">
+            {note}
+          </span>
+        ) : null}
       </div>
       <div className="mt-3 space-y-1 text-xs text-slate-300">{children}</div>
     </div>

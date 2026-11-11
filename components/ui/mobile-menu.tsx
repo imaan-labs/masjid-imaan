@@ -90,7 +90,10 @@ export default function MobileMenu() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <p id={titleId} className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800">
+            <p
+              id={titleId}
+              className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800"
+            >
               Imaan Masjid
             </p>
             <button

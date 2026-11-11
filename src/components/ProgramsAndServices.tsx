@@ -13,7 +13,10 @@ const programs = [
       "Full accommodations for sisters with dedicated live audio-video arrangements.",
       "Open community discussion and a family-friendly environment.",
     ],
-    action: { href: "/bulletin?category=sessions", label: "View Schedule & Details →" },
+    action: {
+      href: "/bulletin?category=sessions",
+      label: "View Schedule & Details →",
+    },
   },
   {
     id: "ramadan-services",
@@ -87,7 +90,10 @@ export default function ProgramsAndServices() {
                 <ul className="mt-4 flex-1 space-y-3 text-sm leading-6 text-slate-600">
                   {program.points.map((point) => (
                     <li key={point} className="flex gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true" />
+                      <span
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400"
+                        aria-hidden="true"
+                      />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -95,7 +101,10 @@ export default function ProgramsAndServices() {
                 {program.note ? (
                   <p className="mt-5 rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-2 text-xs font-medium leading-5 text-slate-600">
                     {program.note}{" "}
-                    <Link href={program.bulletinHref ?? "/bulletin"} className="font-semibold underline underline-offset-2">
+                    <Link
+                      href={program.bulletinHref ?? "/bulletin"}
+                      className="font-semibold underline underline-offset-2"
+                    >
                       Open the bulletin
                     </Link>
                   </p>
@@ -120,8 +129,12 @@ export default function ProgramsAndServices() {
                 <p className="w-fit rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-800">
                   {item.badge}
                 </p>
-                <h3 className="mt-3 text-base font-bold tracking-tight text-slate-900">{item.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{item.description}</p>
+                <h3 className="mt-3 text-base font-bold tracking-tight text-slate-900">
+                  {item.title}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">
+                  {item.description}
+                </p>
                 {item.external ? (
                   <a
                     href={item.href}

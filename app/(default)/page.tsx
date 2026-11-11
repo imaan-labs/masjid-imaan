@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Imaan Masjid",
-  description: "The place to practice your deen, to teach your kids and more. Certified scholars both males and females are present to learn from!",
+  description:
+    "The place to practice your deen, to teach your kids and more. Certified scholars both males and females are present to learn from!",
 };
 
 import Hero from "@/components/hero";

@@ -38,7 +38,8 @@ export default defineType({
       title: "Maghrib Iqamah",
       type: "string",
       initialValue: "Sunset + 5 min",
-      description: 'Clock time or a sunset offset, such as "6:55 PM" or "Sunset + 10 min".',
+      description:
+        'Clock time or a sunset offset, such as "6:55 PM" or "Sunset + 10 min".',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -46,14 +47,16 @@ export default defineType({
       title: "Isha Iqamah",
       type: "string",
       initialValue: "8:30 PM",
-      description: 'Clock time or an offset, such as "8:15 PM" or "Maghrib + 90 min".',
+      description:
+        'Clock time or an offset, such as "8:15 PM" or "Maghrib + 90 min".',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "taraweeh",
       title: "Taraweeh Prayer (Ramadan Only)",
       type: "string",
-      description: 'Leave blank to hide. Examples: "Isha + 15 min", "8:45 PM", or fixed time.',
+      description:
+        'Leave blank to hide. Examples: "Isha + 15 min", "8:45 PM", or fixed time.',
     }),
     defineField({
       name: "jumuahFirstLecture",
@@ -95,7 +98,8 @@ export default defineType({
       name: "specialAnnouncement",
       title: "Special Announcement",
       type: "string",
-      description: "Optional note, such as Ramadan Taraweeh or a temporary schedule change.",
+      description:
+        "Optional note, such as Ramadan Taraweeh or a temporary schedule change.",
     }),
   ],
   preview: {

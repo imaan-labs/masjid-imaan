@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import GalleryLightbox, { formatGalleryDate } from "@/src/components/GalleryLightbox";
+import GalleryLightbox, {
+  formatGalleryDate,
+} from "@/src/components/GalleryLightbox";
 import {
   galleryArchiveQuery,
   galleryCategoryLabel,
@@ -48,13 +50,17 @@ export default function GalleryArchive() {
     };
   }, []);
 
-  const visible = images.filter((image) => filter === "all" || image.category === filter);
+  const visible = images.filter(
+    (image) => filter === "all" || image.category === filter,
+  );
 
   return (
     <section className="scroll-mt-24 py-16 text-slate-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-semibold tracking-tight text-brand-dark sm:text-5xl">Gallery</h1>
+          <h1 className="text-4xl font-semibold tracking-tight text-brand-dark sm:text-5xl">
+            Gallery
+          </h1>
           <p className="mt-3 text-base text-slate-600 sm:text-lg">
             Photos from prayers, gatherings, Eid, and the masjid.
           </p>
@@ -119,9 +125,13 @@ export default function GalleryArchive() {
                       <span className="block text-xs font-bold uppercase tracking-wide text-slate-500">
                         {galleryCategoryLabel(image.category)}
                       </span>
-                      <span className="mt-1 block text-lg font-semibold text-slate-900">{image.title}</span>
+                      <span className="mt-1 block text-lg font-semibold text-slate-900">
+                        {image.title}
+                      </span>
                       {dateLabel ? (
-                        <span className="mt-1 block text-sm text-slate-600">{dateLabel}</span>
+                        <span className="mt-1 block text-sm text-slate-600">
+                          {dateLabel}
+                        </span>
                       ) : null}
                     </span>
                   </button>
@@ -132,7 +142,12 @@ export default function GalleryArchive() {
         )}
       </div>
       {activeIndex !== null ? (
-        <GalleryLightbox images={visible} index={activeIndex} onClose={close} onIndex={setIndex} />
+        <GalleryLightbox
+          images={visible}
+          index={activeIndex}
+          onClose={close}
+          onIndex={setIndex}
+        />
       ) : null}
     </section>
   );

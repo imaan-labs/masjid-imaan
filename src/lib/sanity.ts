@@ -87,21 +87,37 @@ export function resolvePrayerSettings(
     asr: scheduleText(document?.asr, defaults.asr),
     maghrib: scheduleText(document?.maghrib, defaults.maghrib),
     isha: scheduleText(document?.isha, defaults.isha),
-    taraweeh: typeof document?.taraweeh === "string" ? document.taraweeh.trim() : "",
-    jumuahFirstLecture: scheduleText(document?.jumuahFirstLecture, defaults.jumuahFirstLecture),
-    jumuahFirstSalah: scheduleText(document?.jumuahFirstSalah, defaults.jumuahFirstSalah),
-    jumuahSecondLecture: scheduleText(document?.jumuahSecondLecture, defaults.jumuahSecondLecture),
-    jumuahSecondSalah: scheduleText(document?.jumuahSecondSalah, defaults.jumuahSecondSalah),
+    taraweeh:
+      typeof document?.taraweeh === "string" ? document.taraweeh.trim() : "",
+    jumuahFirstLecture: scheduleText(
+      document?.jumuahFirstLecture,
+      defaults.jumuahFirstLecture,
+    ),
+    jumuahFirstSalah: scheduleText(
+      document?.jumuahFirstSalah,
+      defaults.jumuahFirstSalah,
+    ),
+    jumuahSecondLecture: scheduleText(
+      document?.jumuahSecondLecture,
+      defaults.jumuahSecondLecture,
+    ),
+    jumuahSecondSalah: scheduleText(
+      document?.jumuahSecondSalah,
+      defaults.jumuahSecondSalah,
+    ),
     specialAnnouncement:
-      typeof document?.specialAnnouncement === "string" ? document.specialAnnouncement.trim() : "",
+      typeof document?.specialAnnouncement === "string"
+        ? document.specialAnnouncement.trim()
+        : "",
   };
 }
 
 export async function loadPrayerSettings(): Promise<PrayerSettings> {
   try {
-    const document = await getSanityClient().fetch<Partial<PrayerSettings> | null>(
-      PRAYER_SETTINGS_QUERY,
-    );
+    const document =
+      await getSanityClient().fetch<Partial<PrayerSettings> | null>(
+        PRAYER_SETTINGS_QUERY,
+      );
     return resolvePrayerSettings(document);
   } catch {
     return DEFAULT_PRAYER_SETTINGS;
@@ -160,7 +176,9 @@ export async function loadFlyers(): Promise<Flyer[]> {
   }
 }
 
-export function flyersFromDocuments(documents: FlyerDocument[] | null | undefined): Flyer[] {
+export function flyersFromDocuments(
+  documents: FlyerDocument[] | null | undefined,
+): Flyer[] {
   return (documents ?? []).flatMap((document) => {
     if (!document.assetUrl) return [];
 
@@ -221,7 +239,10 @@ export type GalleryImage = {
 };
 
 export function galleryCategoryLabel(category: string | null | undefined) {
-  return GALLERY_CATEGORIES.find((item) => item.id === category)?.label ?? "Community & Gatherings";
+  return (
+    GALLERY_CATEGORIES.find((item) => item.id === category)?.label ??
+    "Community & Gatherings"
+  );
 }
 
 export const FEATURED_CAMPAIGN_QUERY = `*[_type == "campaign" && !(_id in path("drafts.**")) && scope in ["masjid", "both"] && isFeatured == true] | order(_createdAt desc)[0]{
@@ -279,12 +300,17 @@ export const FALLBACK_CAMPAIGN: CampaignProgress = {
 export function resolveCampaign(
   document: CampaignDocument | null | undefined,
 ): CampaignProgress {
-  const title = typeof document?.title === "string" ? document.title.trim() : "";
+  const title =
+    typeof document?.title === "string" ? document.title.trim() : "";
   if (!title) return FALLBACK_CAMPAIGN;
-  const goalAmount = typeof document?.goalAmount === "number" ? document.goalAmount : 0;
-  const raisedAmount = typeof document?.raisedAmount === "number" ? document.raisedAmount : 0;
+  const goalAmount =
+    typeof document?.goalAmount === "number" ? document.goalAmount : 0;
+  const raisedAmount =
+    typeof document?.raisedAmount === "number" ? document.raisedAmount : 0;
   const description =
-    typeof document?.description === "string" ? document.description.trim() : "";
+    typeof document?.description === "string"
+      ? document.description.trim()
+      : "";
   const deadline =
     typeof document?.deadline === "string" && document.deadline.trim()
       ? document.deadline.trim()

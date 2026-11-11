@@ -44,7 +44,9 @@ export default function GalleryCarousel() {
     const scroller = scrollerRef.current;
     if (!scroller) return;
     setAtStart(scroller.scrollLeft <= 4);
-    setAtEnd(scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4);
+    setAtEnd(
+      scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 4,
+    );
   }, []);
 
   useEffect(() => {
@@ -68,8 +70,13 @@ export default function GalleryCarousel() {
       <div className="mx-auto w-full max-w-7xl px-4 pb-4 pt-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">COMMUNITY MOMENTS</p>
-            <h2 id={headingId} className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+              COMMUNITY MOMENTS
+            </p>
+            <h2
+              id={headingId}
+              className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl"
+            >
               Life at Imaan Masjid
             </h2>
             <p className="mt-3 text-base leading-7 text-slate-600">
@@ -120,7 +127,9 @@ export default function GalleryCarousel() {
                   <span className="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-800">
                     {galleryCategoryLabel(image.category)}
                   </span>
-                  <span className="mt-2 text-sm font-semibold text-white">{image.title}</span>
+                  <span className="mt-2 text-sm font-semibold text-white">
+                    {image.title}
+                  </span>
                 </span>
               </button>
             </li>
@@ -135,7 +144,12 @@ export default function GalleryCarousel() {
         </Link>
       </div>
       {activeIndex !== null ? (
-        <GalleryLightbox images={images} index={activeIndex} onClose={close} onIndex={setIndex} />
+        <GalleryLightbox
+          images={images}
+          index={activeIndex}
+          onClose={close}
+          onIndex={setIndex}
+        />
       ) : null}
     </section>
   );
