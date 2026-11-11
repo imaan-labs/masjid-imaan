@@ -37,7 +37,8 @@ export default function Header() {
   useEffect(() => {
     if (!servicesOpen) return;
     const onPointerDown = (event: MouseEvent) => {
-      if (!servicesRef.current?.contains(event.target as Node)) setServicesOpen(false);
+      if (!servicesRef.current?.contains(event.target as Node))
+        setServicesOpen(false);
     };
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setServicesOpen(false);
@@ -74,11 +75,16 @@ export default function Header() {
               <span className="block truncate text-[18px] font-bold text-slate-900">
                 Imaan Masjid
               </span>
-              <span className="block text-xs font-medium text-slate-500">Melissa, TX</span>
+              <span className="block text-xs font-medium text-slate-500">
+                Melissa, TX
+              </span>
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+          <nav
+            className="hidden items-center gap-1 md:flex"
+            aria-label="Primary"
+          >
             <div className="relative" ref={servicesRef}>
               <button
                 type="button"
@@ -89,7 +95,13 @@ export default function Header() {
               >
                 Services
                 <svg className="h-4 w-4" viewBox="0 0 20 20" aria-hidden="true">
-                  <path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <path
+                    d="M5 7.5l5 5 5-5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </button>
               {servicesOpen ? (
@@ -177,35 +189,85 @@ export default function Header() {
   );
 }
 
-function BarIcon({ name }: { name: "prayer" | "bulletin" | "calendar" | "donate" }) {
+function BarIcon({
+  name,
+}: {
+  name: "prayer" | "bulletin" | "calendar" | "donate";
+}) {
   const common = "h-5 w-5";
   if (name === "prayer") {
     return (
       <svg className={common} viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="1.8" />
-        <path d="M12 8v4.5l3 2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <circle
+          cx="12"
+          cy="12"
+          r="8"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M12 8v4.5l3 2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
   if (name === "bulletin") {
     return (
       <svg className={common} viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M7 4.5h7.5L19 9v10.5H7z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-        <path d="M14 4.5V9h5M9 13h7M9 16.5h5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path
+          d="M7 4.5h7.5L19 9v10.5H7z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M14 4.5V9h5M9 13h7M9 16.5h5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
   if (name === "calendar") {
     return (
       <svg className={common} viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="4" y="5.5" width="16" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.8" />
-        <path d="M8 3.5v4M16 3.5v4M4 10h16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <rect
+          x="4"
+          y="5.5"
+          width="16"
+          height="14"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M8 3.5v4M16 3.5v4M4 10h16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
   return (
     <svg className={common} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <path
+        d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

@@ -28,7 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${inter.variable} w-full overflow-x-clip`}>
+    <html
+      lang="en"
+      className={`${jakarta.variable} ${inter.variable} w-full overflow-x-clip`}
+    >
       <body className="w-full overflow-x-clip bg-gradient-to-b from-slate-100/80 via-white to-slate-50 font-sans text-slate-900 antialiased">
         <SiteFrame>{children}</SiteFrame>
       </body>

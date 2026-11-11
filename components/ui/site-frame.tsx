@@ -6,11 +6,7 @@ import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
 import { DonationRoot } from "@/src/components/DonationModal";
 
-export default function SiteFrame({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const studio = pathname.startsWith("/admin");
 
@@ -30,7 +26,15 @@ export default function SiteFrame({
 
   if (studio) {
     return (
-      <div style={{ height: "100vh", width: "100vw", margin: 0, padding: 0, overflow: "hidden" }}>
+      <div
+        style={{
+          height: "100vh",
+          width: "100vw",
+          margin: 0,
+          padding: 0,
+          overflow: "hidden",
+        }}
+      >
         {children}
       </div>
     );

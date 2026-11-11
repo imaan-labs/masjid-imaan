@@ -27,7 +27,11 @@ export default function TopBar() {
               aria-label="Facebook"
               className="inline-flex h-6 w-6 items-center justify-center rounded-full text-current hover:bg-white/10"
             >
-              <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                className="h-3.5 w-3.5 fill-current"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path d="M14.5 8.5V6.8c0-.7.5-1 1.2-1H17V3h-2.1C12.4 3 11 4.5 11 6.6v1.9H9v2.7h2V21h3.5v-9.8h2.3l.4-2.7h-2.7z" />
               </svg>
             </a>
@@ -38,10 +42,27 @@ export default function TopBar() {
               aria-label="Instagram"
               className="inline-flex h-6 w-6 items-center justify-center rounded-full text-current hover:bg-white/10"
             >
-              <svg className="h-3.5 w-3.5 fill-none stroke-current" viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="4" y="4" width="16" height="16" rx="4" strokeWidth="1.8" />
+              <svg
+                className="h-3.5 w-3.5 fill-none stroke-current"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <rect
+                  x="4"
+                  y="4"
+                  width="16"
+                  height="16"
+                  rx="4"
+                  strokeWidth="1.8"
+                />
                 <circle cx="12" cy="12" r="3.5" strokeWidth="1.8" />
-                <circle cx="17.2" cy="6.8" r="0.8" fill="currentColor" stroke="none" />
+                <circle
+                  cx="17.2"
+                  cy="6.8"
+                  r="0.8"
+                  fill="currentColor"
+                  stroke="none"
+                />
               </svg>
             </a>
           </span>

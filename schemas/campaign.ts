@@ -21,7 +21,8 @@ export default defineType({
       name: "deadline",
       title: "Deadline",
       type: "string",
-      description: 'Optional target, such as "Nov 30, 2026" or "Urgent Appeal".',
+      description:
+        'Optional target, such as "Nov 30, 2026" or "Urgent Appeal".',
     }),
     defineField({
       name: "scope",

@@ -27,7 +27,9 @@ export default function Footer() {
                     <span className="block text-lg font-semibold text-white">
                       Imaan Masjid
                     </span>
-                    <span className="block text-xs text-emerald-200">Melissa, TX</span>
+                    <span className="block text-xs text-emerald-200">
+                      Melissa, TX
+                    </span>
                   </span>
                 </Link>
               </div>
@@ -49,32 +51,50 @@ export default function Footer() {
                 <h6 className="text-emerald-200 font-medium mb-1">Resources</h6>
                 <ul>
                   <li className="mb-1">
-                    <Link href="/#donate" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/#donate"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Donate
                     </Link>
                   </li>
                   <li className="mb-1">
-                    <Link href="/prayer-times" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/prayer-times"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Daily Prayer & Jumu&apos;ah
                     </Link>
                   </li>
                   <li className="mb-1">
-                    <Link href="/bulletin" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/bulletin"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Community Bulletin
                     </Link>
                   </li>
                   <li className="mb-1">
-                    <Link href="/calendar" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/calendar"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Hilāl Calendar
                     </Link>
                   </li>
                   <li className="mb-1">
-                    <Link href="/excuse-letters" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/excuse-letters"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Excuse Letters
                     </Link>
                   </li>
                   <li className="mb-1">
-                    <Link href="/gallery" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/gallery"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Photo Gallery
                     </Link>
                   </li>
@@ -96,12 +116,18 @@ export default function Footer() {
                     </a>
                   </li>
                   <li className="mb-1">
-                    <Link href="/privacy" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/privacy"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Privacy Policy
                     </Link>
                   </li>
                   <li className="mb-1">
-                    <Link href="/terms" className="text-emerald-50 hover:text-white">
+                    <Link
+                      href="/terms"
+                      className="text-emerald-50 hover:text-white"
+                    >
                       Terms
                     </Link>
                   </li>
@@ -195,7 +221,11 @@ export default function Footer() {
 
             {/* Copyrights note */}
             <div className="text-emerald-100/70 text-sm mr-4">
-              &copy; IMAAN™ - All rights reserved. IMAAN is a tax-exempt non-profit organization registered in the State of Texas, that has been formed exclusively for community building, educational, and religious purposes. It is registered with the Internal Revenue Service under revenue code 501(c)(3).
+              &copy; IMAAN™ - All rights reserved. IMAAN is a tax-exempt
+              non-profit organization registered in the State of Texas, that has
+              been formed exclusively for community building, educational, and
+              religious purposes. It is registered with the Internal Revenue
+              Service under revenue code 501(c)(3).
             </div>
           </div>
         </div>

@@ -108,7 +108,10 @@ function filled(value: string) {
 }
 
 function contactLine(audience: Audience) {
-  const who = audience === "student" ? "the family or Imaan Masjid of Melissa" : "Imaan Masjid of Melissa";
+  const who =
+    audience === "student"
+      ? "the family or Imaan Masjid of Melissa"
+      : "Imaan Masjid of Melissa";
   return `We thank you for your consideration and understanding in this matter. If you have any questions or need additional information, please contact ${who} directly at shura@imaanmasjid.org.`;
 }
 
@@ -120,7 +123,9 @@ export function buildExcuseLetter(id: LetterId, fields: LetterFields) {
   const name = filled(fields.name);
   const institution = filled(fields.institution);
   const dates = filled(fields.dates);
-  const option = excuseLetterOptions.find((item) => item.id === id) ?? excuseLetterOptions[0];
+  const option =
+    excuseLetterOptions.find((item) => item.id === id) ??
+    excuseLetterOptions[0];
   const institutionName = fields.institution.trim();
 
   return {
@@ -158,7 +163,12 @@ function subjectLine(id: LetterId, name: string) {
   }
 }
 
-function letterParagraphs(id: LetterId, name: string, institution: string, dates: string) {
+function letterParagraphs(
+  id: LetterId,
+  name: string,
+  institution: string,
+  dates: string,
+) {
   switch (id) {
     case "eid-fitr-student":
       return [

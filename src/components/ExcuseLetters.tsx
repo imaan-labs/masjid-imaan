@@ -27,12 +27,13 @@ export default function ExcuseLetters() {
         month: "long",
         day: "numeric",
         year: "numeric",
-      }).format(new Date())
+      }).format(new Date()),
     );
   }, []);
 
   const options = lettersFor(audience);
-  const selected = options.find((option) => option.id === letterId) ?? options[0];
+  const selected =
+    options.find((option) => option.id === letterId) ?? options[0];
   const letter = buildExcuseLetter(selected.id, { name, institution, dates });
   const institutionLabel = audience === "student" ? "School" : "Employer";
 
@@ -73,11 +74,15 @@ export default function ExcuseLetters() {
             Excuse Letters
           </h1>
           <p className="mt-2 text-sm leading-6 text-[#5C5146]">
-            Choose a school or workplace letter, then enter the name, institution, and date(s).
-            The letter updates as you type.
+            Choose a school or workplace letter, then enter the name,
+            institution, and date(s). The letter updates as you type.
           </p>
 
-          <div className="mt-5 grid grid-cols-2 gap-2" role="group" aria-label="Letter audience">
+          <div
+            className="mt-5 grid grid-cols-2 gap-2"
+            role="group"
+            aria-label="Letter audience"
+          >
             {(
               [
                 ["student", "School / Students"],
@@ -107,7 +112,10 @@ export default function ExcuseLetters() {
             })}
           </div>
 
-          <label className="mt-5 block text-sm font-semibold" htmlFor="letter-type">
+          <label
+            className="mt-5 block text-sm font-semibold"
+            htmlFor="letter-type"
+          >
             Letter
             <select
               id="letter-type"
@@ -122,9 +130,14 @@ export default function ExcuseLetters() {
               ))}
             </select>
           </label>
-          <p className="mt-2 text-xs leading-5 text-[#5C5146]">{selected.summary}</p>
+          <p className="mt-2 text-xs leading-5 text-[#5C5146]">
+            {selected.summary}
+          </p>
 
-          <label className="mt-4 block text-sm font-semibold" htmlFor="person-name">
+          <label
+            className="mt-4 block text-sm font-semibold"
+            htmlFor="person-name"
+          >
             Full Name
             <input
               id="person-name"
@@ -136,14 +149,19 @@ export default function ExcuseLetters() {
             />
           </label>
 
-          <label className="mt-4 block text-sm font-semibold" htmlFor="institution">
+          <label
+            className="mt-4 block text-sm font-semibold"
+            htmlFor="institution"
+          >
             {institutionLabel}
             <input
               id="institution"
               value={institution}
               onChange={(event) => setInstitution(event.target.value)}
               className={inputClass}
-              placeholder={audience === "student" ? "Melissa High School" : "Employer name"}
+              placeholder={
+                audience === "student" ? "Melissa High School" : "Employer name"
+              }
             />
           </label>
 
@@ -184,9 +202,7 @@ export default function ExcuseLetters() {
               <p className="text-sm text-[#5C5146]">
                 1010 Milrany Ln, Melissa, TX 75454
               </p>
-              <p className="text-sm text-[#5C5146]">
-                shura@imaanmasjid.org
-              </p>
+              <p className="text-sm text-[#5C5146]">shura@imaanmasjid.org</p>
             </div>
           </header>
 
@@ -211,7 +227,10 @@ export default function ExcuseLetters() {
           <p className="mt-8">Sincerely,</p>
           <div className="mt-8 text-sm leading-6">
             {imaanSignature.map((line) => (
-              <p key={line} className={line === "Administration" ? "font-semibold" : ""}>
+              <p
+                key={line}
+                className={line === "Administration" ? "font-semibold" : ""}
+              >
                 {line}
               </p>
             ))}

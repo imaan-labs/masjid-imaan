@@ -77,12 +77,17 @@ export default function FlyerBoardIsland({
   const headingId = useId();
 
   const searched = flyers.filter((flyer) => {
-    const categoryOk = previewOnly || filter === "all" || flyer.category === filter;
+    const categoryOk =
+      previewOnly || filter === "all" || flyer.category === filter;
     const needle = query.trim().toLowerCase();
-    const textOk = previewOnly || needle.length === 0 || flyer.title.toLowerCase().includes(needle);
+    const textOk =
+      previewOnly ||
+      needle.length === 0 ||
+      flyer.title.toLowerCase().includes(needle);
     return categoryOk && textOk;
   });
-  const visible = typeof limit === "number" ? searched.slice(0, limit) : searched;
+  const visible =
+    typeof limit === "number" ? searched.slice(0, limit) : searched;
 
   const active = flyers.find((flyer) => flyer._id === activeId) ?? null;
   const closeLightbox = useCallback(() => setActiveId(null), []);
@@ -92,7 +97,7 @@ export default function FlyerBoardIsland({
     const stillVisible =
       filter === "all" ||
       flyers.some(
-        (flyer) => flyer._id === activeId && flyer.category === filter
+        (flyer) => flyer._id === activeId && flyer.category === filter,
       );
     if (!stillVisible) setActiveId(null);
   }, [activeId, filter, flyers]);
@@ -107,7 +112,13 @@ export default function FlyerBoardIsland({
           : "scroll-mt-24 py-16 text-slate-900"
       }
     >
-      <div className={previewOnly ? "flex w-full flex-col" : "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"}>
+      <div
+        className={
+          previewOnly
+            ? "flex w-full flex-col"
+            : "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        }
+      >
         <div className={previewOnly ? "" : "mx-auto max-w-2xl text-center"}>
           {previewOnly ? (
             <h2
@@ -124,7 +135,13 @@ export default function FlyerBoardIsland({
               Bulletin Board
             </h1>
           )}
-          <p className={previewOnly ? "mt-1 text-sm text-slate-600" : "mt-3 text-base text-slate-600 sm:text-lg"}>
+          <p
+            className={
+              previewOnly
+                ? "mt-1 text-sm text-slate-600"
+                : "mt-3 text-base text-slate-600 sm:text-lg"
+            }
+          >
             {previewOnly
               ? "The latest announcements from the masjid."
               : "Current announcements for the masjid. Tap a flyer to open it, then pinch or scroll to zoom."}
@@ -132,58 +149,71 @@ export default function FlyerBoardIsland({
         </div>
 
         {previewOnly ? null : (
-        <div className="mx-auto mt-8 max-w-xl">
-          <label className="block text-sm font-semibold text-brand-teal" htmlFor="flyer-search">
-            Search flyers
-          </label>
-          <input
-            id="flyer-search"
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search by title"
-            className="mt-2 w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-900 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
-          />
-        </div>
+          <div className="mx-auto mt-8 max-w-xl">
+            <label
+              className="block text-sm font-semibold text-brand-teal"
+              htmlFor="flyer-search"
+            >
+              Search flyers
+            </label>
+            <input
+              id="flyer-search"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search by title"
+              className="mt-2 w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-900 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+            />
+          </div>
         )}
 
         {previewOnly ? null : (
-        <div
-          className="mt-6 flex flex-wrap items-center justify-center gap-2"
-          role="toolbar"
-          aria-label="Filter flyers by category"
-        >
-          {FILTERS.map((item) => {
-            const selected = filter === item.id;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                aria-pressed={selected}
-                onClick={() => setFilter(item.id)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg ${
-                  selected
-                    ? "border-brand-teal bg-brand-teal text-white"
-                    : "border-slate-200 bg-white text-brand-teal hover:border-brand-teal"
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </div>
+          <div
+            className="mt-6 flex flex-wrap items-center justify-center gap-2"
+            role="toolbar"
+            aria-label="Filter flyers by category"
+          >
+            {FILTERS.map((item) => {
+              const selected = filter === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => setFilter(item.id)}
+                  className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg ${
+                    selected
+                      ? "border-brand-teal bg-brand-teal text-white"
+                      : "border-slate-200 bg-white text-brand-teal hover:border-brand-teal"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
         )}
 
         {status === "loading" ? (
-          <p className={`mx-auto max-w-xl rounded-2xl border px-5 py-6 text-center ${previewOnly ? "mt-4 border-slate-200 bg-slate-50 text-slate-600" : "mt-10 border-slate-200 bg-white text-slate-600"}`}>
+          <p
+            className={`mx-auto max-w-xl rounded-2xl border px-5 py-6 text-center ${previewOnly ? "mt-4 border-slate-200 bg-slate-50 text-slate-600" : "mt-10 border-slate-200 bg-white text-slate-600"}`}
+          >
             Loading current flyers…
           </p>
         ) : visible.length === 0 ? (
-          <p className={`rounded-2xl border px-5 py-6 text-center ${previewOnly ? "mt-4 border-dashed border-slate-300 bg-slate-50 text-slate-600" : "mx-auto mt-10 max-w-xl border-dashed border-slate-300 bg-white text-slate-600"}`}>
+          <p
+            className={`rounded-2xl border px-5 py-6 text-center ${previewOnly ? "mt-4 border-dashed border-slate-300 bg-slate-50 text-slate-600" : "mx-auto mt-10 max-w-xl border-dashed border-slate-300 bg-white text-slate-600"}`}
+          >
             No announcements posted right now.
           </p>
         ) : (
-          <ul className={previewOnly ? "mt-4 grid grid-cols-1 gap-3" : "mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"}>
+          <ul
+            className={
+              previewOnly
+                ? "mt-4 grid grid-cols-1 gap-3"
+                : "mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            }
+          >
             {visible.map((flyer) => (
               <li key={flyer._id}>
                 <button
@@ -202,7 +232,9 @@ export default function FlyerBoardIsland({
                       {categoryLabel(flyer.category)}
                     </span>
                   </span>
-                  <span className={`font-semibold leading-snug ${previewOnly ? "px-1 py-3 text-sm text-slate-900" : "px-4 py-4 text-lg text-slate-900"}`}>
+                  <span
+                    className={`font-semibold leading-snug ${previewOnly ? "px-1 py-3 text-sm text-slate-900" : "px-4 py-4 text-lg text-slate-900"}`}
+                  >
                     {flyer.title}
                   </span>
                 </button>
@@ -223,9 +255,7 @@ export default function FlyerBoardIsland({
         ) : null}
       </div>
 
-      {active ? (
-        <FlyerLightbox flyer={active} onClose={closeLightbox} />
-      ) : null}
+      {active ? <FlyerLightbox flyer={active} onClose={closeLightbox} /> : null}
     </section>
   );
 }
@@ -243,18 +273,15 @@ function FlyerLightbox({
   const [view, setView] = useState<View>({ scale: 1, x: 0, y: 0 });
   const viewRef = useRef(view);
   const pointers = useRef(new Map<number, { x: number; y: number }>());
-  const gesture = useRef<
-    | {
-        type: "pinch" | "pan";
-        startDistance: number;
-        startScale: number;
-        startX: number;
-        startY: number;
-        originX: number;
-        originY: number;
-      }
-    | null
-  >(null);
+  const gesture = useRef<{
+    type: "pinch" | "pan";
+    startDistance: number;
+    startScale: number;
+    startX: number;
+    startY: number;
+    originX: number;
+    originY: number;
+  } | null>(null);
 
   viewRef.current = view;
 
@@ -284,7 +311,7 @@ function FlyerLightbox({
       const nextScale = clamp(
         viewRef.current.scale * direction,
         MIN_SCALE,
-        MAX_SCALE
+        MAX_SCALE,
       );
       setView({
         scale: nextScale,
@@ -324,7 +351,7 @@ function FlyerLightbox({
         type: "pinch",
         startDistance: Math.max(
           1,
-          Math.hypot(first.x - second.x, first.y - second.y)
+          Math.hypot(first.x - second.x, first.y - second.y),
         ),
         startScale: viewRef.current.scale,
         startX: 0,
@@ -361,7 +388,7 @@ function FlyerLightbox({
       const nextScale = clamp(
         gesture.current.startScale * (distance / gesture.current.startDistance),
         MIN_SCALE,
-        MAX_SCALE
+        MAX_SCALE,
       );
       setView({
         scale: nextScale,
@@ -378,12 +405,12 @@ function FlyerLightbox({
         x: clamp(
           gesture.current.originX + (event.clientX - gesture.current.startX),
           -limit,
-          limit
+          limit,
         ),
         y: clamp(
           gesture.current.originY + (event.clientY - gesture.current.startY),
           -limit,
-          limit
+          limit,
         ),
       });
     }
@@ -432,9 +459,7 @@ function FlyerLightbox({
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          onDoubleClick={() =>
-            updateScale(viewRef.current.scale > 1 ? 1 : 2.5)
-          }
+          onDoubleClick={() => updateScale(viewRef.current.scale > 1 ? 1 : 2.5)}
         >
           <img
             src={flyer.fullImageUrl}
@@ -449,7 +474,8 @@ function FlyerLightbox({
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3">
           <p className="text-sm text-[#E7D7B8]">
-            Pinch, scroll, or use the buttons to zoom. {Math.round(view.scale * 100)}%
+            Pinch, scroll, or use the buttons to zoom.{" "}
+            {Math.round(view.scale * 100)}%
           </p>
           <div className="flex items-center gap-2">
             {flyer.actionLink ? (

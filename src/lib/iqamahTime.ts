@@ -40,19 +40,32 @@ function clockTime(label: string): ResolvedIqamah["minutes"] | null {
   return minutes == null ? null : minutes;
 }
 
-function relativeOffset(label: string): { anchor: AnchorName; minutes: number } | null {
-  const match = label.trim().match(/^(sunset|maghrib|isha)\s*\+\s*(\d+)\s*(?:min(?:ute)?s?)?$/i);
+function relativeOffset(
+  label: string,
+): { anchor: AnchorName; minutes: number } | null {
+  const match = label
+    .trim()
+    .match(/^(sunset|maghrib|isha)\s*\+\s*(\d+)\s*(?:min(?:ute)?s?)?$/i);
   if (!match) return null;
   const minutes = Number(match[2]);
   if (!Number.isFinite(minutes)) return null;
   return { anchor: match[1].toLowerCase() as AnchorName, minutes };
 }
 
-function at(minutes: number, sortKey = minutes): Pick<ResolvedIqamah, "minutes" | "sortKey"> {
-  return { minutes: ((minutes % DAY_MINUTES) + DAY_MINUTES) % DAY_MINUTES, sortKey };
+function at(
+  minutes: number,
+  sortKey = minutes,
+): Pick<ResolvedIqamah, "minutes" | "sortKey"> {
+  return {
+    minutes: ((minutes % DAY_MINUTES) + DAY_MINUTES) % DAY_MINUTES,
+    sortKey,
+  };
 }
 
-function afterDate(anchor: Date, offset: number): Pick<ResolvedIqamah, "minutes" | "sortKey"> {
+function afterDate(
+  anchor: Date,
+  offset: number,
+): Pick<ResolvedIqamah, "minutes" | "sortKey"> {
   const target = new Date(anchor.getTime() + offset * 60 * 1000);
   const minutes = chicagoMinutes(target);
   const anchorMinutes = chicagoMinutes(anchor);
@@ -67,7 +80,10 @@ function afterResolved(
   return at(anchor.sortKey + offset, anchor.sortKey + offset);
 }
 
-function resolveMaghrib(label: string, sunset: Date): Pick<ResolvedIqamah, "minutes" | "sortKey"> {
+function resolveMaghrib(
+  label: string,
+  sunset: Date,
+): Pick<ResolvedIqamah, "minutes" | "sortKey"> {
   const clock = clockTime(label);
   if (clock != null) return at(clock);
   const offset = relativeOffset(label);
@@ -87,7 +103,8 @@ function resolveIsha(
   if (clock != null) return at(clock);
   const offset = relativeOffset(label);
   if (offset?.anchor === "sunset") return afterDate(sunset, offset.minutes);
-  if (offset?.anchor === "maghrib") return afterResolved(maghrib, offset.minutes);
+  if (offset?.anchor === "maghrib")
+    return afterResolved(maghrib, offset.minutes);
   if (offset?.anchor === "isha") return afterDate(ishaAdhan, offset.minutes);
   return at(0);
 }
@@ -103,7 +120,8 @@ function resolveTaraweeh(
   const offset = relativeOffset(label);
   if (!offset) return null;
   if (offset.anchor === "sunset") return afterDate(sunset, offset.minutes);
-  if (offset.anchor === "maghrib") return afterResolved(maghrib, offset.minutes);
+  if (offset.anchor === "maghrib")
+    return afterResolved(maghrib, offset.minutes);
   return afterResolved(isha, offset.minutes);
 }
 

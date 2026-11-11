@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MoonPhase } from "astronomy-engine";
-import { hijriFromDate, hijriLabel, nextSunnahFast, type UpcomingDate } from "@/src/lib/lunar/calendarData";
+import {
+  hijriFromDate,
+  hijriLabel,
+  nextSunnahFast,
+  type UpcomingDate,
+} from "@/src/lib/lunar/calendarData";
 import { moonSummary } from "@/src/lib/lunar/hilalWatch";
 
 type Snapshot = {
@@ -20,7 +25,8 @@ function fastChip(fast: UpcomingDate | null) {
   const hijriShort = fast.hijriLabel.replace(/ \d{3,4}$/, "");
   let name = fast.label;
   if (fast.label === "White Day") {
-    const ordinal = day === 13 ? "1st" : day === 14 ? "2nd" : day === 15 ? "3rd" : "";
+    const ordinal =
+      day === 13 ? "1st" : day === 14 ? "2nd" : day === 15 ? "3rd" : "";
     name = ordinal ? `${ordinal} White Day` : "White Day";
   }
   const when = fast.when === "Today" ? "Today" : "Upcoming";
@@ -28,7 +34,7 @@ function fastChip(fast: UpcomingDate | null) {
 }
 
 function moonLitPath(phaseAngle: number) {
-  const phase = ((phaseAngle % 360) + 360) % 360 / 360;
+  const phase = (((phaseAngle % 360) + 360) % 360) / 360;
   const cx = 20;
   const cy = 20;
   const radius = 16;
@@ -55,7 +61,14 @@ function MoonDisc({ phaseAngle }: { phaseAngle: number }) {
     <svg viewBox="0 0 40 40" className="h-12 w-12" aria-hidden="true">
       <circle cx="20" cy="20" r="16" className="fill-brand-teal" />
       <path d={moonLitPath(phaseAngle)} className="fill-brand-gold" />
-      <circle cx="20" cy="20" r="16" fill="none" className="stroke-brand-gold" strokeWidth="1" />
+      <circle
+        cx="20"
+        cy="20"
+        r="16"
+        fill="none"
+        className="stroke-brand-gold"
+        strokeWidth="1"
+      />
     </svg>
   );
 }
@@ -95,7 +108,9 @@ export default function HilalQuickCard() {
             {snapshot?.hijri ?? "Loading the Hijri date…"}
           </p>
           {snapshot ? (
-            <p className="mt-0.5 text-xs text-slate-300">{snapshot.phaseName}</p>
+            <p className="mt-0.5 text-xs text-slate-300">
+              {snapshot.phaseName}
+            </p>
           ) : null}
           <p className="mt-2 inline-flex rounded-full bg-brand-gold/15 px-2.5 py-1 text-[11px] font-semibold leading-4 text-brand-gold">
             {snapshot?.fastChip ?? "Loading the next Sunnah fast…"}
