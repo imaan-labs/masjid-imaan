@@ -7,6 +7,7 @@ import {
   Observer,
   SearchRiseSet,
 } from "astronomy-engine";
+import { MELISSA as SITE } from "@/src/lib/melissa";
 import {
   gregorianForHijri,
   gregorianLabel,
@@ -16,8 +17,8 @@ import {
 } from "./calendarData";
 
 export const MELISSA = {
-  latitude: 33.2859,
-  longitude: -96.5728,
+  latitude: SITE.lat,
+  longitude: SITE.lng,
 };
 
 const observer = new Observer(MELISSA.latitude, MELISSA.longitude, 0);

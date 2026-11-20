@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   WEEKDAYS,
   buildMonth,
@@ -51,6 +52,12 @@ export default function HilalCalendar() {
           13th, 14th, and 15th. They are not marked in Ramadan, and the 13th of
           Dhul-Hijjah is a prohibited fast.
         </p>
+        <Link
+          href="/ramadan"
+          className="mt-6 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+        >
+          View Full Ramadan Suhoor & Iftar Timetable →
+        </Link>
       </div>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
