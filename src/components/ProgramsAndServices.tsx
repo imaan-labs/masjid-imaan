@@ -30,6 +30,10 @@ const programs = [
     ],
     note: "Check the Community Bulletin for current year Ramadan flyers and schedules.",
     bulletinHref: "/bulletin?category=ramadan",
+    action: {
+      href: "/ramadan",
+      label: "View Ramadan Timetable →",
+    },
   },
   {
     id: "eid-services",

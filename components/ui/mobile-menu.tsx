@@ -13,6 +13,7 @@ const links = [
   { href: "/bulletin", label: "Bulletin" },
   { href: "/gallery", label: "Photo Gallery" },
   { href: "/calendar", label: "Hilāl Calendar" },
+  { href: "/ramadan", label: "🌙 Ramadan" },
 ];
 
 export default function MobileMenu() {

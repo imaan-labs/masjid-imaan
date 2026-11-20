@@ -8,6 +8,7 @@ import {
   PrayerTimes as AdhanPrayerTimes,
 } from "adhan";
 import { resolveIqamahRows } from "@/src/lib/iqamahTime";
+import { MELISSA } from "@/src/lib/melissa";
 import {
   DEFAULT_PRAYER_SETTINGS,
   PRAYER_SETTINGS_QUERY,
@@ -16,8 +17,8 @@ import {
   type PrayerSettings,
 } from "@/src/lib/sanity";
 
-const coordinates = new Coordinates(33.2859, -96.5728);
-const TIME_ZONE = "America/Chicago";
+const coordinates = new Coordinates(MELISSA.lat, MELISSA.lng);
+const TIME_ZONE = MELISSA.timeZone;
 
 function formatTime(date: Date) {
   return date.toLocaleTimeString("en-US", {
@@ -83,17 +84,17 @@ function melissaCalendarDate(now: Date) {
 
 function calculatedTimes(now: Date) {
   const date = melissaCalendarDate(now);
+  const paramsKarachi = CalculationMethod.Karachi();
+  const timesKarachi = new AdhanPrayerTimes(coordinates, date, paramsKarachi);
+
   const params15 = CalculationMethod.NorthAmerica();
   const times15 = new AdhanPrayerTimes(coordinates, date, params15);
 
-  const params18 = CalculationMethod.Karachi();
-  const times18 = new AdhanPrayerTimes(coordinates, date, params18);
-
-  const paramsHanafi = CalculationMethod.NorthAmerica();
+  const paramsHanafi = CalculationMethod.Karachi();
   paramsHanafi.madhab = Madhab.Hanafi;
   const timesHanafi = new AdhanPrayerTimes(coordinates, date, paramsHanafi);
 
-  return { times15, times18, timesHanafi };
+  return { timesKarachi, times15, timesHanafi };
 }
 
 function chicagoClock(date: Date) {
@@ -141,26 +142,26 @@ function iqamahRows(sunset: Date, ishaAdhan: Date, settings: PrayerSettings) {
 
 function adhanNote(
   name: string,
+  timesKarachi: AdhanPrayerTimes,
   times15: AdhanPrayerTimes,
-  times18: AdhanPrayerTimes,
   timesHanafi: AdhanPrayerTimes,
 ) {
   if (name === "Fajr") {
-    return `15°: ${formatTime(times15.fajr)} | 18°: ${formatTime(times18.fajr)}`;
+    return `Karachi: ${formatTime(timesKarachi.fajr)} | 15°: ${formatTime(times15.fajr)}`;
   }
   if (name === "Dhuhr") {
-    return formatTime(times15.dhuhr);
+    return formatTime(timesKarachi.dhuhr);
   }
   if (name === "Asr") {
-    return `Std: ${formatTime(times15.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
+    return `Std: ${formatTime(timesKarachi.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
   }
   if (name === "Maghrib") {
-    return formatTime(times15.maghrib);
+    return formatTime(timesKarachi.maghrib);
   }
   if (name === "Taraweeh") {
     return "After Isha";
   }
-  return `15°: ${formatTime(times15.isha)} | 18°: ${formatTime(times18.isha)}`;
+  return `Karachi: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
 }
 
 function jumuahShifts(settings: PrayerSettings) {
@@ -226,22 +227,22 @@ export default function PrayerTimes({
     );
   }
 
-  const { times15, times18, timesHanafi } = calculatedTimes(now);
-  const sunset = times15.maghrib;
+  const { timesKarachi, times15, timesHanafi } = calculatedTimes(now);
+  const sunset = timesKarachi.maghrib;
   const maghribDisplay = resolvePrayerOffset(settings.maghrib, sunset);
   const maghribAt = clockInstant(maghribDisplay.time, sunset) ?? sunset;
   const ishaDisplay = resolvePrayerOffset(
     settings.isha,
-    offsetBase(settings.isha, sunset, maghribAt, times15.isha),
+    offsetBase(settings.isha, sunset, maghribAt, timesKarachi.isha),
   );
-  const ishaAt = clockInstant(ishaDisplay.time, sunset) ?? times15.isha;
+  const ishaAt = clockInstant(ishaDisplay.time, sunset) ?? timesKarachi.isha;
   const taraweehDisplay = settings.taraweeh.trim()
     ? resolvePrayerOffset(
         settings.taraweeh,
         offsetBase(settings.taraweeh, sunset, maghribAt, ishaAt),
       )
     : { time: "" };
-  const rows = iqamahRows(sunset, times15.isha, settings).map((row) => {
+  const rows = iqamahRows(sunset, timesKarachi.isha, settings).map((row) => {
     if (row.name === "Maghrib" && maghribDisplay.time)
       return { ...row, iqamah: maghribDisplay.time };
     if (row.name === "Isha" && ishaDisplay.time)
@@ -321,7 +322,7 @@ export default function PrayerTimes({
                   {row.name}
                 </span>
                 <span className="text-xs font-medium leading-4 text-slate-300">
-                  {adhanNote(row.name, times15, times18, timesHanafi)}
+                  {adhanNote(row.name, timesKarachi, times15, timesHanafi)}
                 </span>
                 <span className="text-right text-base font-bold text-white">
                   {row.iqamah}
@@ -342,7 +343,7 @@ export default function PrayerTimes({
               {settings.title}
             </h2>
             <p className="mt-1 text-sm text-slate-300">
-              Melissa, TX (33.2859° N, 96.5728° W)
+              Melissa, TX ({MELISSA.lat}° N, {Math.abs(MELISSA.lng)}° W) · Karachi method
             </p>
           </div>
           <div className="mt-4 text-sm text-slate-300 md:mt-0 md:text-right">
@@ -355,24 +356,24 @@ export default function PrayerTimes({
         >
           <PrayerCard name="Fajr" iqamah={settings.fajr}>
             <div>
-              <span className="text-slate-300">15°:</span>{" "}
-              {formatTime(times15.fajr)}
+              <span className="text-slate-300">Karachi:</span>{" "}
+              {formatTime(timesKarachi.fajr)}
             </div>
             <div>
-              <span className="text-slate-300">18°:</span>{" "}
-              {formatTime(times18.fajr)}
+              <span className="text-slate-300">15°:</span>{" "}
+              {formatTime(times15.fajr)}
             </div>
           </PrayerCard>
 
           <PrayerCard name="Dhuhr" iqamah={settings.dhuhr}>
             <span className="text-slate-300">Adhan:</span>{" "}
-            {formatTime(times15.dhuhr)}
+            {formatTime(timesKarachi.dhuhr)}
           </PrayerCard>
 
           <PrayerCard name="Asr" iqamah={settings.asr}>
             <div>
               <span className="text-slate-300">Standard:</span>{" "}
-              {formatTime(times15.asr)}
+              {formatTime(timesKarachi.asr)}
             </div>
             <div>
               <span className="text-slate-300">Hanafi:</span>{" "}
@@ -387,7 +388,7 @@ export default function PrayerTimes({
             iqamahClassName="text-xl"
           >
             <span className="text-slate-300">Adhan:</span>{" "}
-            {formatTime(times15.maghrib)}
+            {formatTime(timesKarachi.maghrib)}
           </PrayerCard>
 
           <PrayerCard
@@ -396,12 +397,12 @@ export default function PrayerTimes({
             note={ishaDisplay.note}
           >
             <div>
-              <span className="text-slate-300">15°:</span>{" "}
-              {formatTime(times15.isha)}
+              <span className="text-slate-300">Karachi:</span>{" "}
+              {formatTime(timesKarachi.isha)}
             </div>
             <div>
-              <span className="text-slate-300">18°:</span>{" "}
-              {formatTime(times18.isha)}
+              <span className="text-slate-300">15°:</span>{" "}
+              {formatTime(times15.isha)}
             </div>
           </PrayerCard>
 

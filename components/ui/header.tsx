@@ -14,11 +14,13 @@ const services = [
   { href: "/prayer-times#jumuah", label: "Jumu'ah" },
   { href: "/#aalim-sessions", label: "Classes" },
   { href: "/excuse-letters", label: "Excuse Letters" },
+  { href: "/ramadan", label: "🌙 Ramadan" },
   { href: "/gallery", label: "Photo Gallery" },
 ];
 
 const bottomLinks = [
   { href: "/prayer-times", label: "Salah", icon: "prayer" },
+  { href: "/ramadan", label: "Ramadan", icon: "ramadan" },
   { href: "/bulletin", label: "Bulletin", icon: "bulletin" },
   { href: "/calendar", label: "Calendar", icon: "calendar" },
 ] as const;
@@ -136,6 +138,12 @@ export default function Header() {
             >
               Hilāl Calendar
             </Link>
+            <Link
+              href="/ramadan"
+              className="rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+            >
+              🌙 Ramadan
+            </Link>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -155,7 +163,7 @@ export default function Header() {
         className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur print:hidden md:hidden"
         aria-label="Quick"
       >
-        <ul className="grid grid-cols-4">
+        <ul className="grid grid-cols-5">
           {bottomLinks.map((item) => {
             const active = pathname === item.href;
             return (
@@ -192,7 +200,7 @@ export default function Header() {
 function BarIcon({
   name,
 }: {
-  name: "prayer" | "bulletin" | "calendar" | "donate";
+  name: "prayer" | "bulletin" | "calendar" | "ramadan" | "donate";
 }) {
   const common = "h-5 w-5";
   if (name === "prayer") {
@@ -232,6 +240,19 @@ function BarIcon({
           stroke="currentColor"
           strokeWidth="1.8"
           strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+  if (name === "ramadan") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M15.5 4.5a7 7 0 1 0 0 15 8.5 8.5 0 0 1 0-15z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
         />
       </svg>
     );

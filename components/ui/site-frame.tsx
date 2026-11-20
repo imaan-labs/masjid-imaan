@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
 import { DonationRoot } from "@/src/components/DonationModal";
+import RamadanSeasonBanner from "@/src/components/RamadanSeasonBanner";
 
 export default function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -44,6 +45,7 @@ export default function SiteFrame({ children }: { children: React.ReactNode }) {
     <DonationRoot>
       <div className="flex min-h-screen w-full min-w-0 flex-col overflow-x-clip bg-gradient-to-b from-slate-100/80 via-white to-slate-50 pb-16 text-slate-900 md:pb-0">
         <Header />
+        <RamadanSeasonBanner />
         <div className="flex-1">{children}</div>
         <Footer />
       </div>

@@ -84,6 +84,14 @@ export default function Footer() {
                   </li>
                   <li className="mb-1">
                     <Link
+                      href="/ramadan"
+                      className="text-emerald-50 hover:text-white"
+                    >
+                      Ramadan Timetable
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
                       href="/excuse-letters"
                       className="text-emerald-50 hover:text-white"
                     >
