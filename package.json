@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@sanity/client": "^8.9.0",
-    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/postcss": "^4.1.18",
     "adhan": "^4.4.6",
     "astronomy-engine": "^2.1.19",

@@ -202,11 +202,9 @@ export default function PrayerTimes({
       .fetch<Partial<PrayerSettings> | null>(PRAYER_SETTINGS_QUERY)
       .then((document) => {
         const settings = resolvePrayerSettings(document);
-        console.log("Sanity prayer settings:", settings);
         if (!cancelled) setSettings(settings);
       })
-      .catch((error) => {
-        console.log("Sanity prayer settings:", error);
+      .catch(() => {
         if (!cancelled) setSettings(DEFAULT_PRAYER_SETTINGS);
       });
     return () => {

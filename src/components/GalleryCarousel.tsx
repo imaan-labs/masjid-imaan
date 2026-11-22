@@ -27,12 +27,10 @@ export default function GalleryCarousel() {
     getSanityClient()
       .fetch<GalleryDocument[]>(galleryCarouselQuery)
       .then((data) => {
-        console.log("Sanity gallery:", data);
         if (cancelled) return;
         setImages(galleryFromDocuments(data));
       })
-      .catch((error) => {
-        console.log("Sanity gallery:", error);
+      .catch(() => {
         if (!cancelled) setImages([]);
       });
     return () => {
