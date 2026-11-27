@@ -866,12 +866,14 @@ export default function KioskDisplay() {
                   <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
                     {shift.shift}
                   </p>
-                  <p className="mt-0.5 text-sm font-bold text-white">
-                    Lecture: {shift.lecture}
-                  </p>
-                  <p className="mt-0.5 text-xs font-semibold text-slate-300">
-                    Salah: {shift.salah}
-                  </p>
+                  <div className="mt-0.5 flex flex-wrap items-baseline justify-between gap-2 text-xs sm:text-sm">
+                    <p className="whitespace-nowrap font-bold text-white">
+                      Lecture: {shift.lecture}
+                    </p>
+                    <p className="whitespace-nowrap font-semibold text-slate-300">
+                      Salah: {shift.salah}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>

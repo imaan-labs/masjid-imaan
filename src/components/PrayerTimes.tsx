@@ -431,11 +431,11 @@ export default function PrayerTimes({
                 <span className="text-xs font-bold uppercase tracking-wide text-brand-gold">
                   {shift.shift}
                 </span>
-                <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="text-sm font-semibold text-white">
+                <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <span className="whitespace-nowrap text-sm font-semibold text-white">
                     Lecture: {shift.lecture}
                   </span>
-                  <span className="text-sm font-semibold text-slate-300">
+                  <span className="whitespace-nowrap text-sm font-semibold text-slate-300">
                     Salah: {shift.salah}
                   </span>
                 </div>
