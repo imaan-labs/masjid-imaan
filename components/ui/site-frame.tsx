@@ -10,9 +10,13 @@ import RamadanSeasonBanner from "@/src/components/RamadanSeasonBanner";
 export default function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const studio = pathname.startsWith("/admin");
+  const display = pathname === "/display" || pathname === "/display/";
+  const kiosk = pathname === "/kiosk" || pathname === "/kiosk/";
+  const lobby = display || kiosk;
+  const bare = studio || lobby;
 
   useEffect(() => {
-    if (!studio) return;
+    if (!bare) return;
     const html = document.documentElement;
     const body = document.body;
     const previousHtml = html.style.overflow;
@@ -23,11 +27,18 @@ export default function SiteFrame({ children }: { children: React.ReactNode }) {
       html.style.overflow = previousHtml;
       body.style.overflow = previousBody;
     };
-  }, [studio]);
+  }, [bare]);
 
-  if (studio) {
+  if (bare) {
     return (
       <div
+        className={
+          kiosk
+            ? "bg-slate-50 font-sans text-slate-900"
+            : display
+              ? "bg-[#0B1924]"
+              : undefined
+        }
         style={{
           height: "100vh",
           width: "100vw",

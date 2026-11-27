@@ -102,20 +102,22 @@ export function resolvePrayerSettings(
   };
 }
 
-export const flyersQuery = `*[_type == "flyer" && !(_id in path("drafts.**"))] | order(publishDate desc) {
+export const flyersQuery = `*[_type == "flyer" && !(_id in path("drafts.**")) && (!defined(status) || status == "active") && (!defined(expiryDate) || expiryDate >= now())] | order(publishDate desc) {
   _id,
   title,
   category,
+  status,
   actionLink,
-  "assetUrl": image.asset->url
+  "imageUrl": image.asset->url
 }`;
 
 export type FlyerDocument = {
   _id: string;
   title: string;
   category?: string | null;
+  status?: string | null;
   actionLink?: string | null;
-  assetUrl?: string | null;
+  imageUrl?: string | null;
 };
 
 export type Flyer = {
@@ -143,7 +145,8 @@ export function flyersFromDocuments(
   documents: FlyerDocument[] | null | undefined,
 ): Flyer[] {
   return (documents ?? []).flatMap((document) => {
-    if (!document.assetUrl) return [];
+    const imageUrl = document.imageUrl?.trim();
+    if (!imageUrl) return [];
 
     return [
       {
@@ -151,8 +154,8 @@ export function flyersFromDocuments(
         title: document.title,
         category: document.category ?? null,
         actionLink: document.actionLink ?? null,
-        imageUrl: document.assetUrl,
-        fullImageUrl: document.assetUrl,
+        imageUrl,
+        fullImageUrl: imageUrl,
       },
     ];
   });

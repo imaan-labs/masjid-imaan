@@ -21,3 +21,19 @@
     letter-spacing: -0.025em;
   }
 }
+
+@keyframes smartboard-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.smartboard-progress {
+  transform-origin: left center;
+  animation-name: smartboard-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
