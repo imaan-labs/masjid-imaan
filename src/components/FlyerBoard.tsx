@@ -35,13 +35,11 @@ export default function FlyerBoard({
     getSanityClient()
       .fetch<FlyerDocument[]>(flyersQuery)
       .then((data) => {
-        console.log("Sanity flyers:", data);
         if (cancelled) return;
         setFlyers(flyersFromDocuments(data));
         setStatus("ready");
       })
-      .catch((error) => {
-        console.log("Sanity flyers:", error);
+      .catch(() => {
         if (cancelled) return;
         setFlyers([]);
         setStatus("ready");

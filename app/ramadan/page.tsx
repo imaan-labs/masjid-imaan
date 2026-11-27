@@ -5,7 +5,7 @@ import { getTargetRamadanHijriYear } from "@/src/lib/lunar/ramadanSeason";
 export const metadata = {
   title: "Ramadan Timetable | Imaan Masjid",
   description:
-    "Suhoor, Iftar, and Taraweeh times for Imaan Masjid in Melissa, TX, using the Karachi calculation method.",
+    "Suhoor, Iftar, and Taraweeh times for Imaan Masjid in Melissa, TX.",
 };
 
 export default function RamadanPage() {
@@ -21,7 +21,7 @@ export default function RamadanPage() {
           Ramadan Timetable & Schedule
         </h1>
         <p className="mt-4 text-lg leading-8 text-slate-700">
-          Times use the Karachi calculation method, with a 5-minute Imsak buffer
+          Times use an 18° twilight angle, with a 5-minute Imsak buffer
           and a 2-minute Iftar margin. The first and last days can shift by a
           day when the local moonsighting differs from the civil calendar.
         </p>

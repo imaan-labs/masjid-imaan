@@ -5,15 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDonation } from "@/src/components/DonationModal";
 
-const links = [
+const primaryLinks = [
+  { href: "/bulletin", label: "Bulletin" },
+  { href: "/ramadan", label: "Ramadan" },
+  { href: "/calendar", label: "Hilāl Calendar" },
+  { href: "/excuse-letters", label: "Excuse Letters" },
+];
+
+const moreLinks = [
   { href: "/prayer-times", label: "Prayer" },
   { href: "/prayer-times#jumuah", label: "Jumu'ah" },
   { href: "/#aalim-sessions", label: "Classes" },
-  { href: "/excuse-letters", label: "Excuse Letters" },
-  { href: "/bulletin", label: "Bulletin" },
   { href: "/gallery", label: "Photo Gallery" },
-  { href: "/calendar", label: "Hilāl Calendar" },
-  { href: "/ramadan", label: "🌙 Ramadan" },
 ];
 
 export default function MobileMenu() {
@@ -106,7 +109,23 @@ export default function MobileMenu() {
             </button>
           </div>
           <ul className="mt-6 space-y-1">
-            {links.map((link) => (
+            {primaryLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="block rounded-xl px-3 py-3 text-base font-semibold transition-all duration-200 hover:bg-slate-50"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mb-1 mt-5 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-800">
+            More
+          </p>
+          <ul className="space-y-1">
+            {moreLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}

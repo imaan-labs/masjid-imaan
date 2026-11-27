@@ -17,9 +17,10 @@ export default function MeeqatRamadanEmbed() {
       const data = event.data as { type?: string; height?: unknown } | null;
       if (data?.type !== "meeqat:ramadan-calendar:resize") return;
       if (typeof data.height !== "number" || !Number.isFinite(data.height)) return;
+      if (data.height < 720 || data.height > 4000) return;
       const iframe = iframeRef.current;
       if (!iframe) return;
-      iframe.style.height = `${Math.max(720, data.height)}px`;
+      iframe.style.height = `${data.height}px`;
     }
 
     window.addEventListener("message", onMessage);

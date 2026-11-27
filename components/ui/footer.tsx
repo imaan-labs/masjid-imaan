@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/images/logo.png";
+import { CalculationInfoButton } from "@/src/components/CalculationInfoModal";
 const WHATSAPP_FORM =
   "https://docs.google.com/forms/d/1aQT8UFFkeKrnGlhWZCJ5KrTdQM1OcqaGD5ijvXumkz8";
 
@@ -229,11 +230,14 @@ export default function Footer() {
 
             {/* Copyrights note */}
             <div className="text-emerald-100/70 text-sm mr-4">
+              <CalculationInfoButton />
+              <p className="mt-3">
               &copy; IMAAN™ - All rights reserved. IMAAN is a tax-exempt
               non-profit organization registered in the State of Texas, that has
               been formed exclusively for community building, educational, and
               religious purposes. It is registered with the Internal Revenue
               Service under revenue code 501(c)(3).
+              </p>
             </div>
           </div>
         </div>

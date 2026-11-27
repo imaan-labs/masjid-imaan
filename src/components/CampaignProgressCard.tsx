@@ -41,11 +41,9 @@ export default function CampaignProgressCard({
       .fetch<CampaignDocument | null>(FEATURED_CAMPAIGN_QUERY)
       .then((document) => {
         const resolved = resolveCampaign(document);
-        console.log("Sanity campaign:", resolved);
         if (!cancelled) setFetchedCampaign(resolved);
       })
-      .catch((error) => {
-        console.log("Sanity campaign:", error);
+      .catch(() => {
         if (!cancelled) setFetchedCampaign(FALLBACK_CAMPAIGN);
       });
     return () => {

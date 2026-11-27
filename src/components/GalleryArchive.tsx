@@ -34,13 +34,11 @@ export default function GalleryArchive() {
     getSanityClient()
       .fetch<GalleryDocument[]>(galleryArchiveQuery)
       .then((data) => {
-        console.log("Sanity gallery:", data);
         if (cancelled) return;
         setImages(galleryFromDocuments(data));
         setStatus("ready");
       })
-      .catch((error) => {
-        console.log("Sanity gallery:", error);
+      .catch(() => {
         if (cancelled) return;
         setImages([]);
         setStatus("ready");

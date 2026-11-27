@@ -1,8 +1,4 @@
 import { createClient, type SanityClient } from "@sanity/client";
-import {
-  createImageUrlBuilder as imageUrlBuilder,
-  type SanityImageSource,
-} from "@sanity/image-url";
 
 type PublicSanityEnv = {
   PUBLIC_SANITY_PROJECT_ID?: string;
@@ -20,12 +16,6 @@ const dataset =
   metaEnv?.PUBLIC_SANITY_DATASET ||
   process.env.PUBLIC_SANITY_DATASET ||
   "production";
-
-const builder = imageUrlBuilder({ projectId, dataset });
-
-export function urlFor(source: SanityImageSource) {
-  return builder.image(source);
-}
 
 export const PRAYER_SETTINGS_QUERY = `*[_type == "prayerSettings"][0]{
   title,
@@ -112,32 +102,24 @@ export function resolvePrayerSettings(
   };
 }
 
-export async function loadPrayerSettings(): Promise<PrayerSettings> {
-  try {
-    const document =
-      await getSanityClient().fetch<Partial<PrayerSettings> | null>(
-        PRAYER_SETTINGS_QUERY,
-      );
-    return resolvePrayerSettings(document);
-  } catch {
-    return DEFAULT_PRAYER_SETTINGS;
-  }
-}
-
-export const flyersQuery = `*[_type == "flyer" && !(_id in path("drafts.**"))] | order(publishDate desc) {
+export const flyersQuery = `*[_type == "flyer" && !(_id in path("drafts.**")) && (!defined(status) || status == "active") && (!defined(expiryDate) || expiryDate >= now())] | order(coalesce(priority, 100) asc, publishDate desc) {
   _id,
   title,
   category,
+  status,
+  priority,
   actionLink,
-  "assetUrl": image.asset->url
+  "imageUrl": image.asset->url
 }`;
 
 export type FlyerDocument = {
   _id: string;
   title: string;
   category?: string | null;
+  status?: string | null;
+  priority?: number | null;
   actionLink?: string | null;
-  assetUrl?: string | null;
+  imageUrl?: string | null;
 };
 
 export type Flyer = {
@@ -148,13 +130,6 @@ export type Flyer = {
   imageUrl: string;
   fullImageUrl: string;
 };
-
-export class MissingSanityConfigError extends Error {
-  constructor() {
-    super("Missing PUBLIC_SANITY_PROJECT_ID or PUBLIC_SANITY_DATASET");
-    this.name = "MissingSanityConfigError";
-  }
-}
 
 export const sanityClient: SanityClient = createClient({
   projectId,
@@ -168,19 +143,12 @@ export function getSanityClient(): SanityClient {
   return sanityClient;
 }
 
-export async function loadFlyers(): Promise<Flyer[]> {
-  try {
-    return await getFlyers();
-  } catch {
-    return [];
-  }
-}
-
 export function flyersFromDocuments(
   documents: FlyerDocument[] | null | undefined,
 ): Flyer[] {
   return (documents ?? []).flatMap((document) => {
-    if (!document.assetUrl) return [];
+    const imageUrl = document.imageUrl?.trim();
+    if (!imageUrl) return [];
 
     return [
       {
@@ -188,16 +156,11 @@ export function flyersFromDocuments(
         title: document.title,
         category: document.category ?? null,
         actionLink: document.actionLink ?? null,
-        imageUrl: document.assetUrl,
-        fullImageUrl: document.assetUrl,
+        imageUrl,
+        fullImageUrl: imageUrl,
       },
     ];
   });
-}
-
-export async function getFlyers(): Promise<Flyer[]> {
-  const documents = await getSanityClient().fetch<FlyerDocument[]>(flyersQuery);
-  return flyersFromDocuments(documents);
 }
 
 export const GALLERY_CATEGORIES = [

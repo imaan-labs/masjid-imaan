@@ -147,13 +147,13 @@ function adhanNote(
   timesHanafi: AdhanPrayerTimes,
 ) {
   if (name === "Fajr") {
-    return `Karachi: ${formatTime(timesKarachi.fajr)} | 15°: ${formatTime(times15.fajr)}`;
+    return `18°: ${formatTime(timesKarachi.fajr)} | 15°: ${formatTime(times15.fajr)}`;
   }
   if (name === "Dhuhr") {
     return formatTime(timesKarachi.dhuhr);
   }
   if (name === "Asr") {
-    return `Std: ${formatTime(timesKarachi.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
+    return `Standard: ${formatTime(timesKarachi.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
   }
   if (name === "Maghrib") {
     return formatTime(timesKarachi.maghrib);
@@ -161,7 +161,51 @@ function adhanNote(
   if (name === "Taraweeh") {
     return "After Isha";
   }
-  return `Karachi: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
+  return `18°: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
+}
+
+function prayerWindows(
+  now: Date,
+  times: AdhanPrayerTimes,
+  timesHanafi: AdhanPrayerTimes,
+  nextFajr: Date,
+) {
+  const midnight = new Date(
+    times.maghrib.getTime() + (nextFajr.getTime() - times.maghrib.getTime()) / 2,
+  );
+  const standardAsr = formatTime(times.asr);
+  const hanafiAsr = formatTime(timesHanafi.asr);
+  const asrEnds =
+    standardAsr === hanafiAsr ? standardAsr : `${standardAsr} / ${hanafiAsr}`;
+  const until: Record<string, string> = {
+    Fajr: `Until ${formatTime(times.sunrise)}`,
+    Dhuhr: `Until ${asrEnds}`,
+    Asr: `Until ${formatTime(times.maghrib)}`,
+    Maghrib: `Until ${formatTime(times.isha)}`,
+    Isha: `Until Midnight ${formatTime(midnight)}`,
+  };
+  const t = now.getTime();
+  let label = `Current Window: Dhuhr • Ends at ${asrEnds}`;
+  if (t < times.fajr.getTime()) {
+    label = `Current Window: Isha • Next Fajr at ${formatTime(times.fajr)}`;
+  } else if (t < times.sunrise.getTime()) {
+    label = `Current Window: Fajr • Ends at ${formatTime(times.sunrise)}`;
+  } else if (t < times.dhuhr.getTime()) {
+    label = `Current Window: Dhuhr • Starts at ${formatTime(times.dhuhr)}`;
+  } else if (t < times.asr.getTime()) {
+    label = `Current Window: Dhuhr • Ends at ${asrEnds}`;
+  } else if (t < timesHanafi.asr.getTime()) {
+    label = `Current Window: Asr • Hanafi Dhuhr until ${hanafiAsr}`;
+  } else if (t < times.maghrib.getTime()) {
+    label = `Current Window: Asr • Ends at ${formatTime(times.maghrib)}`;
+  } else if (t < times.isha.getTime()) {
+    label = `Current Window: Maghrib • Ends at ${formatTime(times.isha)}`;
+  } else if (t < midnight.getTime()) {
+    label = `Current Window: Isha • Midnight at ${formatTime(midnight)}`;
+  } else {
+    label = `Current Window: Isha • Next Fajr at ${formatTime(nextFajr)}`;
+  }
+  return { until, label };
 }
 
 function jumuahShifts(settings: PrayerSettings) {
@@ -202,11 +246,9 @@ export default function PrayerTimes({
       .fetch<Partial<PrayerSettings> | null>(PRAYER_SETTINGS_QUERY)
       .then((document) => {
         const settings = resolvePrayerSettings(document);
-        console.log("Sanity prayer settings:", settings);
         if (!cancelled) setSettings(settings);
       })
-      .catch((error) => {
-        console.log("Sanity prayer settings:", error);
+      .catch(() => {
         if (!cancelled) setSettings(DEFAULT_PRAYER_SETTINGS);
       });
     return () => {
@@ -228,6 +270,21 @@ export default function PrayerTimes({
   }
 
   const { timesKarachi, times15, timesHanafi } = calculatedTimes(now);
+  const today = melissaCalendarDate(now);
+  const tomorrow = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 1,
+    12,
+    0,
+    0,
+  );
+  const nextFajr = new AdhanPrayerTimes(
+    coordinates,
+    tomorrow,
+    CalculationMethod.Karachi(),
+  ).fajr;
+  const windows = prayerWindows(now, timesKarachi, timesHanafi, nextFajr);
   const sunset = timesKarachi.maghrib;
   const maghribDisplay = resolvePrayerOffset(settings.maghrib, sunset);
   const maghribAt = clockInstant(maghribDisplay.time, sunset) ?? sunset;
@@ -293,7 +350,12 @@ export default function PrayerTimes({
               Iqamah {nextPrayer.iqamah}
             </p>
           </div>
-          <p className="mt-1 font-mono text-sm text-brand-gold">{countdown}</p>
+          <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+            <p className="font-mono text-sm text-brand-gold">{countdown}</p>
+            <p className="text-right text-[11px] leading-tight text-slate-300">
+              {windows.label}
+            </p>
+          </div>
         </div>
 
         <div className={`mt-3 ${compact ? "" : "md:hidden"}`}>
@@ -301,11 +363,12 @@ export default function PrayerTimes({
             Today&apos;s Prayer &amp; Iqamah
           </p>
           <div
-            className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] items-center border-b border-white/10 text-[0.7rem] font-semibold uppercase tracking-wide text-slate-300"
+            className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1.1fr)_minmax(0,0.9fr)] items-center border-b border-white/10 text-[0.7rem] font-semibold uppercase tracking-wide text-slate-300"
             role="row"
           >
             <span className="py-1 text-left">Prayer</span>
             <span className="py-1 text-left">Adhan</span>
+            <span className="py-1 text-left">Until</span>
             <span className="py-1 text-right">Iqamah</span>
           </div>
           {rows.map((row) => {
@@ -313,7 +376,7 @@ export default function PrayerTimes({
             return (
               <div
                 key={row.name}
-                className={`grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] items-center border-b border-slate-800 py-1.5 ${current ? "rounded-lg bg-white/10" : ""}`}
+                className={`my-0 grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1.1fr)_minmax(0,0.9fr)] items-center border-b border-slate-800 py-1.5 ${current ? "rounded-lg bg-white/10" : ""}`}
                 role="row"
               >
                 <span
@@ -323,6 +386,9 @@ export default function PrayerTimes({
                 </span>
                 <span className="text-xs font-medium leading-4 text-slate-300">
                   {adhanNote(row.name, timesKarachi, times15, timesHanafi)}
+                </span>
+                <span className="text-[11px] leading-tight text-slate-400">
+                  {windows.until[row.name] ?? ""}
                 </span>
                 <span className="text-right text-base font-bold text-white">
                   {row.iqamah}
@@ -343,7 +409,7 @@ export default function PrayerTimes({
               {settings.title}
             </h2>
             <p className="mt-1 text-sm text-slate-300">
-              Melissa, TX ({MELISSA.lat}° N, {Math.abs(MELISSA.lng)}° W) · Karachi method
+              Melissa, TX ({MELISSA.lat}° N, {Math.abs(MELISSA.lng)}° W) • Daily Schedule
             </p>
           </div>
           <div className="mt-4 text-sm text-slate-300 md:mt-0 md:text-right">
@@ -354,9 +420,9 @@ export default function PrayerTimes({
         <div
           className={`gap-4 md:grid-cols-2 ${taraweehDisplay.time ? "lg:grid-cols-6" : "lg:grid-cols-5"} ${compact ? "hidden" : "hidden md:grid"}`}
         >
-          <PrayerCard name="Fajr" iqamah={settings.fajr}>
+          <PrayerCard name="Fajr" iqamah={settings.fajr} until={windows.until.Fajr}>
             <div>
-              <span className="text-slate-300">Karachi:</span>{" "}
+              <span className="text-slate-300">18°:</span>{" "}
               {formatTime(timesKarachi.fajr)}
             </div>
             <div>
@@ -365,12 +431,12 @@ export default function PrayerTimes({
             </div>
           </PrayerCard>
 
-          <PrayerCard name="Dhuhr" iqamah={settings.dhuhr}>
+          <PrayerCard name="Dhuhr" iqamah={settings.dhuhr} until={windows.until.Dhuhr}>
             <span className="text-slate-300">Adhan:</span>{" "}
             {formatTime(timesKarachi.dhuhr)}
           </PrayerCard>
 
-          <PrayerCard name="Asr" iqamah={settings.asr}>
+          <PrayerCard name="Asr" iqamah={settings.asr} until={windows.until.Asr}>
             <div>
               <span className="text-slate-300">Standard:</span>{" "}
               {formatTime(timesKarachi.asr)}
@@ -386,6 +452,7 @@ export default function PrayerTimes({
             iqamah={maghribDisplay.time}
             note={maghribDisplay.note}
             iqamahClassName="text-xl"
+            until={windows.until.Maghrib}
           >
             <span className="text-slate-300">Adhan:</span>{" "}
             {formatTime(timesKarachi.maghrib)}
@@ -395,9 +462,10 @@ export default function PrayerTimes({
             name="Isha"
             iqamah={ishaDisplay.time}
             note={ishaDisplay.note}
+            until={windows.until.Isha}
           >
             <div>
-              <span className="text-slate-300">Karachi:</span>{" "}
+              <span className="text-slate-300">18°:</span>{" "}
               {formatTime(timesKarachi.isha)}
             </div>
             <div>
@@ -433,11 +501,11 @@ export default function PrayerTimes({
                 <span className="text-xs font-bold uppercase tracking-wide text-brand-gold">
                   {shift.shift}
                 </span>
-                <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="text-sm font-semibold text-white">
+                <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <span className="whitespace-nowrap text-sm font-semibold text-white">
                     Lecture: {shift.lecture}
                   </span>
-                  <span className="text-sm font-semibold text-slate-300">
+                  <span className="whitespace-nowrap text-sm font-semibold text-slate-300">
                     Salah: {shift.salah}
                   </span>
                 </div>
@@ -454,12 +522,14 @@ function PrayerCard({
   name,
   iqamah,
   note,
+  until,
   iqamahClassName = "text-2xl",
   children,
 }: {
   name: string;
   iqamah: string;
   note?: string;
+  until?: string;
   iqamahClassName?: string;
   children: ReactNode;
 }) {
@@ -479,7 +549,12 @@ function PrayerCard({
           </span>
         ) : null}
       </div>
-      <div className="mt-3 space-y-1 text-xs text-slate-300">{children}</div>
+      <div className="mt-3 space-y-1 text-xs text-slate-300">
+        {children}
+        {until ? (
+          <p className="text-[11px] leading-tight text-slate-400">{until}</p>
+        ) : null}
+      </div>
     </div>
   );
 }
