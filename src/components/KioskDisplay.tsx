@@ -11,28 +11,34 @@ import {
 import { MoonPhase } from "astronomy-engine";
 import { resolveIqamahRows } from "@/src/lib/iqamahTime";
 import { MELISSA } from "@/src/lib/melissa";
-import {
-  hijriFromDate,
-  hijriLabel,
-  nextSunnahFast,
-  type UpcomingDate,
-} from "@/src/lib/lunar/calendarData";
+import { hijriFromDate, hijriLabel } from "@/src/lib/lunar/calendarData";
 import { moonSummary } from "@/src/lib/lunar/hilalWatch";
 import {
   CAMPAIGN_ZEFFY_URL,
   GENERAL_ZEFFY_URL,
-  FEATURED_CAMPAIGN_QUERY,
   PRAYER_SETTINGS_QUERY,
   flyersQuery,
   getSanityClient,
   resolveCampaign,
   resolvePrayerSettings,
   type CampaignDocument,
+  type CampaignProgress,
   type FlyerDocument,
   type PrayerSettings,
 } from "@/src/lib/sanity";
 
 const DONORBOX_URL = "https://donorbox.org/embed/donate-to-imaan";
+const KIOSK_CAMPAIGN_QUERY = `*[_type == "campaign" && !(_id in path("drafts.**")) && scope in ["masjid", "both"]] | order(isFeatured desc, _createdAt desc)[0]{
+  _id,
+  title,
+  description,
+  deadline,
+  goalAmount,
+  raisedAmount,
+  showProgressBar,
+  isFeatured,
+  donationUrl
+}`;
 const REFRESH_MS = 300_000;
 const SLIDE_MS = 60_000;
 const SWIPE_PX = 40;
@@ -67,7 +73,6 @@ type KioskFlyer = {
 type LunarSnapshot = {
   key: string;
   hijri: string;
-  fast: string;
   phaseName: string;
   illuminationPercent: number;
   phaseAngle: number;
@@ -239,20 +244,6 @@ function adhanNote(
   return `18°: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
 }
 
-function fastChip(fast: UpcomingDate | null) {
-  if (!fast) return "See the Hilāl calendar";
-  const day = Number(fast.hijriLabel.split(" ")[0]);
-  const hijriShort = fast.hijriLabel.replace(/ \d{3,4}$/, "");
-  let name = fast.label;
-  if (fast.label === "White Day") {
-    const ordinal =
-      day === 13 ? "1st" : day === 14 ? "2nd" : day === 15 ? "3rd" : "";
-    name = ordinal ? `${ordinal} White Day` : "White Day";
-  }
-  const when = fast.when === "Today" ? "Today" : "Upcoming";
-  return `${when}: ${name} · ${hijriShort}`;
-}
-
 function categoryLabel(category: string | null) {
   if (!category) return "Community";
   return CATEGORY_LABELS[category] ?? category;
@@ -362,6 +353,44 @@ function KioskCard({
   );
 }
 
+function CampaignMeter({ campaign }: { campaign: CampaignProgress }) {
+  const raised = campaign.raisedAmount || 0;
+  const pct = Math.min(100, Math.round((raised / campaign.goalAmount) * 100));
+  const remaining = Math.max(0, campaign.goalAmount - raised);
+  return (
+    <div className="mt-1.5">
+      <div className="mb-1 flex justify-between gap-3 text-[10px] font-semibold text-slate-700">
+        <p>
+          {campaignMoney(raised)} raised of {campaignMoney(campaign.goalAmount)}{" "}
+          ({pct}% funded)
+        </p>
+        <p className="shrink-0">{campaignMoney(remaining)} remaining</p>
+      </div>
+      <div
+        className="h-2 overflow-hidden rounded-full bg-slate-200"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={pct}
+        aria-label={`${pct}% funded`}
+      >
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-amber-500 to-red-600"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function campaignMoney(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
 function QrTile({ value, label }: { value: string; label: string }) {
   const [markup, setMarkup] = useState("");
 
@@ -405,6 +434,7 @@ export default function KioskDisplay() {
   const [flyers, setFlyers] = useState<KioskFlyer[]>([]);
   const [flyersReady, setFlyersReady] = useState(false);
   const [zeffyUrl, setZeffyUrl] = useState(CAMPAIGN_ZEFFY_URL);
+  const [campaign, setCampaign] = useState<CampaignProgress | null>(null);
   const [index, setIndex] = useState(0);
   const [opacity, setOpacity] = useState(1);
   const [startedAt, setStartedAt] = useState(() => Date.now());
@@ -469,14 +499,17 @@ export default function KioskDisplay() {
       Promise.all([
         client.fetch<Partial<PrayerSettings> | null>(PRAYER_SETTINGS_QUERY),
         client.fetch<FlyerDocument[] | null>(flyersQuery),
-        client.fetch<CampaignDocument | null>(FEATURED_CAMPAIGN_QUERY),
+        client.fetch<CampaignDocument | null>(KIOSK_CAMPAIGN_QUERY),
       ])
         .then(([settingsDoc, flyerDocs, campaignDoc]) => {
           if (cancelled) return;
           setSettings(resolvePrayerSettings(settingsDoc));
           setFlyers(flyersFromHits(flyerDocs));
-          const campaign = resolveCampaign(campaignDoc);
-          setZeffyUrl(campaign.donationUrl?.trim() || CAMPAIGN_ZEFFY_URL);
+          const resolved = campaignDoc?.title?.trim()
+            ? resolveCampaign(campaignDoc)
+            : null;
+          setCampaign(resolved);
+          setZeffyUrl(resolved?.donationUrl?.trim() || CAMPAIGN_ZEFFY_URL);
           setFlyersReady(true);
         })
         .catch(() => {
@@ -536,7 +569,6 @@ export default function KioskDisplay() {
       return {
         key,
         hijri: hijriLabel(hijriFromDate(now)),
-        fast: fastChip(nextSunnahFast(now)),
         phaseName: moon.phaseName,
         illuminationPercent: moon.illuminationPercent,
         phaseAngle: MoonPhase(now),
@@ -853,7 +885,7 @@ export default function KioskDisplay() {
 
           <KioskCard
             label="Ways to give"
-            className="flex min-h-0 grow flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm"
+            className="flex min-h-0 grow flex-col rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm"
           >
             <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
               Ways to Give
@@ -885,6 +917,32 @@ export default function KioskDisplay() {
                 </div>
               </div>
             </div>
+            {campaign ? (
+              <div className="mt-2.5 border-t border-slate-200/80 pt-2.5">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                    Urgent Appeal
+                  </span>
+                  {campaign.deadline ? (
+                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-900">
+                      ⏳ {campaign.deadline}
+                    </span>
+                  ) : null}
+                </div>
+                <p className="mt-1 truncate text-xs font-extrabold text-slate-900">
+                  {campaign.title}
+                </p>
+                {campaign.description ? (
+                  <p className="mt-0.5 line-clamp-1 text-[10px] text-slate-600">
+                    {campaign.description}
+                  </p>
+                ) : null}
+                {campaign.showProgressBar && campaign.goalAmount > 0 ? (
+                  <CampaignMeter campaign={campaign} />
+                ) : null}
+              </div>
+            ) : null}
           </KioskCard>
         </div>
 
@@ -920,9 +978,6 @@ export default function KioskDisplay() {
               </p>
               <p className="mt-0.5 truncate font-heading text-base font-extrabold text-white">
                 {lunar?.phaseName ?? "Reading the moon…"}
-              </p>
-              <p className="truncate text-sm text-slate-300">
-                {lunar?.fast ?? "Loading the next Sunnah fast…"}
               </p>
             </div>
           </KioskCard>
