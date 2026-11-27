@@ -9,11 +9,10 @@ import MobileMenu from "./mobile-menu";
 import { useDonation } from "@/src/components/DonationModal";
 import TopBar from "@/src/components/TopBar";
 
-const services = [
+const moreLinks = [
   { href: "/prayer-times", label: "Prayer" },
   { href: "/prayer-times#jumuah", label: "Jumu'ah" },
   { href: "/#aalim-sessions", label: "Classes" },
-  { href: "/excuse-letters", label: "Excuse Letters" },
   { href: "/gallery", label: "Photo Gallery" },
 ];
 
@@ -25,24 +24,24 @@ const bottomLinks = [
 ] as const;
 
 export default function Header() {
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
   const pathname = usePathname();
   const { openGive } = useDonation();
 
   useEffect(() => {
-    setServicesOpen(false);
+    setMoreOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (!servicesOpen) return;
+    if (!moreOpen) return;
     const onPointerDown = (event: MouseEvent) => {
-      if (!servicesRef.current?.contains(event.target as Node))
-        setServicesOpen(false);
+      if (!moreRef.current?.contains(event.target as Node))
+        setMoreOpen(false);
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setServicesOpen(false);
+      if (event.key === "Escape") setMoreOpen(false);
     };
     document.addEventListener("mousedown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -50,7 +49,7 @@ export default function Header() {
       document.removeEventListener("mousedown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [servicesOpen]);
+  }, [moreOpen]);
 
   return (
     <>
@@ -86,45 +85,6 @@ export default function Header() {
             className="hidden items-center gap-1 md:flex"
             aria-label="Primary"
           >
-            <div className="relative" ref={servicesRef}>
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
-                aria-expanded={servicesOpen}
-                aria-controls={menuId}
-                onClick={() => setServicesOpen((current) => !current)}
-              >
-                Services
-                <svg className="h-4 w-4" viewBox="0 0 20 20" aria-hidden="true">
-                  <path
-                    d="M5 7.5l5 5 5-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-              {servicesOpen ? (
-                <div
-                  id={menuId}
-                  role="menu"
-                  className="absolute left-0 top-full z-50 mt-2 w-72 rounded-2xl border border-slate-200/80 bg-white p-2 shadow-md"
-                >
-                  {services.map((item) => (
-                    <Link
-                      key={item.href}
-                      role="menuitem"
-                      href={item.href}
-                      className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-900 transition-all duration-200 hover:bg-slate-50"
-                      onClick={() => setServicesOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
-            </div>
             <Link
               href="/bulletin"
               className="rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
@@ -143,6 +103,51 @@ export default function Header() {
             >
               Hilāl Calendar
             </Link>
+            <Link
+              href="/excuse-letters"
+              className="rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+            >
+              Excuse Letters
+            </Link>
+            <div className="relative" ref={moreRef}>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                aria-expanded={moreOpen}
+                aria-controls={menuId}
+                onClick={() => setMoreOpen((current) => !current)}
+              >
+                More
+                <svg className="h-4 w-4" viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="M5 7.5l5 5 5-5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+              {moreOpen ? (
+                <div
+                  id={menuId}
+                  role="menu"
+                  className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-slate-200/80 bg-white p-2 shadow-md"
+                >
+                  {moreLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      role="menuitem"
+                      href={item.href}
+                      className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-900 transition-all duration-200 hover:bg-slate-50"
+                      onClick={() => setMoreOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </nav>
 
           <div className="flex items-center gap-2">
