@@ -846,35 +846,33 @@ export default function KioskDisplay() {
               Ways to Give
             </p>
             <div className="mt-2 flex min-h-0 flex-1 flex-col justify-between">
-              <div className="flex min-h-0 flex-1 flex-col gap-3 sm:flex-row sm:items-stretch">
+              <div className="flex min-h-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
                 <div className="grid min-w-0 flex-1 grid-cols-3 items-center gap-2.5">
                   <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
                   <QrTile value={zeffyUrl} label="Zeffy • Property" />
                   <QrTile value={DONORBOX_URL} label="Donorbox" />
                 </div>
-                <div className="flex w-full shrink-0 flex-col justify-between sm:w-[220px] xl:w-[245px]">
-                  <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
+                <div className="flex w-full shrink-0 flex-col gap-2 sm:w-[215px] xl:w-[235px]">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#2E6575]">
                     Zelle
                   </p>
-                  <div className="flex min-h-0 flex-1 flex-col justify-between gap-2">
-                    {ZELLE_CARDS.map((card) => (
-                      <div
-                        key={card.email}
-                        className="flex min-w-0 flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-2"
-                      >
-                        <p className="text-[9px] font-bold uppercase tracking-wider text-[#2E6575]">
-                          {card.label}
-                        </p>
-                        <p className="mt-0.5 break-words text-[11px] font-bold leading-snug text-slate-900">
-                          {card.email}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                  {ZELLE_CARDS.map((card) => (
+                    <div
+                      key={card.email}
+                      className="min-w-0 rounded-xl border border-slate-200/80 bg-slate-50/90 px-3 py-2"
+                    >
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#2E6575]">
+                        {card.label}
+                      </p>
+                      <p className="mt-0.5 break-words text-[11px] font-bold leading-snug text-slate-900">
+                        {card.email}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
               {campaign ? (
-                <div className="mt-2 border-t border-slate-200/80 pt-3">
+                <div className="mt-2 border-t border-slate-200/80 pt-2">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white">
                       <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
