@@ -825,7 +825,7 @@ export default function KioskDisplay() {
             <p className="mb-0.5 mt-2 text-[11px] font-bold uppercase tracking-wider text-slate-300">
               Today&apos;s Prayer &amp; Iqamah
             </p>
-            <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.8fr)_minmax(0,0.9fr)] border-b border-white/10 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-300">
+            <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.8fr)_minmax(0,0.9fr)] border-b border-white/10 px-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-300">
               <span className="py-1 text-left">Prayer</span>
               <span className="py-1 text-left">Adhan</span>
               <span className="py-1 text-right">Iqamah</span>
@@ -835,7 +835,7 @@ export default function KioskDisplay() {
               return (
                 <div
                   key={row.name}
-                  className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.8fr)_minmax(0,0.9fr)] items-center border-b border-slate-800/80 py-0.5 ${current ? "rounded-lg bg-slate-800/70 px-2" : ""}`}
+                  className={`my-0 grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.8fr)_minmax(0,0.9fr)] items-center border-b border-slate-800/80 px-2.5 py-1.5 ${current ? "rounded-lg bg-slate-800/70" : ""}`}
                 >
                   <span
                     className={`text-base font-bold ${current ? "text-[#D4A373]" : "text-white"}`}
@@ -847,7 +847,7 @@ export default function KioskDisplay() {
                       {row.adhan}
                     </span>
                     {row.detailKind === "sunrise" ? (
-                      <span className="block text-[11px] leading-tight text-amber-300/90">
+                      <span className="block text-[10px] leading-tight text-amber-300/90">
                         {row.detail}
                       </span>
                     ) : null}
