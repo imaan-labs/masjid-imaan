@@ -367,7 +367,7 @@ function CampaignMeter({ campaign }: { campaign: CampaignProgress }) {
         <p className="shrink-0">{campaignMoney(remaining)} remaining</p>
       </div>
       <div
-        className="h-2 overflow-hidden rounded-full bg-slate-200"
+        className="h-2.5 overflow-hidden rounded-full bg-slate-200"
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}
@@ -416,7 +416,7 @@ function QrTile({ value, label }: { value: string; label: string }) {
   return (
     <div className="min-w-0">
       <div
-        className="mx-auto block aspect-square w-full max-w-[88px] rounded-xl border border-slate-200/90 bg-slate-50 p-1.5 sm:max-w-[96px] [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
+        className="mx-auto block aspect-square w-full max-w-[112px] rounded-xl border border-slate-200/90 bg-slate-50 p-1.5 sm:max-w-[126px] [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
         dangerouslySetInnerHTML={markup ? { __html: markup } : undefined}
         role="img"
         aria-label={label}
@@ -677,6 +677,8 @@ export default function KioskDisplay() {
       if (row.name === "Isha" && ishaDisplay.time) iqamah = ishaDisplay.time;
       if (row.name === "Taraweeh" && taraweehDisplay.time)
         iqamah = taraweehDisplay.time;
+      const detailKind: "sunrise" | "until" | "" =
+        row.name === "Fajr" ? "sunrise" : windows.until[row.name] ? "until" : "";
       return {
         name: row.name,
         adhan: adhanNote(row.name, times, times15, timesHanafi),
@@ -684,8 +686,7 @@ export default function KioskDisplay() {
           row.name === "Fajr"
             ? `Sunrise (Ends): ${windows.sunrise}`
             : (windows.until[row.name] ?? ""),
-        detailKind:
-          row.name === "Fajr" ? "sunrise" : windows.until[row.name] ? "until" : "",
+        detailKind,
         iqamah,
         sortKey: row.sortKey,
         minutes: row.minutes,
@@ -839,64 +840,66 @@ export default function KioskDisplay() {
 
           <KioskCard
             label="Ways to give"
-            className="flex min-h-0 grow flex-col rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm"
+            className="flex min-h-0 grow flex-col rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm"
           >
             <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
               Ways to Give
             </p>
-            <div className="mt-2 grid min-h-0 flex-1 grid-cols-1 items-start gap-3 xl:grid-cols-[1.35fr_1fr]">
-              <div className="grid min-w-0 grid-cols-3 items-start gap-2 sm:gap-2.5">
-                <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
-                <QrTile value={zeffyUrl} label="Zeffy • Property" />
-                <QrTile value={DONORBOX_URL} label="Donorbox" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
-                  Zelle
-                </p>
-                <div className="flex flex-col gap-2">
-                  {ZELLE_CARDS.map((card) => (
-                    <div
-                      key={card.email}
-                      className="flex min-w-0 flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-2.5 py-1.5"
-                    >
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#2E6575]">
-                        {card.label}
-                      </p>
-                      <p className="mt-0.5 break-words text-[11px] font-bold leading-snug text-slate-900">
-                        {card.email}
-                      </p>
-                    </div>
-                  ))}
+            <div className="mt-2 flex min-h-0 flex-1 flex-col justify-between">
+              <div className="flex min-h-0 flex-1 flex-col gap-3 sm:flex-row sm:items-stretch">
+                <div className="grid min-w-0 flex-1 grid-cols-3 items-center gap-2.5">
+                  <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
+                  <QrTile value={zeffyUrl} label="Zeffy • Property" />
+                  <QrTile value={DONORBOX_URL} label="Donorbox" />
+                </div>
+                <div className="flex w-full shrink-0 flex-col justify-between sm:w-[220px] xl:w-[245px]">
+                  <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
+                    Zelle
+                  </p>
+                  <div className="flex min-h-0 flex-1 flex-col justify-between gap-2">
+                    {ZELLE_CARDS.map((card) => (
+                      <div
+                        key={card.email}
+                        className="flex min-w-0 flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-2"
+                      >
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-[#2E6575]">
+                          {card.label}
+                        </p>
+                        <p className="mt-0.5 break-words text-[11px] font-bold leading-snug text-slate-900">
+                          {card.email}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-            {campaign ? (
-              <div className="mt-2 border-t border-slate-200/80 pt-2">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-                    Urgent Appeal
-                  </span>
-                  {campaign.deadline ? (
-                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-900">
-                      ⏳ {campaign.deadline}
+              {campaign ? (
+                <div className="mt-2 border-t border-slate-200/80 pt-3">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                      Urgent Appeal
                     </span>
+                    {campaign.deadline ? (
+                      <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-900">
+                        ⏳ {campaign.deadline}
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="mt-1 truncate text-xs font-extrabold text-slate-900">
+                    {campaign.title}
+                  </p>
+                  {campaign.description ? (
+                    <p className="mt-0.5 line-clamp-1 text-[10px] text-slate-600">
+                      {campaign.description}
+                    </p>
+                  ) : null}
+                  {campaign.showProgressBar && campaign.goalAmount > 0 ? (
+                    <CampaignMeter campaign={campaign} />
                   ) : null}
                 </div>
-                <p className="mt-1 truncate text-xs font-extrabold text-slate-900">
-                  {campaign.title}
-                </p>
-                {campaign.description ? (
-                  <p className="mt-0.5 line-clamp-1 text-[10px] text-slate-600">
-                    {campaign.description}
-                  </p>
-                ) : null}
-                {campaign.showProgressBar && campaign.goalAmount > 0 ? (
-                  <CampaignMeter campaign={campaign} />
-                ) : null}
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </KioskCard>
 
           <KioskCard
