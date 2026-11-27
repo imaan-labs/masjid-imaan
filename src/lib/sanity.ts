@@ -102,11 +102,12 @@ export function resolvePrayerSettings(
   };
 }
 
-export const flyersQuery = `*[_type == "flyer" && !(_id in path("drafts.**")) && (!defined(status) || status == "active") && (!defined(expiryDate) || expiryDate >= now())] | order(publishDate desc) {
+export const flyersQuery = `*[_type == "flyer" && !(_id in path("drafts.**")) && (!defined(status) || status == "active") && (!defined(expiryDate) || expiryDate >= now())] | order(coalesce(priority, 100) asc, publishDate desc) {
   _id,
   title,
   category,
   status,
+  priority,
   actionLink,
   "imageUrl": image.asset->url
 }`;
@@ -116,6 +117,7 @@ export type FlyerDocument = {
   title: string;
   category?: string | null;
   status?: string | null;
+  priority?: number | null;
   actionLink?: string | null;
   imageUrl?: string | null;
 };

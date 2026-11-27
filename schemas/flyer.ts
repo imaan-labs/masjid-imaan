@@ -68,6 +68,15 @@ export default defineType({
       type: "url",
     }),
     defineField({
+      name: "priority",
+      title: "Display Priority (Lower = Higher Up)",
+      description:
+        "Set a lower number (e.g., 1, 2, 3) to move a flyer higher up, or a higher number to move it down. Default is 100.",
+      type: "number",
+      initialValue: 100,
+      validation: (rule) => rule.integer().min(0),
+    }),
+    defineField({
       name: "publishDate",
       title: "Publish Date",
       type: "datetime",
@@ -84,15 +93,16 @@ export default defineType({
       title: "title",
       category: "category",
       status: "status",
+      priority: "priority",
       media: "image",
     },
-    prepare({ title, category, status, media }) {
+    prepare({ title, category, status, priority, media }) {
       const badge = status === "inactive" ? "[INACTIVE]" : "[ACTIVE]";
       const categoryTitle =
         categoryTitles[category ?? ""] ?? category ?? "General Announcement";
       return {
         title: title || "Untitled flyer",
-        subtitle: `${badge} ${categoryTitle}`,
+        subtitle: `[#${priority ?? 100}] ${badge} ${categoryTitle}`,
         media,
       };
     },
