@@ -20,6 +20,7 @@ import {
 import { moonSummary } from "@/src/lib/lunar/hilalWatch";
 import {
   CAMPAIGN_ZEFFY_URL,
+  GENERAL_ZEFFY_URL,
   FEATURED_CAMPAIGN_QUERY,
   PRAYER_SETTINGS_QUERY,
   flyersQuery,
@@ -384,14 +385,14 @@ function QrTile({ value, label }: { value: string; label: string }) {
   }, [value]);
 
   return (
-    <div className="flex w-28 shrink-0 flex-col items-center gap-1">
+    <div className="flex w-[6.5rem] shrink-0 flex-col items-center gap-1">
       <div
-        className="h-28 w-28 rounded-2xl border border-slate-200/90 bg-slate-50 p-1.5 [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
+        className="h-24 w-full rounded-xl border border-slate-200/90 bg-slate-50 p-1.5 [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
         dangerouslySetInnerHTML={markup ? { __html: markup } : undefined}
         role="img"
         aria-label={label}
       />
-      <p className="text-center text-[11px] font-bold text-slate-800">
+      <p className="text-center text-[10px] font-bold leading-tight text-slate-700">
         {label}
       </p>
     </div>
@@ -895,28 +896,31 @@ export default function KioskDisplay() {
             <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
               Ways to Give
             </p>
-            <div className="mt-2 grid grid-cols-2 gap-3 pb-1">
-              <div className="flex items-start gap-2">
-                <QrTile value={zeffyUrl} label="Zeffy • 0% Fee" />
-                <QrTile value={DONORBOX_URL} label="Donorbox • Card/ACH" />
+            <div className="mt-2 flex items-center gap-3 pb-1">
+              <div className="flex shrink-0 items-start gap-1.5">
+                <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
+                <QrTile value={zeffyUrl} label="Zeffy • Property" />
+                <QrTile value={DONORBOX_URL} label="Donorbox" />
               </div>
-              <div className="flex flex-col justify-center gap-1.5">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
+              <div className="min-w-0 flex-1">
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#2E6575]">
                   Zelle
                 </p>
-                {ZELLE_CARDS.map((card) => (
-                  <div
-                    key={card.email}
-                    className="rounded-xl border border-slate-200/80 bg-slate-50 px-3.5 py-2"
-                  >
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
-                      {card.label}
-                    </p>
-                    <p className="mt-0.5 text-sm font-bold tracking-tight text-slate-900">
-                      {card.email}
-                    </p>
-                  </div>
-                ))}
+                <div className="flex flex-col gap-1.5">
+                  {ZELLE_CARDS.map((card) => (
+                    <div
+                      key={card.email}
+                      className="flex flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-1.5"
+                    >
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#2E6575]">
+                        {card.label}
+                      </p>
+                      <p className="truncate text-xs font-bold text-slate-900">
+                        {card.email}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </KioskCard>
