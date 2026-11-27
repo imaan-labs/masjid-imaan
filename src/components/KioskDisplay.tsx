@@ -385,14 +385,14 @@ function QrTile({ value, label }: { value: string; label: string }) {
   }, [value]);
 
   return (
-    <div className="flex w-[6.5rem] shrink-0 flex-col items-center gap-1">
+    <div className="flex w-32 shrink-0 flex-col items-center gap-1.5">
       <div
-        className="h-24 w-full rounded-xl border border-slate-200/90 bg-slate-50 p-1.5 [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
+        className="h-32 w-full rounded-xl border border-slate-200/90 bg-slate-50 p-1.5 [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
         dangerouslySetInnerHTML={markup ? { __html: markup } : undefined}
         role="img"
         aria-label={label}
       />
-      <p className="text-center text-[10px] font-bold leading-tight text-slate-700">
+      <p className="text-center text-[11px] font-bold leading-tight text-slate-700">
         {label}
       </p>
     </div>
@@ -706,7 +706,7 @@ export default function KioskDisplay() {
       style={{ WebkitTouchCallout: "none", WebkitUserSelect: "none" }}
     >
       <div className="grid h-full min-h-0 grid-cols-12 grid-rows-[minmax(0,1fr)] gap-4 p-4">
-        <div className="col-span-5 flex h-full min-h-0 flex-col justify-between gap-2.5">
+        <div className="col-span-5 flex h-full min-h-0 flex-col justify-between gap-3">
           <KioskCard
             label="Clock and date"
             className="rounded-3xl bg-white px-5 py-3.5 shadow-sm"
@@ -852,9 +852,47 @@ export default function KioskDisplay() {
           </KioskCard>
 
           <KioskCard
+            label="Ways to give"
+            className="flex min-h-0 grow flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
+              Ways to Give
+            </p>
+            <div className="mt-3 flex min-h-0 flex-1 items-center gap-4 pb-1">
+              <div className="flex shrink-0 items-start gap-2">
+                <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
+                <QrTile value={zeffyUrl} label="Zeffy • Property" />
+                <QrTile value={DONORBOX_URL} label="Donorbox" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
+                  Zelle
+                </p>
+                <div className="flex flex-col gap-2">
+                  {ZELLE_CARDS.map((card) => (
+                    <div
+                      key={card.email}
+                      className="flex flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3.5 py-2.5"
+                    >
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#2E6575]">
+                        {card.label}
+                      </p>
+                      <p className="mt-0.5 truncate text-sm font-bold text-slate-900">
+                        {card.email}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </KioskCard>
+        </div>
+
+        <div className="col-span-7 flex h-full min-h-0 flex-col gap-3">
+          <KioskCard
             label="Tonight's Hilāl"
             tone="dark"
-            className="flex items-center gap-4 rounded-3xl bg-slate-950/95 px-4 py-2.5 text-white shadow-md"
+            className="flex shrink-0 items-center gap-4 rounded-3xl bg-slate-950/95 px-5 py-3 text-white shadow-md"
           >
             <div className="flex shrink-0 flex-col items-center">
               <svg viewBox="0 0 40 40" className="h-12 w-12" aria-hidden="true">
@@ -888,54 +926,17 @@ export default function KioskDisplay() {
               </p>
             </div>
           </KioskCard>
-
-          <KioskCard
-            label="Ways to give"
-            className="shrink-0 rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm"
-          >
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
-              Ways to Give
-            </p>
-            <div className="mt-2 flex items-center gap-3 pb-1">
-              <div className="flex shrink-0 items-start gap-1.5">
-                <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
-                <QrTile value={zeffyUrl} label="Zeffy • Property" />
-                <QrTile value={DONORBOX_URL} label="Donorbox" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#2E6575]">
-                  Zelle
-                </p>
-                <div className="flex flex-col gap-1.5">
-                  {ZELLE_CARDS.map((card) => (
-                    <div
-                      key={card.email}
-                      className="flex flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-1.5"
-                    >
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#2E6575]">
-                        {card.label}
-                      </p>
-                      <p className="truncate text-xs font-bold text-slate-900">
-                        {card.email}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </KioskCard>
-        </div>
-
-        <div className="col-span-7 flex h-full min-h-0 flex-col">
-          <FlyerStage
-            flyer={activeFlyer}
-            count={flyers.length}
-            index={index}
-            opacity={opacity}
-            ready={flyersReady}
-            startedAt={startedAt}
-            onSwipe={swipe}
-          />
+          <div className="flex min-h-0 flex-1 flex-col">
+            <FlyerStage
+              flyer={activeFlyer}
+              count={flyers.length}
+              index={index}
+              opacity={opacity}
+              ready={flyersReady}
+              startedAt={startedAt}
+              onSwipe={swipe}
+            />
+          </div>
         </div>
       </div>
       {exitOpen ? (
