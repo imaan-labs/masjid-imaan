@@ -787,23 +787,23 @@ export default function KioskDisplay() {
             className="rounded-3xl bg-slate-950/95 p-3.5 text-white shadow-lg"
           >
             <div className="rounded-2xl border border-slate-800/80 bg-slate-900/80 px-3.5 py-2.5">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
-                    Next Prayer
-                  </p>
-                  <p className="mt-0.5 text-2xl font-extrabold leading-none text-white">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
+                Next Prayer
+              </p>
+              <div className="mt-0.5 flex items-start justify-between gap-3">
+                <div className="flex min-w-0 items-baseline gap-2.5">
+                  <p className="text-xl font-extrabold tabular-nums leading-none text-white">
                     {board?.nextName ?? "Loading today's prayers…"}
                   </p>
                   {board ? (
-                    <p className="mt-0.5 font-mono text-xs text-[#D4A373]">
+                    <p className="text-xl font-extrabold tabular-nums leading-none text-[#D4A373]">
                       {board.countdown}
                     </p>
                   ) : null}
                 </div>
                 {board ? (
                   <div className="max-w-[16rem] shrink-0 text-right">
-                    <p className="text-base font-bold text-white">
+                    <p className="text-xl font-extrabold tabular-nums leading-none text-white">
                       Iqamah {board.nextIqamah}
                     </p>
                     <p className="mt-0.5 text-[11px] leading-tight text-slate-300">
