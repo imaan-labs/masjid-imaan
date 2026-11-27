@@ -738,49 +738,7 @@ export default function KioskDisplay() {
       style={{ WebkitTouchCallout: "none", WebkitUserSelect: "none" }}
     >
       <div className="grid h-full min-h-0 grid-cols-12 grid-rows-[minmax(0,1fr)] gap-4 p-4">
-        <div className="col-span-5 flex h-full min-h-0 flex-col justify-between gap-3">
-          <KioskCard
-            label="Clock and date"
-            className="rounded-3xl bg-white px-5 py-3.5 shadow-sm"
-          >
-            <div className="flex items-center justify-between gap-4">
-              <div
-                className="flex min-w-0 items-center gap-3"
-                onPointerDown={(event) => {
-                  brandPoint.current = { x: event.clientX, y: event.clientY };
-                }}
-                onPointerUp={noteBrandTap}
-                onPointerCancel={() => {
-                  brandPoint.current = null;
-                }}
-              >
-                <img
-                  src="/images/logo.png"
-                  alt=""
-                  draggable={false}
-                  className="h-14 w-auto"
-                />
-                <div className="min-w-0">
-                  <p className="truncate font-heading text-lg font-extrabold tracking-tight text-slate-900">
-                    Imaan Masjid
-                  </p>
-                  <p className="text-xs font-medium text-slate-500">Melissa, TX</p>
-                </div>
-              </div>
-              <div className="shrink-0 text-right">
-                <p className="font-heading text-4xl font-extrabold tabular-nums leading-none text-slate-900">
-                  {now ? formatClock(now) : "--:--:-- --"}
-                </p>
-                <p className="mt-1 text-sm text-slate-600">
-                  {board?.dateLabel ?? "Loading the date…"}
-                </p>
-                <p className="mt-1 inline-flex rounded-full bg-[#2E6575]/10 px-2.5 py-0.5 text-sm font-semibold text-[#2E6575]">
-                  {lunar?.hijri ?? "Loading the Hijri date…"}
-                </p>
-              </div>
-            </div>
-          </KioskCard>
-
+        <div className="col-span-5 flex h-full min-h-0 flex-col gap-2.5">
           <KioskCard
             label="Prayer and Jumu'ah schedule"
             tone="dark"
@@ -940,13 +898,11 @@ export default function KioskDisplay() {
               </div>
             ) : null}
           </KioskCard>
-        </div>
 
-        <div className="col-span-7 flex h-full min-h-0 flex-col gap-3">
           <KioskCard
             label="Tonight's Hilāl"
             tone="dark"
-            className="flex shrink-0 items-center gap-4 rounded-3xl bg-slate-950/95 px-5 py-3 text-white shadow-md"
+            className="flex shrink-0 items-center gap-4 rounded-3xl bg-slate-950/95 px-4 py-2.5 text-white shadow-md"
           >
             <div className="flex shrink-0 flex-col items-center">
               <svg viewBox="0 0 40 40" className="h-12 w-12" aria-hidden="true">
@@ -977,7 +933,51 @@ export default function KioskDisplay() {
               </p>
             </div>
           </KioskCard>
-          <div className="flex min-h-0 flex-1 flex-col">
+        </div>
+
+        <div className="col-span-7 flex h-full min-h-0 flex-col gap-3">
+          <KioskCard
+            label="Clock and date"
+            className="shrink-0 rounded-3xl bg-white px-5 py-3.5 shadow-sm"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div
+                className="flex min-w-0 items-center gap-3"
+                onPointerDown={(event) => {
+                  brandPoint.current = { x: event.clientX, y: event.clientY };
+                }}
+                onPointerUp={noteBrandTap}
+                onPointerCancel={() => {
+                  brandPoint.current = null;
+                }}
+              >
+                <img
+                  src="/images/logo.png"
+                  alt=""
+                  draggable={false}
+                  className="h-14 w-auto"
+                />
+                <div className="min-w-0">
+                  <p className="truncate font-heading text-lg font-extrabold tracking-tight text-slate-900">
+                    Imaan Masjid
+                  </p>
+                  <p className="text-xs font-medium text-slate-600">Melissa, TX</p>
+                </div>
+              </div>
+              <div className="min-w-0 text-center">
+                <p className="text-xs font-medium text-slate-600">
+                  {board?.dateLabel ?? "Loading the date…"}
+                </p>
+                <p className="mt-0.5 text-xs font-medium text-slate-600">
+                  {lunar?.hijri ?? "Loading the Hijri date…"}
+                </p>
+              </div>
+              <p className="shrink-0 font-heading text-4xl font-extrabold tabular-nums leading-none text-slate-900">
+                {now ? formatClock(now) : "--:--:-- --"}
+              </p>
+            </div>
+          </KioskCard>
+          <div className="flex min-h-0 flex-1 flex-col justify-between">
             <FlyerStage
               flyer={activeFlyer}
               count={flyers.length}
