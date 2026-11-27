@@ -193,34 +193,34 @@ function prayerWindows(
     Isha: `Midnight ${formatTime(midnight)}`,
   };
   const t = now.getTime();
-  let lead = "Current Window: Dhuhr • Ends at";
+  let lead = "Window: Dhuhr • Ends";
   let timesLabel = [standardAsr, hanafiAsr];
   if (t < times.fajr.getTime()) {
-    lead = "Current Window: Isha • Next Fajr at";
+    lead = "Window: Isha • Next Fajr";
     timesLabel = [formatTime(times.fajr)];
   } else if (t < sunrise.getTime()) {
-    lead = "Fajr Window • Sunrise at";
+    lead = "Window: Fajr • Sunrise";
     timesLabel = [formatTime(sunrise)];
   } else if (t < times.dhuhr.getTime()) {
-    lead = "Dhuhr Window • Starts at";
+    lead = "Window: Dhuhr • Starts";
     timesLabel = [formatTime(times.dhuhr)];
   } else if (t < times.asr.getTime()) {
-    lead = "Current Window: Dhuhr • Ends at";
+    lead = "Window: Dhuhr • Ends";
     timesLabel = [standardAsr, hanafiAsr];
   } else if (t < timesHanafi.asr.getTime()) {
-    lead = "Current Window: Asr • Hanafi Dhuhr until";
+    lead = "Window: Asr • Hanafi Dhuhr until";
     timesLabel = [hanafiAsr];
   } else if (t < times.maghrib.getTime()) {
-    lead = "Current Window: Asr • Ends at";
+    lead = "Window: Asr • Ends";
     timesLabel = [formatTime(times.maghrib)];
   } else if (t < times.isha.getTime()) {
-    lead = "Current Window: Maghrib • Ends at";
+    lead = "Window: Maghrib • Ends";
     timesLabel = [formatTime(times.isha)];
   } else if (t < midnight.getTime()) {
-    lead = "Current Window: Isha • Midnight at";
+    lead = "Window: Isha • Midnight";
     timesLabel = [formatTime(midnight)];
   } else {
-    lead = "Current Window: Isha • Next Fajr at";
+    lead = "Window: Isha • Next Fajr";
     timesLabel = [formatTime(nextFajr)];
   }
   return { sunrise: formatTime(sunrise), until, lead, timesLabel };
@@ -421,7 +421,7 @@ function QrTile({ value, label }: { value: string; label: string }) {
         role="img"
         aria-label={label}
       />
-      <p className="text-center text-[11px] font-bold leading-tight text-slate-700">
+      <p className="mb-1 text-center text-[11px] font-bold leading-tight text-slate-700">
         {label}
       </p>
     </div>
@@ -787,35 +787,31 @@ export default function KioskDisplay() {
             className="rounded-3xl bg-slate-950/95 p-3.5 text-white shadow-lg"
           >
             <div className="rounded-2xl border border-slate-800/80 bg-slate-900/80 px-3.5 py-2.5">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
-                Next Prayer
-              </p>
-              <div className="mt-0.5 flex items-baseline justify-between gap-3">
-                <p className="text-2xl font-extrabold leading-none text-white">
-                  {board?.nextName ?? "Loading today's prayers…"}
-                </p>
-                {board ? (
-                  <p className="text-base font-bold text-white">
-                    Iqamah {board.nextIqamah}
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
+                    Next Prayer
                   </p>
+                  <p className="mt-0.5 text-2xl font-extrabold leading-none text-white">
+                    {board?.nextName ?? "Loading today's prayers…"}
+                  </p>
+                  {board ? (
+                    <p className="mt-0.5 font-mono text-xs text-[#D4A373]">
+                      {board.countdown}
+                    </p>
+                  ) : null}
+                </div>
+                {board ? (
+                  <div className="max-w-[16rem] shrink-0 text-right">
+                    <p className="text-base font-bold text-white">
+                      Iqamah {board.nextIqamah}
+                    </p>
+                    <p className="mt-0.5 text-[11px] leading-tight text-slate-300">
+                      {board.windowLead} {board.windowTimes.join(" / ")}
+                    </p>
+                  </div>
                 ) : null}
               </div>
-              {board ? (
-                <p className="mt-0.5 font-mono text-xs text-[#D4A373]">
-                  {board.countdown}
-                </p>
-              ) : null}
-              {board ? (
-                <p className="mt-0.5 truncate text-xs text-slate-300">
-                  {board.windowLead}{" "}
-                  {board.windowTimes.map((time, index) => (
-                    <span key={`${time}-${index}`}>
-                      {index > 0 ? " / " : null}
-                      <span className="font-semibold text-[#D4A373]">{time}</span>
-                    </span>
-                  ))}
-                </p>
-              ) : null}
             </div>
             {schedule.specialAnnouncement ? (
               <p className="mt-2 line-clamp-2 rounded-xl border border-[#D4A373]/40 bg-[#D4A373]/15 px-3 py-1.5 text-sm font-semibold text-[#D4A373]">
@@ -888,7 +884,7 @@ export default function KioskDisplay() {
             <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
               Ways to Give
             </p>
-            <div className="mt-3 flex min-h-0 flex-1 items-center gap-4 pb-1">
+            <div className="mt-3 flex min-h-0 flex-1 items-start gap-4">
               <div className="flex shrink-0 items-start gap-2">
                 <QrTile value={GENERAL_ZEFFY_URL} label="Zeffy • Ops" />
                 <QrTile value={zeffyUrl} label="Zeffy • Property" />
@@ -902,7 +898,7 @@ export default function KioskDisplay() {
                   {ZELLE_CARDS.map((card) => (
                     <div
                       key={card.email}
-                      className="flex flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3.5 py-2.5"
+                      className="flex flex-col justify-center rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-1.5"
                     >
                       <p className="text-[10px] font-bold uppercase tracking-wider text-[#2E6575]">
                         {card.label}
