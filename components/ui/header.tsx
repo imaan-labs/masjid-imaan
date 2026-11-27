@@ -14,7 +14,6 @@ const services = [
   { href: "/prayer-times#jumuah", label: "Jumu'ah" },
   { href: "/#aalim-sessions", label: "Classes" },
   { href: "/excuse-letters", label: "Excuse Letters" },
-  { href: "/ramadan", label: "🌙 Ramadan" },
   { href: "/gallery", label: "Photo Gallery" },
 ];
 
@@ -133,16 +132,16 @@ export default function Header() {
               Bulletin
             </Link>
             <Link
+              href="/ramadan"
+              className="rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+            >
+              Ramadan
+            </Link>
+            <Link
               href="/calendar"
               className="rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
             >
               Hilāl Calendar
-            </Link>
-            <Link
-              href="/ramadan"
-              className="rounded-xl px-3.5 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
-            >
-              🌙 Ramadan
             </Link>
           </nav>
 

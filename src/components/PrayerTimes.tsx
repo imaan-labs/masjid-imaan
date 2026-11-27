@@ -147,13 +147,13 @@ function adhanNote(
   timesHanafi: AdhanPrayerTimes,
 ) {
   if (name === "Fajr") {
-    return `Karachi: ${formatTime(timesKarachi.fajr)} | 15°: ${formatTime(times15.fajr)}`;
+    return `18°: ${formatTime(timesKarachi.fajr)} | 15°: ${formatTime(times15.fajr)}`;
   }
   if (name === "Dhuhr") {
     return formatTime(timesKarachi.dhuhr);
   }
   if (name === "Asr") {
-    return `Std: ${formatTime(timesKarachi.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
+    return `Standard: ${formatTime(timesKarachi.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
   }
   if (name === "Maghrib") {
     return formatTime(timesKarachi.maghrib);
@@ -161,7 +161,7 @@ function adhanNote(
   if (name === "Taraweeh") {
     return "After Isha";
   }
-  return `Karachi: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
+  return `18°: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
 }
 
 function jumuahShifts(settings: PrayerSettings) {
@@ -341,7 +341,7 @@ export default function PrayerTimes({
               {settings.title}
             </h2>
             <p className="mt-1 text-sm text-slate-300">
-              Melissa, TX ({MELISSA.lat}° N, {Math.abs(MELISSA.lng)}° W) · Karachi method
+              Melissa, TX ({MELISSA.lat}° N, {Math.abs(MELISSA.lng)}° W) • Daily Schedule
             </p>
           </div>
           <div className="mt-4 text-sm text-slate-300 md:mt-0 md:text-right">
@@ -354,7 +354,7 @@ export default function PrayerTimes({
         >
           <PrayerCard name="Fajr" iqamah={settings.fajr}>
             <div>
-              <span className="text-slate-300">Karachi:</span>{" "}
+              <span className="text-slate-300">18°:</span>{" "}
               {formatTime(timesKarachi.fajr)}
             </div>
             <div>
@@ -395,7 +395,7 @@ export default function PrayerTimes({
             note={ishaDisplay.note}
           >
             <div>
-              <span className="text-slate-300">Karachi:</span>{" "}
+              <span className="text-slate-300">18°:</span>{" "}
               {formatTime(timesKarachi.isha)}
             </div>
             <div>

@@ -5,6 +5,7 @@ import QRCode from "qrcode";
 import {
   CalculationMethod,
   Coordinates,
+  Madhab,
   PrayerTimes as AdhanPrayerTimes,
 } from "adhan";
 import { MoonPhase } from "astronomy-engine";
@@ -164,17 +165,77 @@ function countdownClock(now: Date, targetSortKey: number) {
   const hours = Math.floor(remaining / 3600);
   const minutes = Math.floor((remaining % 3600) / 60);
   const seconds = remaining % 60;
-  const pad = (value: number) => String(value).padStart(2, "0");
-  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  return `${hours}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;
 }
 
-function adhanFor(name: string, times: AdhanPrayerTimes) {
-  if (name === "Fajr") return formatTime(times.fajr);
-  if (name === "Dhuhr") return formatTime(times.dhuhr);
-  if (name === "Asr") return formatTime(times.asr);
-  if (name === "Maghrib") return formatTime(times.maghrib);
+function prayerWindows(
+  now: Date,
+  times: AdhanPrayerTimes,
+  timesHanafi: AdhanPrayerTimes,
+  nextFajr: Date,
+) {
+  const sunrise = times.sunrise;
+  const midnight = new Date(
+    times.maghrib.getTime() + (nextFajr.getTime() - times.maghrib.getTime()) / 2,
+  );
+  const standardAsr = formatTime(times.asr);
+  const hanafiAsr = formatTime(timesHanafi.asr);
+  const until: Record<string, string> = {
+    Dhuhr: `${standardAsr} / ${hanafiAsr}`,
+    Asr: formatTime(times.maghrib),
+    Maghrib: formatTime(times.isha),
+    Isha: `Midnight ${formatTime(midnight)}`,
+  };
+  const t = now.getTime();
+  let lead = "Current Window: Dhuhr • Ends at";
+  let timesLabel = [standardAsr, hanafiAsr];
+  if (t < times.fajr.getTime()) {
+    lead = "Current Window: Isha • Next Fajr at";
+    timesLabel = [formatTime(times.fajr)];
+  } else if (t < sunrise.getTime()) {
+    lead = "Fajr Window • Sunrise at";
+    timesLabel = [formatTime(sunrise)];
+  } else if (t < times.dhuhr.getTime()) {
+    lead = "Dhuhr Window • Starts at";
+    timesLabel = [formatTime(times.dhuhr)];
+  } else if (t < times.asr.getTime()) {
+    lead = "Current Window: Dhuhr • Ends at";
+    timesLabel = [standardAsr, hanafiAsr];
+  } else if (t < timesHanafi.asr.getTime()) {
+    lead = "Current Window: Asr • Hanafi Dhuhr until";
+    timesLabel = [hanafiAsr];
+  } else if (t < times.maghrib.getTime()) {
+    lead = "Current Window: Asr • Ends at";
+    timesLabel = [formatTime(times.maghrib)];
+  } else if (t < times.isha.getTime()) {
+    lead = "Current Window: Maghrib • Ends at";
+    timesLabel = [formatTime(times.isha)];
+  } else if (t < midnight.getTime()) {
+    lead = "Current Window: Isha • Midnight at";
+    timesLabel = [formatTime(midnight)];
+  } else {
+    lead = "Current Window: Isha • Next Fajr at";
+    timesLabel = [formatTime(nextFajr)];
+  }
+  return { sunrise: formatTime(sunrise), until, lead, timesLabel };
+}
+
+function adhanNote(
+  name: string,
+  timesKarachi: AdhanPrayerTimes,
+  times15: AdhanPrayerTimes,
+  timesHanafi: AdhanPrayerTimes,
+) {
+  if (name === "Fajr") {
+    return `18°: ${formatTime(timesKarachi.fajr)} | 15°: ${formatTime(times15.fajr)}`;
+  }
+  if (name === "Dhuhr") return formatTime(timesKarachi.dhuhr);
+  if (name === "Asr") {
+    return `Standard: ${formatTime(timesKarachi.asr)} | Hanafi: ${formatTime(timesHanafi.asr)}`;
+  }
+  if (name === "Maghrib") return formatTime(timesKarachi.maghrib);
   if (name === "Taraweeh") return "After Isha";
-  return formatTime(times.isha);
+  return `18°: ${formatTime(timesKarachi.isha)} | 15°: ${formatTime(times15.isha)}`;
 }
 
 function fastChip(fast: UpcomingDate | null) {
@@ -323,9 +384,9 @@ function QrTile({ value, label }: { value: string; label: string }) {
   }, [value]);
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+    <div className="flex w-28 shrink-0 flex-col items-center gap-1">
       <div
-        className="aspect-square w-full max-w-[9.25rem] rounded-2xl border border-slate-200/90 bg-slate-50 p-2 [&_svg]:block [&_svg]:h-auto [&_svg]:w-full"
+        className="h-28 w-28 rounded-2xl border border-slate-200/90 bg-slate-50 p-1.5 [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
         dangerouslySetInnerHTML={markup ? { __html: markup } : undefined}
         role="img"
         aria-label={label}
@@ -508,10 +569,19 @@ export default function KioskDisplay() {
   const activeFlyer = flyers[index] ?? null;
 
   let board: {
-    rows: { name: string; adhan: string; iqamah: string }[];
+    rows: {
+      name: string;
+      adhan: string;
+      iqamah: string;
+      detail: string;
+      detailKind: "sunrise" | "until" | "";
+    }[];
     shifts: { shift: string; lecture: string; salah: string }[];
     nextName: string;
+    nextIqamah: string;
     countdown: string;
+    windowLead: string;
+    windowTimes: string[];
     dateLabel: string;
   } | null = null;
 
@@ -522,6 +592,28 @@ export default function KioskDisplay() {
       date,
       CalculationMethod.Karachi(),
     );
+    const times15 = new AdhanPrayerTimes(
+      coordinates,
+      date,
+      CalculationMethod.NorthAmerica(),
+    );
+    const paramsHanafi = CalculationMethod.Karachi();
+    paramsHanafi.madhab = Madhab.Hanafi;
+    const timesHanafi = new AdhanPrayerTimes(coordinates, date, paramsHanafi);
+    const tomorrow = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate() + 1,
+      12,
+      0,
+      0,
+    );
+    const nextFajr = new AdhanPrayerTimes(
+      coordinates,
+      tomorrow,
+      CalculationMethod.Karachi(),
+    ).fajr;
+    const windows = prayerWindows(now, times, timesHanafi, nextFajr);
     const sunset = times.maghrib;
     const maghribDisplay = resolvePrayerOffset(schedule.maghrib, sunset);
     const maghribAt = clockInstant(maghribDisplay.time, sunset) ?? sunset;
@@ -554,7 +646,13 @@ export default function KioskDisplay() {
         iqamah = taraweehDisplay.time;
       return {
         name: row.name,
-        adhan: adhanFor(row.name, times),
+        adhan: adhanNote(row.name, times, times15, timesHanafi),
+        detail:
+          row.name === "Fajr"
+            ? `Sunrise (Ends): ${windows.sunrise}`
+            : (windows.until[row.name] ?? ""),
+        detailKind:
+          row.name === "Fajr" ? "sunrise" : windows.until[row.name] ? "until" : "",
         iqamah,
         sortKey: row.sortKey,
         minutes: row.minutes,
@@ -565,7 +663,13 @@ export default function KioskDisplay() {
     const nextPrayer = upcoming ?? rows[0];
     const target = upcoming ? nextPrayer.sortKey : nextPrayer.minutes + 24 * 60;
     board = {
-      rows: rows.map(({ name, adhan, iqamah }) => ({ name, adhan, iqamah })),
+      rows: rows.map(({ name, adhan, iqamah, detail, detailKind }) => ({
+        name,
+        adhan,
+        iqamah,
+        detail,
+        detailKind,
+      })),
       shifts: [
         {
           shift: "1st Jumu'ah",
@@ -579,7 +683,10 @@ export default function KioskDisplay() {
         },
       ],
       nextName: nextPrayer?.name ?? "Fajr",
+      nextIqamah: nextPrayer?.iqamah ?? "",
       countdown: countdownClock(now, target),
+      windowLead: windows.lead,
+      windowTimes: windows.timesLabel,
       dateLabel: now.toLocaleDateString("en-US", {
         timeZone: TIME_ZONE,
         weekday: "long",
@@ -597,8 +704,8 @@ export default function KioskDisplay() {
       onDragStart={(event) => event.preventDefault()}
       style={{ WebkitTouchCallout: "none", WebkitUserSelect: "none" }}
     >
-      <div className="grid h-full min-h-0 grid-cols-12 grid-rows-[minmax(0,1fr)] gap-5 p-5">
-        <div className="col-span-5 flex h-full min-h-0 flex-col justify-between gap-3.5">
+      <div className="grid h-full min-h-0 grid-cols-12 grid-rows-[minmax(0,1fr)] gap-4 p-4">
+        <div className="col-span-5 flex h-full min-h-0 flex-col justify-between gap-2.5">
           <KioskCard
             label="Clock and date"
             className="rounded-3xl bg-white px-5 py-3.5 shadow-sm"
@@ -644,71 +751,100 @@ export default function KioskDisplay() {
           <KioskCard
             label="Prayer and Jumu'ah schedule"
             tone="dark"
-            className="rounded-3xl bg-[#0F2432] p-5 text-white shadow-lg"
+            className="rounded-3xl bg-slate-950/95 p-3.5 text-white shadow-lg"
           >
-            <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#D4A373]/40 bg-[#D4A373]/15 px-3 py-2">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
-                  Next Prayer
-                </p>
-                <p className="font-heading text-lg font-extrabold tabular-nums text-white">
-                  {board
-                    ? `${board.nextName} in ${board.countdown}`
-                    : "Loading today's prayers…"}
-                </p>
-              </div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#D4A373]">
-                Karachi · Melissa
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-900/80 px-3.5 py-2.5">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
+                Next Prayer
               </p>
+              <div className="mt-0.5 flex items-baseline justify-between gap-3">
+                <p className="text-2xl font-extrabold leading-none text-white">
+                  {board?.nextName ?? "Loading today's prayers…"}
+                </p>
+                {board ? (
+                  <p className="text-base font-bold text-white">
+                    Iqamah {board.nextIqamah}
+                  </p>
+                ) : null}
+              </div>
+              {board ? (
+                <p className="mt-0.5 font-mono text-xs text-[#D4A373]">
+                  {board.countdown}
+                </p>
+              ) : null}
+              {board ? (
+                <p className="mt-0.5 truncate text-xs text-slate-300">
+                  {board.windowLead}{" "}
+                  {board.windowTimes.map((time, index) => (
+                    <span key={`${time}-${index}`}>
+                      {index > 0 ? " / " : null}
+                      <span className="font-semibold text-[#D4A373]">{time}</span>
+                    </span>
+                  ))}
+                </p>
+              ) : null}
             </div>
             {schedule.specialAnnouncement ? (
               <p className="mt-2 line-clamp-2 rounded-xl border border-[#D4A373]/40 bg-[#D4A373]/15 px-3 py-1.5 text-sm font-semibold text-[#D4A373]">
                 {schedule.specialAnnouncement}
               </p>
             ) : null}
-            <div className="mt-3 grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,1fr)] border-b border-white/10 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-              <span className="py-1.5 text-left">Prayer</span>
-              <span className="py-1.5 text-left">Adhan</span>
-              <span className="py-1.5 text-right">Iqamah</span>
+            <p className="mb-0.5 mt-2 text-[11px] font-bold uppercase tracking-wider text-slate-300">
+              Today&apos;s Prayer &amp; Iqamah
+            </p>
+            <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.8fr)_minmax(0,0.9fr)] border-b border-white/10 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-300">
+              <span className="py-1 text-left">Prayer</span>
+              <span className="py-1 text-left">Adhan</span>
+              <span className="py-1 text-right">Iqamah</span>
             </div>
             {(board?.rows ?? []).map((row) => {
               const current = row.name === board?.nextName;
               return (
                 <div
                   key={row.name}
-                  className={`grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,1fr)] items-center border-b border-slate-800/80 py-1.5 ${current ? "rounded-lg bg-[#D4A373]/15 px-2" : ""}`}
+                  className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.8fr)_minmax(0,0.9fr)] items-center border-b border-slate-800/80 py-0.5 ${current ? "rounded-lg bg-slate-800/70 px-2" : ""}`}
                 >
                   <span
-                    className={`text-lg font-bold ${current ? "text-[#D4A373]" : "text-white"}`}
+                    className={`text-base font-bold ${current ? "text-[#D4A373]" : "text-white"}`}
                   >
                     {row.name}
                   </span>
-                  <span className="text-base font-medium tabular-nums text-slate-200">
-                    {row.adhan}
+                  <span className="min-w-0">
+                    <span className="block text-sm font-medium leading-tight text-slate-300">
+                      {row.adhan}
+                    </span>
+                    {row.detailKind === "sunrise" ? (
+                      <span className="block text-[11px] leading-tight text-amber-300/90">
+                        {row.detail}
+                      </span>
+                    ) : null}
+                    {row.detailKind === "until" ? (
+                      <span className="block text-[10px] leading-tight text-slate-400">
+                        Until {row.detail}
+                      </span>
+                    ) : null}
                   </span>
-                  <span className="text-right text-xl font-bold tabular-nums text-white">
+                  <span className="text-right text-base font-bold tabular-nums text-white">
                     {row.iqamah}
                   </span>
                 </div>
               );
             })}
-            <div className="mt-3 grid grid-cols-1 gap-2">
+            <div className="mt-2 grid grid-cols-2 gap-2.5">
               {(board?.shifts ?? []).map((shift) => (
                 <div
                   key={shift.shift}
-                  className="rounded-2xl border border-slate-800/80 bg-slate-900/80 px-3 py-2"
+                  className="rounded-2xl border border-slate-800/80 bg-slate-900/80 p-2.5"
                 >
-                  <p className="text-[11px] font-bold uppercase tracking-wide text-[#D4A373]">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#D4A373]">
                     {shift.shift}
                   </p>
-                  <div className="mt-0.5 flex items-baseline justify-between gap-2">
-                    <span className="text-sm text-slate-200">
-                      Lecture {shift.lecture}
-                    </span>
-                    <span className="text-sm font-semibold text-white">
-                      Salah {shift.salah}
-                    </span>
-                  </div>
+                  <p className="mt-0.5 text-sm font-bold text-white">
+                    Lecture: {shift.lecture}
+                  </p>
+                  <p className="mt-0.5 text-xs font-semibold text-slate-300">
+                    Salah: {shift.salah}
+                  </p>
                 </div>
               ))}
             </div>
@@ -717,10 +853,10 @@ export default function KioskDisplay() {
           <KioskCard
             label="Tonight's Hilāl"
             tone="dark"
-            className="flex items-center gap-4 rounded-3xl bg-[#0F2432] px-5 py-3.5 text-white shadow-md"
+            className="flex items-center gap-4 rounded-3xl bg-slate-950/95 px-4 py-2.5 text-white shadow-md"
           >
             <div className="flex shrink-0 flex-col items-center">
-              <svg viewBox="0 0 40 40" className="h-14 w-14" aria-hidden="true">
+              <svg viewBox="0 0 40 40" className="h-12 w-12" aria-hidden="true">
                 <circle cx="20" cy="20" r="16" className="fill-brand-teal" />
                 <path
                   d={moonLitPath(lunar?.phaseAngle ?? 0)}
@@ -754,17 +890,17 @@ export default function KioskDisplay() {
 
           <KioskCard
             label="Ways to give"
-            className="rounded-3xl bg-white p-4 shadow-sm"
+            className="shrink-0 rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm"
           >
             <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
               Ways to Give
             </p>
-            <div className="mt-2.5 grid grid-cols-2 gap-3">
+            <div className="mt-2 grid grid-cols-2 gap-3 pb-1">
               <div className="flex items-start gap-2">
                 <QrTile value={zeffyUrl} label="Zeffy • 0% Fee" />
                 <QrTile value={DONORBOX_URL} label="Donorbox • Card/ACH" />
               </div>
-              <div className="flex flex-col justify-center gap-2">
+              <div className="flex flex-col justify-center gap-1.5">
                 <p className="text-[11px] font-bold uppercase tracking-wider text-[#2E6575]">
                   Zelle
                 </p>

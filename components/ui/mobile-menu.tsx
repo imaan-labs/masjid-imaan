@@ -10,10 +10,10 @@ const links = [
   { href: "/prayer-times#jumuah", label: "Jumu'ah" },
   { href: "/#aalim-sessions", label: "Classes" },
   { href: "/excuse-letters", label: "Excuse Letters" },
-  { href: "/bulletin", label: "Bulletin" },
   { href: "/gallery", label: "Photo Gallery" },
+  { href: "/bulletin", label: "Bulletin" },
+  { href: "/ramadan", label: "Ramadan" },
   { href: "/calendar", label: "Hilāl Calendar" },
-  { href: "/ramadan", label: "🌙 Ramadan" },
 ];
 
 export default function MobileMenu() {

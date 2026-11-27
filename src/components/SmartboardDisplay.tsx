@@ -549,7 +549,7 @@ export default function SmartboardDisplay() {
                   : "Loading today's prayers…"}
               </p>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-gold">
-                Karachi · Melissa
+                Melissa, TX • Daily Schedule
               </p>
             </div>
             {schedule.specialAnnouncement ? (
